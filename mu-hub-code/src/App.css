@@ -28,6 +28,13 @@
   color: #61dafb;
 }
 
+#sso-test {
+  margin: 100px;
+  width: 200px;
+  height: 50px;
+  font-size: xx-large;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
