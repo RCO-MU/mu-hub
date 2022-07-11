@@ -15,7 +15,7 @@ app.get('/api/test2', (req, res) => {
   res.send({ ding: 'dong' });
 });
 
-// console log port number
+// log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Server listening on port ${port}`);
 });

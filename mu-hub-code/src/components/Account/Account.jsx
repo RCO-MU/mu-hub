@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { useState } from 'react';
-import Home from './components/Home/Home';
-import './App.css';
+import './Account.css';
 
-function App() {
+function Account() {
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
@@ -20,19 +19,24 @@ function App() {
 
   // TODO LATER: PASS ONLY PROPS THAT ARE NECESSARY
   return (
-    <div className="App">
-      <main>
-        <Home
-          response={response}
-          setResponse={setResponse}
-          loading={loading}
-          setLoading={setLoading}
-          error={error}
-          setError={setError}
-        />
-      </main>
+    <div className="Account">
+      <form action="/account_update">
+        <label htmlFor="unixname">
+          {'Meta Unixname: '}
+          <br />
+          <input type="text" id="unixname" name="unixname" />
+        </label>
+        <br />
+        <label htmlFor="college">
+          {'College: '}
+          <br />
+          <input type="text" id="college" name="college" />
+        </label>
+        <br />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
 
-export default App;
+export default Account;
