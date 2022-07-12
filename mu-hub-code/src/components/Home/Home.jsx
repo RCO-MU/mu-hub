@@ -3,11 +3,18 @@ import * as React from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import './Home.css';
-import Account from '../Account/Account';
+import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
 
 function Home({
-  response, setResponse, loading, setLoading, error, setError,
+  testResponse, setTestResponse, loading, setLoading, error, setError, handleLogout, user,
 }) {
+  // **********************************************************************
+  // CONSTANTS
+  // **********************************************************************
+
+  const navigate = useNavigate();
+
   // **********************************************************************
   // AXIOS FUNCTIONS (GET/POST)
   // **********************************************************************
@@ -23,18 +30,17 @@ function Home({
     setLoading(true);
     try {
       const { data } = await axios.get(`/api/test${id}`);
-      console.log('response: ', data);
       if (data === undefined) {
         const msg = 'No response received';
-        setResponse({});
+        setTestResponse({});
         console.error(msg);
         setError(msg);
       } else {
-        setResponse(data);
+        setTestResponse(data);
         setError(null);
       }
     } catch (err) {
-      setResponse({});
+      setTestResponse({});
       console.error(err);
       setError(err);
     } finally {
@@ -43,28 +49,33 @@ function Home({
   }
 
   // **********************************************************************
-  // LOADING CONTENT
-  // Adapted from Anastasiya Kuligina (https://codepen.io/WebSonata/pen/bRaONB)
-  // **********************************************************************
-  const loadingContent = (
-    <div id="preloader">
-      <div id="loader" />
-    </div>
-  );
-
-  // **********************************************************************
   // HOME CONTENT
   // Button that fetches data, JSON response displayed on page
   // **********************************************************************
 
   // IMPORTANT TODO: START RENDERING USEFUL CONTENT
   function homeContent(content) {
-    console.log('content: ', content);
     return (
       <div className="home-content">
-        <Account />
+        <p>{`Your username is: ${user}`}</p>
+        <p>{`Your college is: ${'placeholder'}`}</p>
+        <button
+          className="action-button"
+          type="button"
+          onClick={() => navigate('/account_update')}
+        >
+          Edit Profile Info
+        </button>
+        <br />
+        <button
+          className="action-button"
+          type="button"
+          onClick={handleLogout}
+        >
+          Log Out
+        </button>
         <h1>- Server Test: - </h1>
-        <button id="action-button" type="button" onClick={() => fetchTestResponse('2')}>
+        <button className="action-button" type="button" onClick={() => fetchTestResponse('2')}>
           Click Me
         </button>
         <p id="test-response">{JSON.stringify(content)}</p>
@@ -85,7 +96,7 @@ function Home({
   // **********************************************************************
   return (
     <div className="Home">
-      {loading ? loadingContent : homeContent(response)}
+      {loading ? <Loader /> : homeContent(testResponse)}
     </div>
   );
 }
