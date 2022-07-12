@@ -48,6 +48,31 @@ function Home({
     }
   }
 
+  /*
+    TODO: code function and write comment.
+  */
+  async function getAccountInfo() {
+    /* setLoading(true);
+    try {
+      const { data } = await axios.get(`/api/test${id}`);
+      if (data === undefined) {
+      const msg = 'No response received';
+        setTestResponse({});
+        console.error(msg);
+        setError(msg);
+      } else {
+        setTestResponse(data);
+        setError(null);
+      }
+    } catch (err) {
+      setTestResponse({});
+      console.error(err);
+      setError(err);
+    } finally {
+      setLoading(false);
+    } */
+  }
+
   // **********************************************************************
   // HOME CONTENT
   // Button that fetches data, JSON response displayed on page

@@ -33,7 +33,7 @@ function AccountUpdate({
   // **********************************************************************
 
   /*
-    TODO: write comment
+    TODO: code database connection and write comment.
   */
   async function postAccountInfo() {
     try {
