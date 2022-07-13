@@ -1,4 +1,4 @@
-# MetaU-Hub (MU Intern Capstone Project: Rafael Collado)
+# MetaU Hub (MU Intern Capstone Project: Rafael Collado)
 
 ## Table of Contents
 1. [Overview](#Overview)
