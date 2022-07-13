@@ -3,11 +3,11 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import Home from './components/Home/Home';
-import NotFound from './components/NotFound/NotFound';
+import Home from '../Home/Home';
+import NotFound from '../NotFound/NotFound';
 import './App.css';
-import AccountUpdate from './components/AccountUpdate/AccountUpdate';
-import refreshPage from './utils/refresh';
+import AccountUpdate from '../AccountUpdate/AccountUpdate';
+import refreshPage from '../../utils/refresh';
 
 function App() {
   // **********************************************************************
