@@ -15,10 +15,18 @@ app.get('/api/test2', (req, res) => {
   res.send({ randomNumber: Math.floor(Math.random() * 1000) });
 });
 
-app.post('/api/account_update', (req, res) => {
+app.post('/api/account_create', (req, res) => {
   res.send({
     username: req.query.username,
     college: req.query.college,
+    other: req.query.other,
+  });
+});
+
+app.post('/api/account_update', (req, res) => {
+  res.send({
+    college: req.query.college,
+    other: req.query.other,
   });
 });
 

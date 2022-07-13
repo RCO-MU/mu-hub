@@ -1,13 +1,13 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import './AccountUpdate.css';
-import { useState } from 'react';
+import './AccountCreate.css';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import testUser from '../../utils/testUser';
 
-function AccountUpdate({
-  setLoading, setError, loggedIn,
+function AccountCreate({
+  setLoading, setError, setCookie, setHasAccount, loggedIn,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -15,10 +15,16 @@ function AccountUpdate({
 
   const navigate = useNavigate();
 
+  // TODO: Figure out how to use this to enforce required input fields
+  const {
+    register, handleSubmit, watch, errors,
+  } = useForm();
+
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
+  const [user, setUser] = useState('');
   const [college, setCollege] = useState();
   const [otherInput, setOtherInput] = useState();
 
@@ -28,9 +34,9 @@ function AccountUpdate({
 
   // TODO: Store account info in database
   // TODO: Write function comment
-  async function postAccountUpdate() {
+  async function postNewAccount() {
     try {
-      const { data } = await axios.post(`/api/account_update?college=${college}&other=${otherInput}`);
+      const { data } = await axios.post(`/api/account_create?username=${user}&college=${college}&other=${otherInput}`);
       // console.log('response: ', data);
       setError(null);
     } catch (err) {
@@ -43,23 +49,37 @@ function AccountUpdate({
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  const handleOnAccountUpdateSubmit = async () => {
+  const handleOnAccountInfoSubmit = async () => {
     setLoading(true);
-    await postAccountUpdate();
-    navigate('/');
+    await postNewAccount();
+    setCookie('data', {
+      loggedIn: true,
+      user: testUser,
+    });
+    setHasAccount(true);
   };
 
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: Get old values from account database
-  // TODO: Display old values in their respective input fields
   return (
-    <div className="AccountUpdate">
+    <div className="AccountCreate">
       <form
-        onSubmit={(e) => { e.preventDefault(); handleOnAccountUpdateSubmit(); }}
+        onSubmit={(e) => { e.preventDefault(); handleOnAccountInfoSubmit(); }}
       >
+        <label htmlFor="username">
+          {'Username: '}
+          <br />
+          <i>(Will retrieve automatically from login)</i>
+          <br />
+          <input
+            type="text"
+            id="username"
+            name="username"
+            onChange={(e) => setUser(e.target.value)}
+          />
+        </label>
         <br />
         <label htmlFor="college">
           {'College: '}
@@ -87,7 +107,7 @@ function AccountUpdate({
           className="action-button"
           type="submit"
           value="Submit"
-          onClick={handleOnAccountUpdateSubmit}
+          onClick={handleOnAccountInfoSubmit}
         />
       </form>
       {loggedIn ? (
@@ -103,4 +123,4 @@ function AccountUpdate({
   );
 }
 
-export default AccountUpdate;
+export default AccountCreate;

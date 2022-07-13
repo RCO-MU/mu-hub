@@ -1,19 +1,26 @@
 /* eslint-disable no-promise-executor-return */
 import * as React from 'react';
 import axios from 'axios';
-import { useEffect } from 'react';
-import './Home.css';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
+import delay from '../../utils/delay';
+import './Home.css';
 
 function Home({
   testResponse, setTestResponse, loading, setLoading, error, setError, handleLogout, user,
 }) {
   // **********************************************************************
-  // CONSTANTS
+  // CONSTANTS/VARIABLES
   // **********************************************************************
 
   const navigate = useNavigate();
+
+  // **********************************************************************
+  // STATE VARIABLES AND FUNCTIONS
+  // **********************************************************************
+
+  const [info, setInfo] = useState({});
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET/POST)
@@ -48,64 +55,15 @@ function Home({
     }
   }
 
-  /*
-    TODO: code function and write comment.
-  */
-  async function getAccountInfo() {
-    /* setLoading(true);
-    try {
-      const { data } = await axios.get(`/api/test${id}`);
-      if (data === undefined) {
-      const msg = 'No response received';
-        setTestResponse({});
-        console.error(msg);
-        setError(msg);
-      } else {
-        setTestResponse(data);
-        setError(null);
-      }
-    } catch (err) {
-      setTestResponse({});
-      console.error(err);
-      setError(err);
-    } finally {
-      setLoading(false);
-    } */
-  }
+  // TODO: Get account info via database connection
+  // TODO: Write comment
+  // TODO: Display account info values on home page
 
-  // **********************************************************************
-  // HOME CONTENT
-  // Button that fetches data, JSON response displayed on page
-  // **********************************************************************
-
-  // IMPORTANT TODO: START RENDERING USEFUL CONTENT
-  function homeContent(content) {
-    return (
-      <div className="home-content">
-        <p>{`Your username is: ${user}`}</p>
-        <p>{`Your college is: ${'placeholder'}`}</p>
-        <button
-          className="action-button"
-          type="button"
-          onClick={() => navigate('/account_update')}
-        >
-          Edit Profile Info
-        </button>
-        <br />
-        <button
-          className="action-button"
-          type="button"
-          onClick={handleLogout}
-        >
-          Log Out
-        </button>
-        <h1>- Server Test: - </h1>
-        <button className="action-button" type="button" onClick={() => fetchTestResponse('2')}>
-          Click Me
-        </button>
-        <p id="test-response">{JSON.stringify(content)}</p>
-      </div>
-    );
+  function getAccountInfo() {
+    return {
+      user: '1',
+      college: '2',
+    };
   }
 
   // **********************************************************************
@@ -114,6 +72,7 @@ function Home({
 
   useEffect(() => {
     fetchTestResponse('');
+    setInfo(getAccountInfo());
   }, []);
 
   // **********************************************************************
@@ -121,7 +80,32 @@ function Home({
   // **********************************************************************
   return (
     <div className="Home">
-      {loading ? <Loader /> : homeContent(testResponse)}
+      {loading ? <Loader /> : (
+        <div className="home-content">
+          <p>{`Your username is: ${info.user}`}</p>
+          <p>{`Your college is: ${info.college}`}</p>
+          <button
+            className="action-button"
+            type="button"
+            onClick={() => navigate('/account_update')}
+          >
+            Edit Profile Info
+          </button>
+          <br />
+          <button
+            className="action-button"
+            type="button"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+          <h1>- Server Test: - </h1>
+          <button className="action-button" type="button" onClick={() => fetchTestResponse('2')}>
+            Click Me
+          </button>
+          <p id="test-response">{JSON.stringify(testResponse)}</p>
+        </div>
+      )}
     </div>
   );
 }

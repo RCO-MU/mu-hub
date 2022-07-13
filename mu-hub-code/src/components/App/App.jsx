@@ -1,21 +1,20 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Home from '../Home/Home';
 import NotFound from '../NotFound/NotFound';
-import './App.css';
+import Login from '../Login/Login';
+import AccountCreate from '../AccountCreate/AccountCreate';
 import AccountUpdate from '../AccountUpdate/AccountUpdate';
-import refreshPage from '../../utils/refresh';
+import refreshPage from '../../utils/refreshPage';
+import testUser from '../../utils/testUser';
+import './App.css';
 
 function App() {
   // **********************************************************************
-  // CONSTANTS
+  // CONSTANTS & VARIABLES
   // **********************************************************************
-
-  // TODO: replace loggedIn cookie with state variable
-  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
 
   const navigate = useNavigate();
 
@@ -23,10 +22,24 @@ function App() {
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  // TODO LATER: Refactor state variables to non-global context
+  // TODO LATER: Refactor certain state variables to non-global context?
   const [testResponse, setTestResponse] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [hasAccount, setHasAccount] = useState(false);
+
+  // **********************************************************************
+  // COOKIES (DEFINE & RETRIEVE)
+  // **********************************************************************
+
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+
+  let loggedIn;
+  let user;
+  if (cookies.data !== undefined) {
+    loggedIn = cookies.data.loggedIn;
+    user = cookies.data.user;
+  }
 
   // **********************************************************************
   // HANDLER FUNCTIONS
@@ -34,34 +47,56 @@ function App() {
 
   const handleLogout = async () => {
     setLoading(true);
-    removeCookie('loggedIn');
-    removeCookie('user');
+    setCookie('data', {
+      loggedIn: false,
+      user: testUser,
+    });
     refreshPage();
     navigate('/');
   };
 
   // **********************************************************************
+  // USE EFFECT (re-renders app on certain state changes)
+  // **********************************************************************
+
+  useEffect(() => {}, [loggedIn, user, hasAccount, loading]);
+
+  // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO LATER: Optimize props
-  if (cookies.loggedIn === undefined || cookies.loggedIn === false) {
+  // if user has never logged in / has logged out
+  if (loggedIn === undefined || loggedIn === false) {
     return (
       <div className="App">
         <h1>You are not logged in.</h1>
-        <AccountUpdate
+        <Login
           setLoading={setLoading}
-          setError={setError}
           setCookie={setCookie}
-          loggedIn={cookies.loggedIn}
+          loading={loading}
         />
       </div>
     );
   }
+  if (!hasAccount) {
+    return (
+      <div className="App">
+        <h1>Create your account!</h1>
+        <p>{'(We see you are logged in but don\'t have an account yet.)'}</p>
+        <AccountCreate
+          setLoading={setLoading}
+          setCookie={setCookie}
+          setHasAccount={setHasAccount}
+          setError={setError}
+        />
+      </div>
+    );
+  }
+  // TODO LATER: Optimize props
   return (
     <div className="App">
       <main>
-        <h1>You are logged in.</h1>
+        <h1>You are logged in and you have an account.</h1>
         <Routes>
           <Route
             path="/"
@@ -74,7 +109,7 @@ function App() {
                 error={error}
                 setError={setError}
                 handleLogout={handleLogout}
-                user={cookies.user}
+                user={user}
               />
 )}
           />
@@ -85,7 +120,7 @@ function App() {
                 setLoading={setLoading}
                 setError={setError}
                 setCookie={setCookie}
-                loggedIn={cookies.loggedIn}
+                loggedIn={loggedIn}
               />
 )}
           />

@@ -1,4 +1,4 @@
-.AccountUpdate {
+.AccountCreate {
     margin: 20px;
 }
 
@@ -10,4 +10,8 @@ input {
 
 label {
     font-size: larger;
+}
+
+i {
+    font-size: small;
 }

@@ -1,0 +1,23 @@
+.AccountLogin {
+    margin: 20px;
+}
+
+#login-sso-button {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 17px;
+    height: 40px;
+    max-width: 400px;
+    overflow: hidden;
+    padding: 0 12px;
+    transition: 0.2s;
+    width: 100%;
+}
+
+#login-sso-button:hover {
+    background-color: #0b65db;
+    cursor: pointer;
+}
