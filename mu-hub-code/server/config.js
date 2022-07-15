@@ -1,7 +1,7 @@
 const PARSE_APP_ID = process.env.PARSE_APP_ID || 'KeC16DdIha4vqcSSAENjW7qBNEsTSmkTUFOwL6t5';
 const PARSE_JAVASCRIPT_KEY = process.env.PARSE_JAVASCRIPT_KEY || 'vG2pAZLFcJsADE0Vhhyd80vP6As6QGaVtUeIASXw';
 
-export default {
+module.exports = {
   PARSE_APP_ID,
   PARSE_JAVASCRIPT_KEY,
 };

@@ -24,6 +24,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'no-alert': 'off',
     'no-console': 'off',
+    'import/extensions': 'off',
     'react/prop-types': 'off',
   },
 };

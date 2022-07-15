@@ -2,12 +2,9 @@
     margin: 20px;
 }
 
-#login-sso-button {
-    background: #1479fb;
-    border: 1px solid #1479fb;
+.login-button {
     border-radius: 6px;
     box-sizing: border-box;
-    color: #fff;
     font-size: 17px;
     height: 40px;
     max-width: 400px;
@@ -17,7 +14,24 @@
     width: 100%;
 }
 
-#login-sso-button:hover {
+#sso {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    color: #fff;
+}
+
+#test {
+    background: #fbd114;
+    border: 1px solid #fbd114;
+    color: rgb(0, 0, 0);
+}
+
+#sso:hover {
     background-color: #0b65db;
+    cursor: pointer;
+}
+
+#test:hover {
+    background-color: #e2ba08;
     cursor: pointer;
 }

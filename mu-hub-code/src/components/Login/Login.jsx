@@ -1,5 +1,5 @@
-/* eslint-disable no-console */
 import * as React from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
@@ -33,6 +33,19 @@ function Login({
     navigate('/');
   };
 
+  const handleDBTest = async () => {
+    setLoading(true);
+    console.log('WORKING...');
+    try {
+      await axios.get('/api/dbtest');
+      await delay(3000);
+      refreshPage();
+      navigate('/');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
@@ -42,13 +55,23 @@ function Login({
       {loading ? <Loader /> : (
         <div className="Login">
           <button
-            id="login-sso-button"
+            className="login-button"
+            id="sso"
             type="button"
             onClick={handleLogin}
           >
             Log in with SSO
           </button>
           <p><i>(Currently not actually functional)</i></p>
+          <button
+            className="login-button"
+            id="test"
+            type="button"
+            onClick={handleDBTest}
+          >
+            Add Person to DB
+          </button>
+          <p><i>(Test Button)</i></p>
         </div>
       )}
     </div>
