@@ -63,15 +63,6 @@ function Login({
             Log in with SSO
           </button>
           <p><i>(Currently not actually functional)</i></p>
-          <button
-            className="login-button"
-            id="test"
-            type="button"
-            onClick={handleDBTest}
-          >
-            Add Person to DB
-          </button>
-          <p><i>(Test Button)</i></p>
         </div>
       )}
     </div>
