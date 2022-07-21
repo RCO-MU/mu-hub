@@ -1,32 +1,23 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
 import './AccountCreate.css';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import testUser from '../../utils/testUser';
+import Loader from '../Loader/Loader';
+import { localhost } from '../../utils/constants';
+import delay from '../../utils/delay';
+import refreshPage from '../../utils/refreshPage';
 
 function AccountCreate({
-  setLoading, setError, setCookie, setHasAccount, loggedIn,
+  loading, setLoading, setCookie,
 }) {
-  // **********************************************************************
-  // CONSTANTS/VARIABLES
-  // **********************************************************************
-
-  const navigate = useNavigate();
-
-  // TODO: Figure out how to use this to enforce required input fields
-  const {
-    register, handleSubmit, watch, errors,
-  } = useForm();
-
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const [user, setUser] = useState('');
-  const [college, setCollege] = useState();
-  const [otherInput, setOtherInput] = useState();
+  const [unixname, setUnixname] = useState('');
+  const [name, setName] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [error, setError] = useState('');
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET/POST)
@@ -36,12 +27,13 @@ function AccountCreate({
   // TODO: Write function comment
   async function postNewAccount() {
     try {
-      const { data } = await axios.post(`/api/account_create?username=${user}&college=${college}&other=${otherInput}`);
-      // console.log('response: ', data);
-      setError(null);
+      const url = 'api/user'
+      + `?unixname=${unixname}`
+      + `&name=${name}`
+      + `&role=${isAdmin ? 'admin' : 'intern'}`;
+      await axios.post(localhost + url);
     } catch (err) {
       console.error(err);
-      setError(err);
     }
   }
 
@@ -49,14 +41,22 @@ function AccountCreate({
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  const handleOnAccountInfoSubmit = async () => {
-    setLoading(true);
-    await postNewAccount();
-    setCookie('data', {
-      loggedIn: true,
-      user: testUser,
-    });
-    setHasAccount(true);
+  const handleOnAccountSubmit = async () => {
+    if (unixname === '') {
+      setError('Please enter your unixname.');
+    } else if (name === '') {
+      setError('Please enter your name.');
+    } else {
+      setError('');
+      setLoading(true);
+      await postNewAccount();
+      setCookie('data', {
+        loggedIn: true,
+        user: unixname,
+      });
+      await delay(3000);
+      refreshPage();
+    }
   };
 
   // **********************************************************************
@@ -64,42 +64,42 @@ function AccountCreate({
   // **********************************************************************
 
   return (
-    <div className="AccountCreate">
-      <form
-        onSubmit={(e) => { e.preventDefault(); handleOnAccountInfoSubmit(); }}
-      >
-        <label htmlFor="username">
-          {'Username: '}
-          <br />
-          <i>(Will retrieve automatically from login)</i>
+    loading ? <Loader /> : (
+      <div className="AccountCreate">
+        <h1>Create your account!</h1>
+        <h2>
+          This is a temporary page.
+          All of this information will eventually be retrieved via SSO integration.
+        </h2>
+        <label htmlFor="unixname">
+          {'Unixname: '}
           <br />
           <input
             type="text"
-            id="username"
-            name="username"
-            onChange={(e) => setUser(e.target.value)}
+            id="unixname"
+            name="unixname"
+            onChange={(e) => setUnixname(e.target.value)}
           />
         </label>
         <br />
-        <label htmlFor="college">
-          {'College: '}
+        <label htmlFor="Name">
+          {'Name: '}
           <br />
           <input
             type="text"
-            id="college"
-            name="college"
-            onChange={(e) => setCollege(e.target.value)}
+            id="name"
+            name="name"
+            onChange={(e) => setName(e.target.value)}
           />
         </label>
         <br />
-        <label htmlFor="otherInput">
-          {'Other Input: '}
-          <br />
+        <label htmlFor="is-admin">
+          {'Are you an admin? '}
           <input
-            type="text"
-            id="otherInput"
-            name="otherInput"
-            onChange={(e) => setOtherInput(e.target.value)}
+            type="checkbox"
+            id="is-admin"
+            name="is-admin"
+            onChange={() => setIsAdmin(!isAdmin)}
           />
         </label>
         <br />
@@ -107,19 +107,11 @@ function AccountCreate({
           className="action-button"
           type="submit"
           value="Submit"
-          onClick={handleOnAccountInfoSubmit}
+          onClick={handleOnAccountSubmit}
         />
-      </form>
-      {loggedIn ? (
-        <button
-          className="action-button"
-          type="button"
-          onClick={() => navigate('/')}
-        >
-          Return Home
-        </button>
-      ) : null}
-    </div>
+        <h3>{error}</h3>
+      </div>
+    )
   );
 }
 
