@@ -4,11 +4,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
-import delay from '../../utils/delay';
 import './Home.css';
+import refreshPage from '../../utils/refreshPage';
 
 function Home({
-  testResponse, setTestResponse, loading, setLoading, error, setError, handleLogout, user,
+  user, loading, setLoading, setCookie,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -20,7 +20,7 @@ function Home({
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const [info, setInfo] = useState({});
+  const [userInfo, setUserInfo] = useState({});
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET/POST)
@@ -33,27 +33,6 @@ function Home({
     If response is valid, set response accordingly and error = null.
     If other error occurs, response = {} and error is set to the caught error message.
   */
-  async function fetchTestResponse(id) {
-    setLoading(true);
-    try {
-      const { data } = await axios.get(`/api/test${id}`);
-      if (data === undefined) {
-        const msg = 'No response received';
-        setTestResponse({});
-        console.error(msg);
-        setError(msg);
-      } else {
-        setTestResponse(data);
-        setError(null);
-      }
-    } catch (err) {
-      setTestResponse({});
-      console.error(err);
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  }
 
   // TODO: Get account info via database connection
   // TODO: Write comment
@@ -67,45 +46,54 @@ function Home({
   }
 
   // **********************************************************************
+  // HANDLER FUNCTIONS
+  // **********************************************************************
+
+  // TODO: implement delete account
+  const handleLogout = async () => {
+    setLoading(true);
+    setCookie('data', {
+      loggedIn: false,
+      user,
+    });
+    refreshPage();
+    navigate('/');
+  };
+
+  // **********************************************************************
   // FETCH DATA ON PAGE LOAD
   // **********************************************************************
 
   useEffect(() => {
-    fetchTestResponse('');
-    setInfo(getAccountInfo());
+    setUserInfo(getAccountInfo());
   }, []);
 
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
+  if (loading) {
+    return <Loader />;
+  }
+  // else if not loading
   return (
     <div className="Home">
-      {loading ? <Loader /> : (
-        <div className="home-content">
-          <p>{`Your username is: ${info.user}`}</p>
-          <p>{`Your college is: ${info.college}`}</p>
-          <button
-            className="action-button"
-            type="button"
-            onClick={() => navigate('/account_update')}
-          >
-            Edit Profile Info
-          </button>
-          <br />
-          <button
-            className="action-button"
-            type="button"
-            onClick={handleLogout}
-          >
-            Log Out
-          </button>
-          <h1>- Server Test: - </h1>
-          <button className="action-button" type="button" onClick={() => fetchTestResponse('2')}>
-            Click Me
-          </button>
-          <p id="test-response">{JSON.stringify(testResponse)}</p>
-        </div>
-      )}
+      <p>{`Your username is: ${userInfo.user}`}</p>
+      <p>{`Your college is: ${userInfo.college}`}</p>
+      <button
+        className="action-button"
+        type="button"
+        onClick={() => navigate('/account_update')}
+      >
+        Edit Profile Info
+      </button>
+      <br />
+      <button
+        className="action-button"
+        type="button"
+        onClick={handleLogout}
+      >
+        Log Out
+      </button>
     </div>
   );
 }

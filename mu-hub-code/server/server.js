@@ -2,10 +2,11 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const DB = require('./db');
+const { PORT } = require('../src/utils/constants');
 
 // server setup
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || PORT;
 
 // use packages
 app.use(express.json());
@@ -15,57 +16,51 @@ app.use(cors());
 // initialize DB using constructor
 const db = new DB();
 
-// CONSTANTS FOR TESTING
-const name = 'baby';
-const age = 1;
+// ENDPOINTS
 
-// Saving your First Data Object on Back4App
-app.get('/api/dbtest', async (req, res) => {
+// get user information
+app.get('/api/user', async (req, res) => {
+  const { unixname } = req.query;
   try {
-    await DB.saveNewPerson(name, age);
-    res.send({ msg: 'success' });
+    const info = await DB.getUserInfo(unixname);
+    res.send(info);
   } catch (error) {
     res.send({ msg: error.message });
   }
 });
 
-// Retrieving your First Data Object on Back4App
-app.get('/api/dbtest2', async (req, res) => {
+// create user account
+app.post('/api/user', async (req, res) => {
+  const { unixname, name, role } = req.query;
   try {
-    const result = await DB.retrievePerson();
-    res.send({ msg: result });
+    await DB.createUserAccount(unixname, name, role);
+    res.status(201).send({ account: { unixname, name, role } });
   } catch (error) {
     res.send({ msg: error.message });
   }
 });
 
-app.post('/api/account_create', (req, res) => {
-  res.send({
-    username: req.query.username,
-    college: req.query.college,
-    other: req.query.other,
-  });
+// create intern account
+app.post('/api/intern', async (req, res) => {
+  const {
+    unixname, startDate, division, residence, college, bio,
+  } = req.query;
+  console.log('start date in server.js: ', startDate);
+  try {
+    await DB.createInternAccount(unixname, startDate, division, residence, college, bio);
+    res.status(201).send({
+      intern: {
+        unixname, startDate, division, residence, college, bio,
+      },
+    });
+  } catch (error) {
+    res.send({ msg: error.message });
+  }
 });
 
-app.post('/api/account_update', (req, res) => {
-  res.send({
-    college: req.query.college,
-    other: req.query.other,
-  });
-});
-
+// basic test
 app.get('/', (req, res) => {
   res.send('Hello World!');
-});
-
-// default get request (test)
-app.get('/api/test', (req, res) => {
-  res.send({ randomNumber: 'n/a' });
-});
-
-// default get request (test 2)
-app.get('/api/test2', (req, res) => {
-  res.send({ randomNumber: Math.floor(Math.random() * 1000) });
 });
 
 // log port number and confirm server is launched

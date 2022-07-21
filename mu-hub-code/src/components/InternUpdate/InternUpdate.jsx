@@ -1,13 +1,12 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import './AccountUpdate.css';
+import './InternUpdate.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function AccountUpdate({
-  setLoading, setError, loggedIn,
+function InternUpdate({
+  setLoading, loggedIn,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -28,14 +27,13 @@ function AccountUpdate({
 
   // TODO: Store account info in database
   // TODO: Write function comment
-  async function postAccountUpdate() {
+  async function putInternUpdate() {
     try {
-      const { data } = await axios.post(`/api/account_update?college=${college}&other=${otherInput}`);
-      // console.log('response: ', data);
-      setError(null);
+      const { data } = await axios.put(`/api/intern
+      ?college=${college}
+      &other=${otherInput}`);
     } catch (err) {
       console.error(err);
-      setError(err);
     }
   }
 
@@ -43,9 +41,9 @@ function AccountUpdate({
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  const handleOnAccountUpdateSubmit = async () => {
+  const handleOnInternUpdateSubmit = async () => {
     setLoading(true);
-    await postAccountUpdate();
+    await putInternUpdate();
     navigate('/');
   };
 
@@ -56,9 +54,9 @@ function AccountUpdate({
   // TODO: Get old values from account database
   // TODO: Display old values in their respective input fields
   return (
-    <div className="AccountUpdate">
+    <div className="InternUpdate">
       <form
-        onSubmit={(e) => { e.preventDefault(); handleOnAccountUpdateSubmit(); }}
+        onSubmit={(e) => { e.preventDefault(); handleOnInternUpdateSubmit(); }}
       >
         <br />
         <label htmlFor="college">
@@ -87,7 +85,7 @@ function AccountUpdate({
           className="action-button"
           type="submit"
           value="Submit"
-          onClick={handleOnAccountUpdateSubmit}
+          onClick={handleOnInternUpdateSubmit}
         />
       </form>
       {loggedIn ? (
@@ -103,4 +101,4 @@ function AccountUpdate({
   );
 }
 
-export default AccountUpdate;
+export default InternUpdate;

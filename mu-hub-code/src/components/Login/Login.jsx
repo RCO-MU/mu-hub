@@ -3,12 +3,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
-import testUser from '../../utils/testUser';
 import delay from '../../utils/delay';
 import './Login.css';
 
 function Login({
-  setLoading, setCookie, loading,
+  user, setLoading, setCookie, loading,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -26,7 +25,7 @@ function Login({
     setLoading(true);
     setCookie('data', {
       loggedIn: true,
-      user: testUser,
+      user,
     });
     await delay(3000);
     refreshPage();
@@ -51,21 +50,19 @@ function Login({
   // **********************************************************************
 
   return (
-    <div className="Home">
-      {loading ? <Loader /> : (
-        <div className="Login">
-          <button
-            className="login-button"
-            id="sso"
-            type="button"
-            onClick={handleLogin}
-          >
-            Log in with SSO
-          </button>
-          <p><i>(Currently not actually functional)</i></p>
-        </div>
-      )}
-    </div>
+    loading ? <Loader /> : (
+      <div className="Login">
+        <button
+          className="login-button"
+          id="sso"
+          type="button"
+          onClick={handleLogin}
+        >
+          Log in with SSO
+        </button>
+        <p><i>(Currently not actually functional)</i></p>
+      </div>
+    )
   );
 }
 

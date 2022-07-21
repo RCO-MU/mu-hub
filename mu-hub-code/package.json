@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "mu-hub",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -28,10 +28,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "server": "nodemon server/server.js",
-    "client": "npm run start",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run start\""
   },
-  "proxy": "http://localhost:5000/",
   "browserslist": {
     "production": [
       ">0.2%",
