@@ -19,18 +19,29 @@ function AccountCreate({
   const [error, setError] = useState('');
 
   // **********************************************************************
-  // AXIOS FUNCTIONS (GET/POST)
+  // AXIOS FUNCTIONS (POST)
   // **********************************************************************
 
-  // TODO: Store account info in database
-  // TODO: Write function comment
+  /*
+    Posts data to backend /api/user endpoint using axios.
+    loading is true while this function runs and false otherwise.
+      (loading -> false is handled by page refresh in client function)
+    Adds user account with unixname, full name, and role (intern/admin) to database.
+    Sets cookie information to loggedIn: true, user: unixname.
+    If an error occurs, the error is logged.
+  */
   async function postNewAccount() {
+    setLoading(true);
     try {
       const url = 'api/user'
       + `?unixname=${unixname}`
       + `&name=${name}`
       + `&role=${isAdmin ? 'admin' : 'intern'}`;
       await axios.post(url);
+      setCookie('data', {
+        loggedIn: true,
+        user: unixname,
+      });
     } catch (err) {
       console.error(err);
     }
@@ -47,13 +58,8 @@ function AccountCreate({
       setError('Please enter your name.');
     } else {
       setError('');
-      setLoading(true);
       await postNewAccount();
-      setCookie('data', {
-        loggedIn: true,
-        user: unixname,
-      });
-      await delay(3000);
+      await delay(3000); // artificial delay for occasional database latency
       refreshPage();
     }
   };
@@ -62,55 +68,57 @@ function AccountCreate({
   // PAGE RENDERING
   // **********************************************************************
 
+  if (loading) {
+    return <Loader />;
+  }
+  // else if not loading
   return (
-    loading ? <Loader /> : (
-      <div className="AccountCreate">
-        <h1>Create your account!</h1>
-        <h2>
-          This is a temporary page.
-          All of this information will eventually be retrieved via SSO integration.
-        </h2>
-        <label htmlFor="unixname">
-          {'Unixname: '}
-          <br />
-          <input
-            type="text"
-            id="unixname"
-            name="unixname"
-            onChange={(e) => setUnixname(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="Name">
-          {'Name: '}
-          <br />
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="is-admin">
-          {'Are you an admin? '}
-          <input
-            type="checkbox"
-            id="is-admin"
-            name="is-admin"
-            onChange={() => setIsAdmin(!isAdmin)}
-          />
-        </label>
+    <div className="AccountCreate">
+      <h1>Create your account!</h1>
+      <h2>
+        This is a temporary page.
+        All of this information will eventually be retrieved via SSO integration.
+      </h2>
+      <label htmlFor="unixname">
+        {'Unixname: '}
         <br />
         <input
-          className="action-button"
-          type="submit"
-          value="Submit"
-          onClick={handleOnAccountSubmit}
+          type="text"
+          id="unixname"
+          name="unixname"
+          onChange={(e) => setUnixname(e.target.value)}
         />
-        <h3>{error}</h3>
-      </div>
-    )
+      </label>
+      <br />
+      <label htmlFor="Name">
+        {'Name: '}
+        <br />
+        <input
+          type="text"
+          id="name"
+          name="name"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </label>
+      <br />
+      <label htmlFor="is-admin">
+        {'Are you an admin? '}
+        <input
+          type="checkbox"
+          id="is-admin"
+          name="is-admin"
+          onChange={() => setIsAdmin(!isAdmin)}
+        />
+      </label>
+      <br />
+      <input
+        className="action-button"
+        type="submit"
+        value="Submit"
+        onClick={handleOnAccountSubmit}
+      />
+      <h3>{error}</h3>
+    </div>
   );
 }
 

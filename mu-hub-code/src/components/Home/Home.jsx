@@ -8,42 +8,13 @@ import './Home.css';
 import refreshPage from '../../utils/refreshPage';
 
 function Home({
-  user, loading, setLoading, setCookie,
+  userInfo, loading, setLoading, setCookie,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
   // **********************************************************************
 
   const navigate = useNavigate();
-
-  // **********************************************************************
-  // STATE VARIABLES AND FUNCTIONS
-  // **********************************************************************
-
-  const [userInfo, setUserInfo] = useState({});
-
-  // **********************************************************************
-  // AXIOS FUNCTIONS (GET/POST)
-  // **********************************************************************
-
-  /*
-    Retrieves data from backend /api/test endpoint using axios.
-    loading is true while this function runs and false otherwise.
-    If response is undefined, response = {} and error = 'No response received'.
-    If response is valid, set response accordingly and error = null.
-    If other error occurs, response = {} and error is set to the caught error message.
-  */
-
-  // TODO: Get account info via database connection
-  // TODO: Write comment
-  // TODO: Display account info values on home page
-
-  function getAccountInfo() {
-    return {
-      user: '1',
-      college: '2',
-    };
-  }
 
   // **********************************************************************
   // HANDLER FUNCTIONS
@@ -54,19 +25,11 @@ function Home({
     setLoading(true);
     setCookie('data', {
       loggedIn: false,
-      user,
+      user: userInfo.unixname,
     });
-    refreshPage();
     navigate('/');
+    refreshPage();
   };
-
-  // **********************************************************************
-  // FETCH DATA ON PAGE LOAD
-  // **********************************************************************
-
-  useEffect(() => {
-    setUserInfo(getAccountInfo());
-  }, []);
 
   // **********************************************************************
   // PAGE RENDERING
@@ -77,8 +40,7 @@ function Home({
   // else if not loading
   return (
     <div className="Home">
-      <p>{`Your username is: ${userInfo.user}`}</p>
-      <p>{`Your college is: ${userInfo.college}`}</p>
+      <p>{`Raw user info: ${JSON.stringify(userInfo)}`}</p>
       <button
         className="action-button"
         type="button"

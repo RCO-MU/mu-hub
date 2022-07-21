@@ -7,7 +7,7 @@ import delay from '../../utils/delay';
 import './Login.css';
 
 function Login({
-  user, setLoading, setCookie, loading,
+  userInfo, setLoading, setCookie, loading,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -25,7 +25,7 @@ function Login({
     setLoading(true);
     setCookie('data', {
       loggedIn: true,
-      user,
+      user: userInfo.unixname,
     });
     await delay(3000);
     refreshPage();
