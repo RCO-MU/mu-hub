@@ -45,7 +45,6 @@ app.post('/api/intern', async (req, res) => {
   const {
     unixname, startDate, division, residence, college, bio,
   } = req.query;
-  console.log('start date in server.js: ', startDate);
   try {
     await DB.createInternAccount(unixname, startDate, division, residence, college, bio);
     res.status(201).send({

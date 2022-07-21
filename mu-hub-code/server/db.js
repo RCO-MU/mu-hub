@@ -24,7 +24,6 @@ class DB {
   // creates an intern account
   static async createInternAccount(unixname, startDate, division, residence, college, bio) {
     const intern = new Parse.Object('Intern');
-    console.log('start date in db.js: ', startDate);
     intern.set('unixname', unixname);
     intern.set('startDate', startDate);
     intern.set('division', division);
