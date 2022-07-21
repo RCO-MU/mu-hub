@@ -2,11 +2,13 @@
 import * as React from 'react';
 import axios from 'axios';
 import './InternUpdate.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Loader from '../Loader/Loader';
+import refreshPage from '../../utils/refreshPage';
 
 function InternUpdate({
-  setLoading, loggedIn,
+  userInfo, loading, setLoading,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -18,20 +20,27 @@ function InternUpdate({
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const [college, setCollege] = useState();
-  const [otherInput, setOtherInput] = useState();
+  const [bio, setBio] = useState('');
 
   // **********************************************************************
-  // AXIOS FUNCTIONS (GET/POST)
+  // AXIOS FUNCTIONS (PUT)
   // **********************************************************************
 
-  // TODO: Store account info in database
-  // TODO: Write function comment
+  /*
+    Puts data through backend /api/intern endpoint using axios.
+    loading is true while this function runs and false otherwise.
+      (loading -> false is handled by page navigation in client function)
+    Updates intern info (bio) in database.
+    If an error occurs, the error is logged.
+  */
+  // TODO: Update account info in database
   async function putInternUpdate() {
+    setLoading(true);
     try {
-      const { data } = await axios.put(`/api/intern
-      ?college=${college}
-      &other=${otherInput}`);
+      const url = 'api/intern'
+      + `?unixname=${userInfo.unixname}`
+      + `&bio=${bio}`;
+      await axios.put(url);
     } catch (err) {
       console.error(err);
     }
@@ -42,9 +51,9 @@ function InternUpdate({
   // **********************************************************************
 
   const handleOnInternUpdateSubmit = async () => {
-    setLoading(true);
     await putInternUpdate();
     navigate('/');
+    refreshPage();
   };
 
   // **********************************************************************
@@ -53,50 +62,37 @@ function InternUpdate({
 
   // TODO: Get old values from account database
   // TODO: Display old values in their respective input fields
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <div className="InternUpdate">
-      <form
-        onSubmit={(e) => { e.preventDefault(); handleOnInternUpdateSubmit(); }}
-      >
-        <br />
-        <label htmlFor="college">
-          {'College: '}
-          <br />
-          <input
-            type="text"
-            id="college"
-            name="college"
-            onChange={(e) => setCollege(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="otherInput">
-          {'Other Input: '}
-          <br />
-          <input
-            type="text"
-            id="otherInput"
-            name="otherInput"
-            onChange={(e) => setOtherInput(e.target.value)}
-          />
-        </label>
+      <p>{`Here's the existing info: ${JSON.stringify(userInfo)}`}</p>
+      <br />
+      <label htmlFor="bio">
+        {'Bio: '}
         <br />
         <input
-          className="action-button"
-          type="submit"
-          value="Submit"
-          onClick={handleOnInternUpdateSubmit}
+          type="textarea"
+          id="bio"
+          name="bio"
+          onChange={(e) => setBio(e.target.value)}
         />
-      </form>
-      {loggedIn ? (
-        <button
-          className="action-button"
-          type="button"
-          onClick={() => navigate('/')}
-        >
-          Return Home
-        </button>
-      ) : null}
+      </label>
+      <br />
+      <input
+        className="action-button"
+        type="submit"
+        value="Submit"
+        onClick={handleOnInternUpdateSubmit}
+      />
+      <button
+        className="action-button"
+        type="button"
+        onClick={() => navigate('/')}
+      >
+        Return Home
+      </button>
     </div>
   );
 }
