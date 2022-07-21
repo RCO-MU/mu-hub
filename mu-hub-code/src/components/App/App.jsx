@@ -10,8 +10,6 @@ import Login from '../Login/Login';
 import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import InternUpdate from '../InternUpdate/InternUpdate';
-import refreshPage from '../../utils/refreshPage';
-import { localhost } from '../../utils/constants';
 import './App.css';
 
 function App() {
@@ -26,13 +24,37 @@ function App() {
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  // TODO LATER: Refactor certain state variables to non-global context?
   const [loading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(undefined);
+  const [userInfo, setUserInfo] = useState({});
   const [hasAccount, setHasAccount] = useState(false);
   const [isIntern, setIsIntern] = useState(false);
   const [hasInternAccount, setHasInternAccount] = useState(false);
+
+  // **********************************************************************
+  // AXIOS FUNCTIONS (GET)
+  // **********************************************************************
+
+  /*
+    Retrieves data from backend /api/user endpoint using axios.
+    loading is true while this function runs and false otherwise.
+    If response is valid, userInfo is set to the data that was fetched.
+    If an error occurs, the error is logged.
+  */
+  async function fetchUserInfo(username) {
+    setLoading(true);
+    try {
+      const url = 'api/user'
+      + `?unixname=${username}`;
+      const { data } = await axios.get(url);
+      return data;
+    } catch (err) {
+      console.error(err);
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // **********************************************************************
   // USE EFFECT
@@ -46,21 +68,19 @@ function App() {
     - User has logged in and all info is complete.
   */
   useEffect(() => {
-    async function getUserInfo() {
-      setLoading(true);
+    async function effect() {
       // get cookie information
-      let currUser;
+      let user;
       if (cookies.data !== undefined) {
         setLoggedIn(cookies.data.loggedIn);
-        currUser = cookies.data.user;
-        setUser(currUser);
+        user = cookies.data.user;
       }
-      console.log('currUser? ', currUser);
-      // fetch account information if current user is defined
-      if (currUser) {
-        const url = `api/user?unixname=${currUser}`;
-        const { data } = await axios.get(localhost + url);
-        // set state variables based on fetched data
+      console.log('current user: ', user);
+      // if current user is defined, fetch user info, set state vars accordingly
+      if (user) {
+        const data = await fetchUserInfo(user);
+        setUserInfo(data);
+        console.log('current user info: ', data);
         if (data.user) {
           setHasAccount(true);
           if (data.user.role === 'intern') {
@@ -74,7 +94,7 @@ function App() {
       setLoading(false);
     }
     // call defined function
-    getUserInfo();
+    effect();
   }, []);
 
   // **********************************************************************
@@ -91,7 +111,7 @@ function App() {
       <div className="App">
         <h1>You are not logged in.</h1>
         <Login
-          user={user}
+          userInfo={userInfo}
           loading={loading}
           setLoading={setLoading}
           setCookie={setCookie}
@@ -116,7 +136,7 @@ function App() {
     return (
       <div className="App">
         <InternCreate
-          user={user}
+          userInfo={userInfo}
           loading={loading}
           setLoading={setLoading}
           setCookie={setCookie}
@@ -134,7 +154,7 @@ function App() {
             path="/"
             element={(
               <Home
-                user={user}
+                userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
                 setCookie={setCookie}
@@ -145,9 +165,9 @@ function App() {
             path="/account_update"
             element={(
               <InternUpdate
+                userInfo={userInfo}
+                loading={loading}
                 setLoading={setLoading}
-                setCookie={setCookie}
-                loggedIn={loggedIn}
               />
 )}
           />

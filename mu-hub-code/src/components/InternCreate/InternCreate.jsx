@@ -8,7 +8,7 @@ import refreshPage from '../../utils/refreshPage';
 
 // TODO: Fix start date bug
 function InternCreate({
-  user, loading, setLoading,
+  userInfo, loading, setLoading,
 }) {
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -22,15 +22,21 @@ function InternCreate({
   const [error, setError] = useState('');
 
   // **********************************************************************
-  // AXIOS FUNCTIONS (GET/POST)
+  // AXIOS FUNCTIONS (POST)
   // **********************************************************************
 
-  // TODO: Store account info in database
-  // TODO: Write function comment
+  /*
+    Posts data to backend /api/intern endpoint using axios.
+    loading is true while this function runs and false otherwise.
+      (loading -> false is handled by page refresh in client function)
+    Adds intern info (unixname, start date, division, residence, college, bio) to database.
+    If an error occurs, the error is logged.
+  */
   async function postNewIntern() {
+    setLoading(true);
     try {
       const url = 'api/intern'
-      + `?unixname=${user}`
+      + `?unixname=${userInfo.unixname}`
       + `&startDate=${startDate}`
       + `&division=${division}`
       + `&residence=${residence}`
@@ -55,9 +61,8 @@ function InternCreate({
       setError('Please select your college.');
     } else {
       setError('');
-      setLoading(true);
       await postNewIntern();
-      await delay(3000);
+      await delay(3000); // artificial delay for occasional database latency
       refreshPage();
     }
   };
