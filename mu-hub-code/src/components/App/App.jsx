@@ -10,8 +10,6 @@ import Login from '../Login/Login';
 import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import InternUpdate from '../InternUpdate/InternUpdate';
-import refreshPage from '../../utils/refreshPage';
-import { localhost } from '../../utils/constants';
 import './App.css';
 
 function App() {
