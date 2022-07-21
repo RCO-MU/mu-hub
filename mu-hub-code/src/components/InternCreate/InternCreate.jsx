@@ -3,7 +3,6 @@ import axios from 'axios';
 import './InternCreate.css';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
-import { localhost } from '../../utils/constants';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
@@ -37,8 +36,7 @@ function InternCreate({
       + `&residence=${residence}`
       + `&college=${college}`
       + `&bio=${bio}`;
-      console.log('start date in interncreate.jsx: ', startDate);
-      await axios.post(localhost + url);
+      await axios.post(url);
     } catch (err) {
       console.error(err);
     }

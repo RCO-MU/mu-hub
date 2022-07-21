@@ -3,7 +3,6 @@ import axios from 'axios';
 import './AccountCreate.css';
 import { useState } from 'react';
 import Loader from '../Loader/Loader';
-import { localhost } from '../../utils/constants';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
@@ -31,7 +30,7 @@ function AccountCreate({
       + `?unixname=${unixname}`
       + `&name=${name}`
       + `&role=${isAdmin ? 'admin' : 'intern'}`;
-      await axios.post(localhost + url);
+      await axios.post(url);
     } catch (err) {
       console.error(err);
     }
