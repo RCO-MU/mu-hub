@@ -70,6 +70,7 @@ function InternCreate({
   // PAGE RENDERING
   // **********************************************************************
 
+  // TODO: make form more user-friendly (dropdowns, default values, etc.)
   return (
     loading ? <Loader /> : (
       <div className="InternCreate">
