@@ -61,7 +61,8 @@ function App() {
   // **********************************************************************
 
   /*
-    Assesses current user account state, several possibilities:
+    Fetches userInfo to be used throughout the application
+    Also assesses current user account state, several possibilities:
     - User has never logged into the site, thus no cookies
     - User has logged in but has no account info. (WILL BE REPLACED WITH AUTOMATIC SSO)
     - User is a logged-in intern with no intern info.
@@ -75,12 +76,10 @@ function App() {
         setLoggedIn(cookies.data.loggedIn);
         user = cookies.data.user;
       }
-      console.log('current user: ', user);
       // if current user is defined, fetch user info, set state vars accordingly
       if (user) {
         const data = await fetchUserInfo(user);
         setUserInfo(data);
-        console.log('current user info: ', data);
         if (data.user) {
           setHasAccount(true);
           if (data.user.role === 'intern') {
@@ -101,6 +100,7 @@ function App() {
   // PAGE RENDERING
   // **********************************************************************
 
+  // TODO: Build website skeleton with header and sidebar
   // loading
   if (loading) {
     return <Loader />;
@@ -148,7 +148,6 @@ function App() {
   return (
     <div className="App">
       <main>
-        <h1>You are logged in and you have completed your account!</h1>
         <Routes>
           <Route
             path="/"
