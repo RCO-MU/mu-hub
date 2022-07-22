@@ -6,7 +6,6 @@ import Loader from '../Loader/Loader';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
-// TODO: Fix start date bug
 function InternCreate({
   userInfo, loading, setLoading,
 }) {

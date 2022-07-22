@@ -33,7 +33,6 @@ function InternUpdate({
     Updates intern info (bio) in database.
     If an error occurs, the error is logged.
   */
-  // TODO: Update account info in database
   async function putInternUpdate() {
     setLoading(true);
     try {
@@ -60,7 +59,6 @@ function InternUpdate({
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: Get old values from account database
   // TODO: Display old values in their respective input fields
   if (loading) {
     return <Loader />;
