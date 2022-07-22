@@ -43,14 +43,15 @@ function Home({
     <div className="Home">
       <h1>You are logged in and you have completed your account!</h1>
       <p>{`Raw user info: ${JSON.stringify(userInfo)}`}</p>
-      <button
-        className="action-button"
-        type="button"
-        onClick={() => navigate('/account_update')}
-      >
-        Edit Profile Info
-      </button>
-      <br />
+      {userInfo.user.role === 'intern' ? (
+        <button
+          className="action-button"
+          type="button"
+          onClick={() => navigate('/account_update')}
+        >
+          Edit Profile Info
+        </button>
+      ) : null}
       <button
         className="action-button"
         type="button"
