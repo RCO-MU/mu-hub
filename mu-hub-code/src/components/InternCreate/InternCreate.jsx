@@ -6,7 +6,7 @@ import Loader from '../Loader/Loader';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
-function InternCreate({
+export default function InternCreate({
   userInfo, loading, setLoading,
 }) {
   // **********************************************************************
@@ -70,76 +70,83 @@ function InternCreate({
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: make form more user-friendly (dropdowns, default values, etc.)
+  // TODO: make form more user-friendly (dropdowns, default values, placeholders, etc.)
+
+  // loading
+  if (loading) {
+    return <Loader />;
+  }
+  // else if not loading
   return (
-    loading ? <Loader /> : (
-      <div className="InternCreate">
-        <h1>Create your intern account!</h1>
-        <label htmlFor="startDate">
-          {'Start Date: '}
-          <br />
-          <input
-            type="text"
-            id="startDate"
-            name="startDate"
-            onChange={(e) => setStartDate(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="division">
-          {'Division: '}
-          <br />
-          <input
-            type="text"
-            id="division"
-            name="division"
-            onChange={(e) => setDivision(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="residence">
-          {'Residence: '}
-          <br />
-          <input
-            type="text"
-            id="residence"
-            name="residence"
-            onChange={(e) => setResidence(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="college">
-          {'College: '}
-          <br />
-          <input
-            type="text"
-            id="college"
-            name="college"
-            onChange={(e) => setCollege(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="bio">
-          {'Bio: '}
-          <br />
-          <input
-            type="textarea"
-            id="bio"
-            name="bio"
-            onChange={(e) => setBio(e.target.value)}
-          />
-        </label>
+    <div className="InternCreate">
+      <h1>Create your intern account!</h1>
+      <label htmlFor="startDate">
+        {'Start Date: '}
         <br />
         <input
-          className="action-button"
-          type="submit"
-          value="Submit"
-          onClick={handleOnInternInfoSubmit}
+          type="text"
+          id="startDate"
+          className="input-field text"
+          name="startDate"
+          onChange={(e) => setStartDate(e.target.value)}
         />
-        <h3>{error}</h3>
-      </div>
-    )
+      </label>
+      <br />
+      <label htmlFor="division">
+        {'Division: '}
+        <br />
+        <input
+          type="text"
+          id="division"
+          className="input-field text"
+          name="division"
+          onChange={(e) => setDivision(e.target.value)}
+        />
+      </label>
+      <br />
+      <label htmlFor="residence">
+        {'Residence: '}
+        <br />
+        <input
+          type="text"
+          id="residence"
+          className="input-field text"
+          name="residence"
+          onChange={(e) => setResidence(e.target.value)}
+        />
+      </label>
+      <br />
+      <label htmlFor="college">
+        {'College: '}
+        <br />
+        <input
+          type="text"
+          id="college"
+          className="input-field text"
+          name="college"
+          onChange={(e) => setCollege(e.target.value)}
+        />
+      </label>
+      <br />
+      <label htmlFor="bio">
+        {'Bio: '}
+        <br />
+        <textarea
+          id="bio"
+          className="input-field text"
+          placeholder="Enter a fun bio!"
+          name="bio"
+          onChange={(e) => setBio(e.target.value)}
+        />
+      </label>
+      <br />
+      <input
+        className="action-button"
+        type="submit"
+        value="Submit"
+        onClick={handleOnInternInfoSubmit}
+      />
+      <h3>{error}</h3>
+    </div>
   );
 }
-
-export default InternCreate;

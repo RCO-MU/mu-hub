@@ -1,11 +1,12 @@
 .AccountCreate {
-    margin: 20px;
+    margin: 40px;
+    text-align: center;
 }
 
-input {
+.input-field {
     padding: 10px;
     font-size: larger;
-    margin: 10px;
+    margin: 15px;
 }
 
 label {
@@ -17,4 +18,25 @@ label {
     height: 20px;
     width: 20px;
     top: 3px;
+}
+
+.action-button {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 24px;
+    height: 50px;
+    max-width: 200px;
+    margin-top: 20px;
+    overflow: hidden;
+    padding: 0 12px;
+    transition: 0.2s;
+    width: 100%;
+}
+
+.action-button:hover {
+    background-color: #0b65db;
+    cursor: pointer;
 }

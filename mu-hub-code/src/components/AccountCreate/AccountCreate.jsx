@@ -6,7 +6,7 @@ import Loader from '../Loader/Loader';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
-function AccountCreate({
+export default function AccountCreate({
   loading, setLoading, setCookie,
 }) {
   // **********************************************************************
@@ -85,6 +85,7 @@ function AccountCreate({
         <input
           type="text"
           id="unixname"
+          className="input-field text"
           name="unixname"
           onChange={(e) => setUnixname(e.target.value)}
         />
@@ -96,6 +97,7 @@ function AccountCreate({
         <input
           type="text"
           id="name"
+          className="input-field text"
           name="name"
           onChange={(e) => setName(e.target.value)}
         />
@@ -106,6 +108,7 @@ function AccountCreate({
         <input
           type="checkbox"
           id="is-admin"
+          className="input-field checkbox"
           name="is-admin"
           onChange={() => setIsAdmin(!isAdmin)}
         />
@@ -121,5 +124,3 @@ function AccountCreate({
     </div>
   );
 }
-
-export default AccountCreate;

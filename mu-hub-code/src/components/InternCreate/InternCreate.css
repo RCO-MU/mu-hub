@@ -1,3 +1,45 @@
 .InternCreate {
-    margin: 20px;
+    text-align: center;
+}
+
+.input-field {
+    padding: 10px;
+    font-size: larger;
+    margin: 15px;
+}
+
+label {
+    font-size: larger;
+}
+
+#bio {
+    height: 150px;
+    width: 500px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: medium;
+}
+
+.action-button {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 24px;
+    height: 50px;
+    max-width: 200px;
+    margin-top: 20px;
+    overflow: hidden;
+    padding: 0 12px;
+    transition: 0.2s;
+    width: 100%;
+}
+
+.action-button:hover {
+    background-color: #0b65db;
+    cursor: pointer;
 }
