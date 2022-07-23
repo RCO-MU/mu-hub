@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
 
-function InternUpdate({
+export default function InternUpdate({
   userInfo, loading, setLoading,
 }) {
   // **********************************************************************
@@ -94,5 +94,3 @@ function InternUpdate({
     </div>
   );
 }
-
-export default InternUpdate;

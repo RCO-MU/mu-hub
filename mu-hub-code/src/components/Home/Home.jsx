@@ -7,7 +7,7 @@ import Loader from '../Loader/Loader';
 import './Home.css';
 import refreshPage from '../../utils/refreshPage';
 
-function Home({
+export default function Home({
   userInfo, loading, setLoading, setCookie,
 }) {
   // **********************************************************************
@@ -41,7 +41,6 @@ function Home({
   // else if not loading
   return (
     <div className="Home">
-      <h1>You are logged in and you have completed your account!</h1>
       <p>{`Raw user info: ${JSON.stringify(userInfo)}`}</p>
       {userInfo.user.role === 'intern' ? (
         <button
@@ -62,5 +61,3 @@ function Home({
     </div>
   );
 }
-
-export default Home;

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Home from '../Home/Home';
+import Banner from '../Banner/Banner';
+import Navbar from '../Navbar/Navbar';
 import Loader from '../Loader/Loader';
 import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
@@ -11,8 +13,9 @@ import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import InternUpdate from '../InternUpdate/InternUpdate';
 import './App.css';
+import Sidebar from '../Sidebar/Sidebar';
 
-function App() {
+export default function App() {
   // **********************************************************************
   // CONSTANTS & VARIABLES
   // **********************************************************************
@@ -101,15 +104,20 @@ function App() {
   // **********************************************************************
 
   // TODO: Build website skeleton with header and sidebar
+
   // loading
   if (loading) {
-    return <Loader />;
+    return (
+      <div className="App">
+        <Loader />
+      </div>
+    );
   }
   // if user has never logged in / has logged out
   if (loggedIn === undefined || loggedIn === false) {
     return (
       <div className="App">
-        <h1>You are not logged in.</h1>
+        <Banner />
         <Login
           userInfo={userInfo}
           loading={loading}
@@ -123,6 +131,7 @@ function App() {
   if (!hasAccount) {
     return (
       <div className="App">
+        <Banner />
         <AccountCreate
           loading={loading}
           setLoading={setLoading}
@@ -135,6 +144,7 @@ function App() {
   if (isIntern && !hasInternAccount) {
     return (
       <div className="App">
+        <Banner />
         <InternCreate
           userInfo={userInfo}
           loading={loading}
@@ -148,6 +158,8 @@ function App() {
   return (
     <div className="App">
       <main>
+        <Sidebar />
+        <Navbar />
         <Routes>
           <Route
             path="/"
@@ -177,4 +189,4 @@ function App() {
   );
 }
 
-export default App;
+// TODO: Create a footer

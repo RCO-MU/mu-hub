@@ -1,3 +1,5 @@
+/* TODO: Remove this global property */
 .App {
-  text-align: center;
+  background-color: rgb(240, 242, 244);
+  /* border: 1px solid black; */
 }

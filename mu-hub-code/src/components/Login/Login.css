@@ -1,12 +1,17 @@
-.AccountLogin {
-    margin: 20px;
+.Login {
+    margin: 40px;
+    text-align: center;
+}
+
+#login-msg {
+    font-size: 40px;
 }
 
 .login-button {
     border-radius: 6px;
     box-sizing: border-box;
-    font-size: 17px;
-    height: 40px;
+    font-size: 24px;
+    height: 50px;
     max-width: 400px;
     overflow: hidden;
     padding: 0 12px;
@@ -20,18 +25,7 @@
     color: #fff;
 }
 
-#test {
-    background: #fbd114;
-    border: 1px solid #fbd114;
-    color: rgb(0, 0, 0);
-}
-
 #sso:hover {
     background-color: #0b65db;
-    cursor: pointer;
-}
-
-#test:hover {
-    background-color: #e2ba08;
     cursor: pointer;
 }
