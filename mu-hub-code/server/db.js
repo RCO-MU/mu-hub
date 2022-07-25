@@ -2,11 +2,54 @@ const Parse = require('parse/node');
 const config = require('./config');
 
 class DB {
-  // initializes db connection
+  // **********************************************************************
+  // CONSTRUCTOR (initializes DB connection)
+  // **********************************************************************
+
   constructor() {
     Parse.initialize(config.PARSE_APP_ID, config.PARSE_JAVASCRIPT_KEY);
     Parse.serverURL = 'https://parseapi.back4app.com';
   }
+
+  // **********************************************************************
+  // HELPER FUNCTIONS
+  // **********************************************************************
+
+  // private helper method for getUserInfo, gets user Parse object
+  static async #getUserObject(unixname) {
+    // setup Parse query, search for matching unixname
+    let user = new Parse.Object('HubUser');
+    const query = new Parse.Query(user);
+    query.equalTo('unixname', unixname);
+    try {
+      // perform query
+      [user] = await query.find();
+      return user;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  // private helper method for getUserInfo, gets intern Parse object
+  static async #getInternObject(unixname) {
+    // setup Parse query, search for matching unixname
+    let intern = new Parse.Object('Intern');
+    const query = new Parse.Query(intern);
+    query.equalTo('unixname', unixname);
+    try {
+      // perform query
+      [intern] = await query.find();
+      return intern;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  // **********************************************************************
+  // MAIN METHODS
+  // **********************************************************************
 
   // creates a hub user account
   static async createUserAccount(unixname, name, role) {
@@ -37,70 +80,51 @@ class DB {
     }
   }
 
-  // retrieves hub user info
+  // retrieves all hub user info
   static async getUserInfo(unixname) {
-    // setup Parse query
-    let user = new Parse.Object('HubUser');
-    const query = new Parse.Query(user);
-    // search for matching unixname
-    query.equalTo('unixname', unixname);
-    try {
-      // perform query
-      [user] = await query.find();
-      let internInfo = null;
-      // add intern info if the user is an intern
-      if (user.get('role') === 'intern') {
-        internInfo = await this.#getInternInfo(unixname);
+    let user = await this.#getUserObject(unixname);
+    let intern = null;
+    // also retrieve intern info if needed
+    if (user.get('role') === 'intern') {
+      intern = await this.#getInternObject(unixname);
+      if (intern) {
+        intern = intern.toJSON();
+        delete intern.unixname; // remove redundant field
       }
-      // convert to JSON
-      user = user.toJSON();
-      delete user.unixname; // remove this redundant field
-      // final output
-      return {
-        unixname,
-        user,
-        internInfo,
-      };
-    } catch (error) {
-      console.error(error);
-      return null;
     }
-  }
-
-  // private helper method for getUserInfo, gets intern-specific data
-  static async #getInternInfo(unixname) {
-    // setup Parse query
-    let intern = new Parse.Object('Intern');
-    const query = new Parse.Query(intern);
-    // search for matching unixname
-    query.equalTo('unixname', unixname);
-    try {
-      // perform query
-      [intern] = await query.find();
-      // convert to JSON
-      intern = intern.toJSON();
-      delete intern.unixname; // remove this redundant field
-      return intern;
-    } catch (error) {
-      console.error(error);
-      return null;
-    }
+    user = user.toJSON();
+    delete user.unixname; // remove redundant field
+    return {
+      unixname,
+      user,
+      intern,
+    };
   }
 
   // updates intern bio
   static async putInternInfo(unixname, bio) {
-    let intern = new Parse.Object('Intern');
-    const query = new Parse.Query(intern);
-    // search for matching unixname
-    query.equalTo('unixname', unixname);
+    const intern = await this.#getInternObject(unixname);
+    intern.set('bio', bio);
     try {
-      // perform query
-      [intern] = await query.find();
-      intern.set('bio', bio);
       await intern.save();
     } catch (error) {
       console.error(error);
     }
+  }
+
+  // deletes user from database
+  static async deleteUser(unixname) {
+    const user = await this.#getUserObject(unixname);
+    try {
+      await user.destroy();
+      if (user.get('role') === 'intern') {
+        const intern = await this.#getInternObject(unixname);
+        await intern.destroy();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return { user };
   }
 }
 

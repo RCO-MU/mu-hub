@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import axios from 'axios';
-import './InternUpdate.css';
-import { useState, useEffect } from 'react';
+import './AccountUpdate.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
 
-export default function InternUpdate({
-  userInfo, loading, setLoading,
+export default function AccountUpdate({
+  userInfo, loading, setLoading, setCookie,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
@@ -45,6 +45,24 @@ export default function InternUpdate({
     }
   }
 
+  /*
+    Deletes user account through api/user endpoint using axios.
+    loading is true while this function runs and false otherwise.
+      (loading -> false is handled by page navigation in client function)
+    Deletes all user account information from database.
+    If an error occurs, the error is logged.
+  */
+  async function deleteAccount() {
+    setLoading(true);
+    try {
+      const url = 'api/user'
+        + `?unixname=${userInfo.unixname}`;
+      await axios.delete(url);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   // **********************************************************************
   // HANDLER FUNCTIONS
   // **********************************************************************
@@ -55,35 +73,52 @@ export default function InternUpdate({
     refreshPage();
   };
 
+  const handleDeleteAccount = async () => {
+    await deleteAccount();
+    setCookie('data', {
+      loggedIn: false,
+      user: undefined,
+    });
+    navigate('/');
+    refreshPage();
+  };
+
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: Display old values in their respective input fields
+  // loading
   if (loading) {
     return <Loader />;
   }
+  // TODO: Display old values in their respective input fields
+  // if user is an intern, allow bio editing. Else, no account edits can be made
   return (
-    <div className="InternUpdate">
+    <div className="AccountUpdate">
       <p>{`Here's the existing info: ${JSON.stringify(userInfo)}`}</p>
       <br />
-      <label htmlFor="bio">
-        {'Bio: '}
-        <br />
-        <input
-          type="textarea"
-          id="bio"
-          name="bio"
-          onChange={(e) => setBio(e.target.value)}
-        />
-      </label>
-      <br />
-      <input
-        className="action-button"
-        type="submit"
-        value="Submit"
-        onClick={handleOnInternUpdateSubmit}
-      />
+      {userInfo.user.role === 'intern' ? (
+        <>
+          <label htmlFor="bio">
+            {'Bio: '}
+            <br />
+            <textarea
+              id="bio"
+              className="input-field text"
+              placeholder="Enter a fun bio!"
+              name="bio"
+              onChange={(e) => setBio(e.target.value)}
+            />
+          </label>
+          <br />
+          <input
+            className="action-button"
+            type="submit"
+            value="Submit"
+            onClick={handleOnInternUpdateSubmit}
+          />
+        </>
+      ) : (<h2>Admins cannot edit their account information.</h2>)}
       <button
         className="action-button"
         type="button"
@@ -91,6 +126,14 @@ export default function InternUpdate({
       >
         Return Home
       </button>
+      <button
+        className="action-button delete"
+        type="button"
+        onClick={handleDeleteAccount}
+      >
+        Delete Account
+      </button>
+
     </div>
   );
 }

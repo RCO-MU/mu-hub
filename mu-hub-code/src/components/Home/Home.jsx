@@ -1,7 +1,5 @@
 /* eslint-disable no-promise-executor-return */
 import * as React from 'react';
-import axios from 'axios';
-import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import './Home.css';
@@ -42,15 +40,13 @@ export default function Home({
   return (
     <div className="Home">
       <p>{`Raw user info: ${JSON.stringify(userInfo)}`}</p>
-      {userInfo.user.role === 'intern' ? (
-        <button
-          className="action-button"
-          type="button"
-          onClick={() => navigate('/account_update')}
-        >
-          Edit Profile Info
-        </button>
-      ) : null}
+      <button
+        className="action-button"
+        type="button"
+        onClick={() => navigate('/account_update')}
+      >
+        Edit Profile Info
+      </button>
       <button
         className="action-button"
         type="button"

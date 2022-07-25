@@ -35,7 +35,7 @@ app.post('/api/user', async (req, res) => {
     await DB.createUserAccount(unixname, name, role);
     res.status(201).send({ account: { unixname, name, role } });
   } catch (error) {
-    res.send({ msg: error.message });
+    res.send({ errorMsg: error.message });
   }
 });
 
@@ -45,21 +45,21 @@ app.get('/api/user', async (req, res) => {
   try {
     // call DB method
     const info = await DB.getUserInfo(unixname);
-    res.send(info);
+    res.status(200).send(info);
   } catch (error) {
-    res.send({ msg: error.message });
+    res.send({ errorMsg: error.message });
   }
 });
 
-// update user information
-app.put('/api/intern', async (req, res) => {
-  const { unixname, bio } = req.query; // url params
+// delete user
+app.delete('/api/user', async (req, res) => {
+  const { unixname } = req.query; // url params
   try {
     // call DB method
-    const info = await DB.putInternInfo(unixname, bio);
-    res.status(200).send({ update: { unixname, bio } });
+    const info = await DB.deleteUser(unixname);
+    res.status(200).send(info);
   } catch (error) {
-    res.send({ msg: error.message });
+    res.send({ errorMsg: error.message });
   }
 });
 
@@ -77,7 +77,19 @@ app.post('/api/intern', async (req, res) => {
       },
     });
   } catch (error) {
-    res.send({ msg: error.message });
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// update intern information
+app.put('/api/intern', async (req, res) => {
+  const { unixname, bio } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.putInternInfo(unixname, bio);
+    res.status(200).send({ update: { unixname, bio } });
+  } catch (error) {
+    res.send({ errorMsg: error.message });
   }
 });
 
