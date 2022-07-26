@@ -11,7 +11,7 @@ import NotFound from '../NotFound/NotFound';
 import Login from '../Login/Login';
 import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
-import InternUpdate from '../InternUpdate/InternUpdate';
+import AccountUpdate from '../AccountUpdate/AccountUpdate';
 import './App.css';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -82,6 +82,7 @@ export default function App() {
       // if current user is defined, fetch user info, set state vars accordingly
       if (user) {
         const data = await fetchUserInfo(user);
+        console.log(data);
         setUserInfo(data);
         if (data.user) {
           setHasAccount(true);
@@ -89,7 +90,7 @@ export default function App() {
             setIsIntern(true);
           }
         }
-        if (data.internInfo) {
+        if (data.intern) {
           setHasInternAccount(true);
         }
       }
@@ -175,10 +176,11 @@ export default function App() {
           <Route
             path="/account_update"
             element={(
-              <InternUpdate
+              <AccountUpdate
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
+                setCookie={setCookie}
               />
 )}
           />

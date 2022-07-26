@@ -1,0 +1,24 @@
+.AccountUpdate {
+    margin-left: calc(var(--sidebar-width) + 20px);
+    margin-top: calc(var(--navbar-height) + 20px);
+}
+
+
+input {
+    padding: 10px;
+    font-size: larger;
+    margin: 0px;
+}
+
+label {
+    font-size: larger;
+}
+
+.delete {
+    background-color: red;
+    border: 0px;
+}
+
+.delete:hover {
+    background-color: rgb(200, 0, 0);
+}

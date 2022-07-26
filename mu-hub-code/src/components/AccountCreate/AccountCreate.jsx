@@ -85,7 +85,7 @@ export default function AccountCreate({
         <input
           type="text"
           id="unixname"
-          className="input-field text"
+          className="input-field text ac"
           name="unixname"
           onChange={(e) => setUnixname(e.target.value)}
         />
@@ -97,7 +97,7 @@ export default function AccountCreate({
         <input
           type="text"
           id="name"
-          className="input-field text"
+          className="input-field text ac"
           name="name"
           onChange={(e) => setName(e.target.value)}
         />
@@ -108,14 +108,14 @@ export default function AccountCreate({
         <input
           type="checkbox"
           id="is-admin"
-          className="input-field checkbox"
+          className="input-field checkbox ac"
           name="is-admin"
           onChange={() => setIsAdmin(!isAdmin)}
         />
       </label>
       <br />
       <input
-        className="action-button"
+        className="action-button ac"
         type="submit"
         value="Submit"
         onClick={handleOnAccountSubmit}
