@@ -92,6 +92,7 @@ export default function AccountUpdate({
     return <Loader />;
   }
   // TODO: Display old values in their respective input fields
+  // TODO: Change placeholder
   // if user is an intern, allow bio editing. Else, no account edits can be made
   return (
     <div className="AccountUpdate">
@@ -105,7 +106,7 @@ export default function AccountUpdate({
             <textarea
               id="bio"
               className="input-field text"
-              placeholder="Enter a fun bio!"
+              placeholder="Tell us about yourself!"
               name="bio"
               onChange={(e) => setBio(e.target.value)}
             />

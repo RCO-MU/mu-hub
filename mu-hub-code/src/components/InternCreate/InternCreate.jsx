@@ -90,8 +90,6 @@ export default function InternCreate({
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: make form more user-friendly (dropdowns, default values, placeholders, etc.)
-
   // loading
   if (loading) {
     return <Loader />;
@@ -154,7 +152,7 @@ export default function InternCreate({
         <textarea
           id="bio"
           className="input-field text ic"
-          placeholder="Enter a fun bio!"
+          placeholder="Tell us about yourself!"
           name="bio"
           onChange={(e) => setBio(e.target.value)}
         />

@@ -5,7 +5,7 @@ import './Navbar.css';
 export default function Navbar() {
   return (
     <nav className="navbar" id="Navbar">
-      <Banner />
+      <Banner clickable />
     </nav>
   );
 }
