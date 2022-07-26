@@ -1,6 +1,8 @@
 .not-found {
     text-align: center;
     padding: 110px;
+    margin-left: calc(var(--sidebar-width) + 20px);
+    margin-top: calc(var(--navbar-height) + 20px);
 }
 
 .home-link {

@@ -100,7 +100,7 @@ export default function AccountUpdate({
       {userInfo.user.role === 'intern' ? (
         <>
           <label htmlFor="bio">
-            {'Bio: '}
+            {'Update Bio: '}
             <br />
             <textarea
               id="bio"
@@ -114,9 +114,10 @@ export default function AccountUpdate({
           <input
             className="action-button"
             type="submit"
-            value="Submit"
+            value="Update"
             onClick={handleOnInternUpdateSubmit}
           />
+          <br />
         </>
       ) : (<h2>Admins cannot edit their account information.</h2>)}
       <button
@@ -126,6 +127,7 @@ export default function AccountUpdate({
       >
         Return Home
       </button>
+      <br />
       <button
         className="action-button delete"
         type="button"

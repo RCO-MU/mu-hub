@@ -1,5 +1,5 @@
-/* TODO: Remove this global property */
 .App {
-  background-color: rgb(240, 242, 244);
-  /* border: 1px solid black; */
+  background-color: rgb(247, 247, 247);
+  width: 100%;
+  height: 100%;
 }

@@ -1,6 +1,7 @@
 .Home {
     margin-left: calc(var(--sidebar-width) + 20px);
     margin-top: calc(var(--navbar-height) + 20px);
+    text-align: center;
 }
 
 #test-response {

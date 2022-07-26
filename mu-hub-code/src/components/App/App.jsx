@@ -32,7 +32,7 @@ export default function App() {
   const [userInfo, setUserInfo] = useState({});
   const [hasAccount, setHasAccount] = useState(false);
   const [isIntern, setIsIntern] = useState(false);
-  const [hasInternAccount, setHasInternAccount] = useState(false);
+  const [accountComplete, setAccountComplete] = useState(false);
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET)
@@ -88,10 +88,12 @@ export default function App() {
           setHasAccount(true);
           if (data.user.role === 'intern') {
             setIsIntern(true);
+          } else {
+            setAccountComplete(true);
           }
         }
         if (data.intern) {
-          setHasInternAccount(true);
+          setAccountComplete(true);
         }
       }
       setLoading(false);
@@ -104,8 +106,6 @@ export default function App() {
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: Build website skeleton with header and sidebar
-
   // loading
   if (loading) {
     return (
@@ -114,63 +114,77 @@ export default function App() {
       </div>
     );
   }
-  // if user has never logged in / has logged out
-  if (loggedIn === undefined || loggedIn === false) {
+
+  // elements rendered for "/" endpoint
+  const mainElement = () => {
+    // if user has never logged in, or has logged out
+    if (loggedIn === undefined || loggedIn === false) {
+      return (
+        <div className="App">
+          <Banner />
+          <Login
+            userInfo={userInfo}
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // if user has no account info
+    if (!hasAccount) {
+      return (
+        <div className="App">
+          <Banner />
+          <AccountCreate
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // if user is an intern with no intern info
+    if (isIntern && !accountComplete) {
+      return (
+        <div className="App">
+          <Banner />
+          <InternCreate
+            userInfo={userInfo}
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // else, logged in with all account info
     return (
-      <div className="App">
-        <Banner />
-        <Login
-          userInfo={userInfo}
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
+      <Home
+        userInfo={userInfo}
+        loading={loading}
+      />
     );
-  }
-  // if user has no account info
-  if (!hasAccount) {
-    return (
-      <div className="App">
-        <Banner />
-        <AccountCreate
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
-    );
-  }
-  // if user is an intern with no intern info
-  if (isIntern && !hasInternAccount) {
-    return (
-      <div className="App">
-        <Banner />
-        <InternCreate
-          userInfo={userInfo}
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
-    );
-  }
-  // logged in with all account info
+  };
+
   return (
     <div className="App">
       <main>
-        <Sidebar />
-        <Navbar />
+        {accountComplete && loggedIn ? (
+          <>
+            <Sidebar
+              userInfo={userInfo}
+              setLoading={setLoading}
+              setCookie={setCookie}
+            />
+            <Navbar />
+          </>
+        ) : null}
         <Routes>
           <Route
             path="/"
             element={(
-              <Home
-                userInfo={userInfo}
-                loading={loading}
-                setLoading={setLoading}
-                setCookie={setCookie}
-              />
+            mainElement()
 )}
           />
           <Route

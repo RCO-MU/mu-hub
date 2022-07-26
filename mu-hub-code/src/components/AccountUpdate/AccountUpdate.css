@@ -1,8 +1,8 @@
 .AccountUpdate {
     margin-left: calc(var(--sidebar-width) + 20px);
     margin-top: calc(var(--navbar-height) + 20px);
+    text-align: center;
 }
-
 
 input {
     padding: 10px;
@@ -21,4 +21,8 @@ label {
 
 .delete:hover {
     background-color: rgb(200, 0, 0);
+}
+
+.action-button {
+    margin: 10px;
 }
