@@ -6,11 +6,13 @@ export default function Banner({ clickable }) {
   const makeLogo = () => {
     if (clickable) {
       return (
-        <img
-          src={logo}
-          alt="logo"
-          className="logo clickable"
-        />
+        <a href="/">
+          <img
+            src={logo}
+            alt="logo"
+            className="logo"
+          />
+        </a>
       );
     }
     return (<img src={logo} alt="logo" className="logo" />);
