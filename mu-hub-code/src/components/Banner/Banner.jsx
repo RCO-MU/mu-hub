@@ -3,6 +3,11 @@ import './Banner.css';
 import logo from '../../data/metalogo.jpg';
 
 export default function Banner({ clickable }) {
+  // **********************************************************************
+  // CONSTANTS & VARIABLES
+  // **********************************************************************
+
+  // render logo based on if it can be clicked on
   const makeLogo = () => {
     if (clickable) {
       return (
@@ -17,6 +22,10 @@ export default function Banner({ clickable }) {
     }
     return (<img src={logo} alt="logo" className="logo" />);
   };
+
+  // **********************************************************************
+  // PAGE RENDERING
+  // **********************************************************************
 
   return (
     <div className="Banner">
