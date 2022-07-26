@@ -2,13 +2,33 @@ import * as React from 'react';
 import axios from 'axios';
 import './InternCreate.css';
 import { useState } from 'react';
+import Select, { createFilter } from 'react-select';
 import Loader from '../Loader/Loader';
 import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
+import colleges from '../../data/colleges.json';
+import startDates from '../../data/startDates.json';
+import divisions from '../../data/divisions.json';
 
 export default function InternCreate({
   userInfo, loading, setLoading,
 }) {
+  // **********************************************************************
+  // CONSTANTS
+  // **********************************************************************
+
+  const collegeOptions = colleges.map((college) => ({
+    value: college, label: college,
+  }));
+
+  const startDateOptions = startDates.map((date) => ({
+    value: date, label: date,
+  }));
+
+  const divisionOptions = divisions.map((division) => ({
+    value: division, label: division,
+  }));
+
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
@@ -83,24 +103,24 @@ export default function InternCreate({
       <label htmlFor="startDate">
         {'Start Date: '}
         <br />
-        <input
-          type="text"
-          id="startDate"
-          className="input-field text"
+        <Select
           name="startDate"
-          onChange={(e) => setStartDate(e.target.value)}
+          className="input-field dropdown ic"
+          options={startDateOptions}
+          filterOption={createFilter({ ignoreAccents: false })}
+          onChange={(e) => setStartDate(e.value)}
         />
       </label>
       <br />
       <label htmlFor="division">
         {'Division: '}
         <br />
-        <input
-          type="text"
-          id="division"
-          className="input-field text"
+        <Select
           name="division"
-          onChange={(e) => setDivision(e.target.value)}
+          className="input-field dropdown ic"
+          options={divisionOptions}
+          filterOption={createFilter({ ignoreAccents: false })}
+          onChange={(e) => setDivision(e.value)}
         />
       </label>
       <br />
@@ -110,7 +130,7 @@ export default function InternCreate({
         <input
           type="text"
           id="residence"
-          className="input-field text"
+          className="input-field text ic"
           name="residence"
           onChange={(e) => setResidence(e.target.value)}
         />
@@ -119,12 +139,12 @@ export default function InternCreate({
       <label htmlFor="college">
         {'College: '}
         <br />
-        <input
-          type="text"
-          id="college"
-          className="input-field text"
-          name="college"
-          onChange={(e) => setCollege(e.target.value)}
+        <Select
+          name="colleges"
+          className="input-field dropdown ic"
+          options={collegeOptions}
+          filterOption={createFilter({ ignoreAccents: false })}
+          onChange={(e) => setCollege(e.value)}
         />
       </label>
       <br />
@@ -133,7 +153,7 @@ export default function InternCreate({
         <br />
         <textarea
           id="bio"
-          className="input-field text"
+          className="input-field text ic"
           placeholder="Enter a fun bio!"
           name="bio"
           onChange={(e) => setBio(e.target.value)}
@@ -141,7 +161,7 @@ export default function InternCreate({
       </label>
       <br />
       <input
-        className="action-button"
+        className="action-button ic"
         type="submit"
         value="Submit"
         onClick={handleOnInternInfoSubmit}
