@@ -1,4 +1,5 @@
 .not-found {
+    margin: 20px;
     text-align: center;
     padding: 110px;
     margin-left: calc(var(--sidebar-width) + 20px);

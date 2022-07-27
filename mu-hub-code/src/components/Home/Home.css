@@ -1,11 +1,12 @@
 .Home {
+    margin: 20px;
     margin-left: calc(var(--sidebar-width) + 20px);
     margin-top: calc(var(--navbar-height) + 20px);
     text-align: center;
-}
-
-#test-response {
-    font-size: larger;
+    border: 1px solid black;
+    background-color: white;
+    font-size: 100px;
+    overflow: scroll;
 }
 
 .action-button {

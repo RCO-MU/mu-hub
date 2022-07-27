@@ -2,7 +2,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import './AccountUpdate.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
@@ -21,6 +21,7 @@ export default function AccountUpdate({
   // **********************************************************************
 
   const [bio, setBio] = useState('');
+  const [isChanged, setIsChanged] = useState(false);
 
   // **********************************************************************
   // AXIOS FUNCTIONS (PUT)
@@ -69,7 +70,6 @@ export default function AccountUpdate({
 
   const handleOnInternUpdateSubmit = async () => {
     await putInternUpdate();
-    navigate('/');
     refreshPage();
   };
 
@@ -96,31 +96,39 @@ export default function AccountUpdate({
   // if user is an intern, allow bio editing. Else, no account edits can be made
   return (
     <div className="AccountUpdate">
-      <p>{`Here's the existing info: ${JSON.stringify(userInfo)}`}</p>
       <br />
-      {userInfo.user.role === 'intern' ? (
-        <>
-          <label htmlFor="bio">
-            {'Update Bio: '}
+      <div className="user-card">
+        <p id="name-update"><b>{`${userInfo.user.name} (${userInfo.unixname})`}</b></p>
+        {userInfo.user.role === 'intern' ? (
+          <>
+            <p className="update-info"><i>{`• ${userInfo.intern.division} (${userInfo.intern.startDate} Start)`}</i></p>
+            <p className="update-info"><i>{`• Lives in ${userInfo.intern.residence}`}</i></p>
+            <p className="update-info"><i>{`• Goes to ${userInfo.intern.college}`}</i></p>
             <br />
+            <p className="update-info"><b>Bio:</b></p>
             <textarea
               id="bio"
-              className="input-field text"
+              className="input-field update text"
               placeholder="Tell us about yourself!"
               name="bio"
-              onChange={(e) => setBio(e.target.value)}
+              defaultValue={userInfo.intern.bio}
+              onChange={(e) => { setBio(e.target.value); setIsChanged(true); }}
             />
-          </label>
-          <br />
-          <input
-            className="action-button"
-            type="submit"
-            value="Update"
-            onClick={handleOnInternUpdateSubmit}
-          />
-          <br />
-        </>
-      ) : (<h2>Admins cannot edit their account information.</h2>)}
+            <br />
+            {isChanged ? (
+              <>
+                <input
+                  className="action-button"
+                  type="submit"
+                  value="Update"
+                  onClick={handleOnInternUpdateSubmit}
+                />
+                <br />
+              </>
+            ) : null}
+          </>
+        ) : (<h2>Admins cannot edit their account information.</h2>)}
+      </div>
       <button
         className="action-button"
         type="button"
@@ -136,7 +144,6 @@ export default function AccountUpdate({
       >
         Delete Account
       </button>
-
     </div>
   );
 }

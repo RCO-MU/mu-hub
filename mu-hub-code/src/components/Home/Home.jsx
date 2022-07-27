@@ -16,7 +16,7 @@ export default function Home({
   // else if not loading
   return (
     <div className="Home">
-      <p>{`Raw user info: ${JSON.stringify(userInfo)}`}</p>
+      <p>Announcements and Tools coming soon!</p>
     </div>
   );
 }

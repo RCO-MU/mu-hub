@@ -27,7 +27,7 @@ export default function App() {
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [hasAccount, setHasAccount] = useState(false);
@@ -50,6 +50,8 @@ export default function App() {
       const url = 'api/user'
       + `?unixname=${username}`;
       const { data } = await axios.get(url);
+      setUserInfo(data);
+      console.log(data);
       return data;
     } catch (err) {
       console.error(err);
@@ -82,8 +84,6 @@ export default function App() {
       // if current user is defined, fetch user info, set state vars accordingly
       if (user) {
         const data = await fetchUserInfo(user);
-        console.log(data);
-        setUserInfo(data);
         if (data.user) {
           setHasAccount(true);
           if (data.user.role === 'intern') {

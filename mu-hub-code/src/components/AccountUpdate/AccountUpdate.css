@@ -1,13 +1,39 @@
 .AccountUpdate {
+    margin: 20px;
     margin-left: calc(var(--sidebar-width) + 20px);
     margin-top: calc(var(--navbar-height) + 20px);
     text-align: center;
+    justify-content: center;
 }
 
-input {
+.user-card {
+    background-color: #9cc3f5;
+    border-radius: 20px 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    max-width: 820px;
+    overflow: hidden;
+    font-size: large;
+}
+
+.update-info {
+    margin: 10px;
+}
+
+#name-update {
+    font-size: xx-large;
+}
+
+.update.text {
     padding: 10px;
-    font-size: larger;
-    margin: 0px;
+    font-size: large;
+    margin: 10px;
+    min-width: min(85%, 200px);
+    max-width: 85%;
+    height: auto;
+    min-height: 25px;
 }
 
 label {

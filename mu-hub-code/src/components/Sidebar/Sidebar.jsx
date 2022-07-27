@@ -50,10 +50,7 @@ export default function Sidebar({ userInfo, setLoading, setCookie }) {
       <div id="user-info">
         <p id="name-sidebar"><b>{userInfo.user.name}</b></p>
         {userInfo.user.role === 'intern' ? (
-          <>
-            <p><i>{userInfo.intern.division}</i></p>
-            <p><i>{`${userInfo.intern.startDate} Start`}</i></p>
-          </>
+          <p><i>{userInfo.intern.division}</i></p>
         ) : null}
         <button
           className="action-button side"
