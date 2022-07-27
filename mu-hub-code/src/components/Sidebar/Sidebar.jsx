@@ -30,7 +30,6 @@ export default function Sidebar({ userInfo, setLoading, setCookie }) {
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  // TODO: implement delete account
   const handleLogout = async () => {
     setLoading(true);
     setCookie('data', {

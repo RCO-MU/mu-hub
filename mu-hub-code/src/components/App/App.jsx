@@ -206,4 +206,4 @@ export default function App() {
   );
 }
 
-// TODO: Create a footer
+// TODO: Create a footer (login only maybe?)

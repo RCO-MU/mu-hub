@@ -18,7 +18,7 @@ function Login({
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  // IMPORTANT TODO: Use SSO to login user and obtain their information, remove delay
+  // IMPORTANT TODO: Use SSO to login user and obtain their information, remove fake delay
   const handleLogin = async () => {
     setLoading(true);
     setCookie('data', {
