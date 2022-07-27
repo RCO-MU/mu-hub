@@ -2,7 +2,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import './AccountUpdate.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
@@ -91,9 +91,8 @@ export default function AccountUpdate({
   if (loading) {
     return <Loader />;
   }
-  // TODO: Display old values in their respective input fields
-  // TODO: Change placeholder
-  // if user is an intern, allow bio editing. Else, no account edits can be made
+  // If user is an intern, allow bio editing. Else, no account edits can be made
+  // Only display update button if bio has changed.
   return (
     <div className="AccountUpdate">
       <br />

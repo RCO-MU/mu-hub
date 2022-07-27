@@ -115,7 +115,7 @@ export default function App() {
     );
   }
 
-  // elements rendered for "/" endpoint
+  // figure out which element is rendered for "/" endpoint
   const mainElement = () => {
     // if user has never logged in, or has logged out
     if (loggedIn === undefined || loggedIn === false) {
@@ -167,6 +167,7 @@ export default function App() {
     );
   };
 
+  // display navbar and sidebar if user is logged in and account is complete.
   return (
     <div className="App">
       <main>

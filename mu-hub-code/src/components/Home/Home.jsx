@@ -4,15 +4,16 @@ import Loader from '../Loader/Loader';
 import './Home.css';
 
 export default function Home({
-  userInfo, loading, setLoading, setCookie,
+  loading,
 }) {
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
+
+  // loading
   if (loading) {
     return <Loader />;
   }
-  // TODO: display user info... better
   // else if not loading
   return (
     <div className="Home">

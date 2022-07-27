@@ -7,7 +7,7 @@ export default function Banner({ clickable }) {
   // CONSTANTS & VARIABLES
   // **********************************************************************
 
-  // render logo based on if it can be clicked on
+  // renders logo based on if it can be clicked on
   const makeLogo = () => {
     if (clickable) {
       return (
@@ -20,6 +20,7 @@ export default function Banner({ clickable }) {
         </a>
       );
     }
+    // not clickable
     return (<img src={logo} alt="logo" className="logo" />);
   };
 

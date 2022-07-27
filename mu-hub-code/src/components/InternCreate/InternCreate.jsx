@@ -94,7 +94,7 @@ export default function InternCreate({
   if (loading) {
     return <Loader />;
   }
-  // else if not loading
+  // else if not loading, return intern account creation form
   return (
     <div className="InternCreate">
       <h1>Create your intern account!</h1>
