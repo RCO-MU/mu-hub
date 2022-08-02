@@ -4,6 +4,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
+const multer = require('multer');
 const DB = require('./db');
 const { PORT } = require('../src/utils/constants');
 
@@ -22,6 +23,9 @@ app.use(cors());
 
 // initialize DB using constructor
 const db = new DB();
+
+// multer set up for file reading
+const upload = multer();
 
 // **********************************************************************
 // ENDPOINTS
@@ -93,9 +97,20 @@ app.put('/api/intern', async (req, res) => {
   }
 });
 
-// basic test
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+// upload file
+app.post('/api/upload', upload.single('file'), async (req, res) => {
+  const { file } = req;
+  const { unixname } = req.body;
+  try {
+    const info = await DB.uploadFile(unixname, file);
+    if (info === 201) {
+      res.status(201).send({ response: `${file.originalname} uploaded successfully by ${unixname}` });
+    } else {
+      res.status(500).send({ response: `${file.originalname} could not be uploaded` });
+    }
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
 });
 
 // **********************************************************************

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Home from '../Home/Home';
 import Banner from '../Banner/Banner';
@@ -12,6 +12,7 @@ import Login from '../Login/Login';
 import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import AccountUpdate from '../AccountUpdate/AccountUpdate';
+import DocumentUpload from '../DocumentUpload/DocumentUpload';
 import './App.css';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -20,7 +21,6 @@ export default function App() {
   // CONSTANTS & VARIABLES
   // **********************************************************************
 
-  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['cookie-name']);
 
   // **********************************************************************
@@ -190,16 +190,29 @@ export default function App() {
           />
           <Route
             path="/account_update"
-            element={(
+            element={accountComplete && loggedIn ? (
               <AccountUpdate
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
                 setCookie={setCookie}
               />
-)}
+            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/document_upload"
+            element={accountComplete && loggedIn ? (
+              <DocumentUpload
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+              />
+            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
+          />
+          <Route
+            path="*"
+            element={<NotFound loggedIn={loggedIn && accountComplete} />}
+          />
         </Routes>
       </main>
     </div>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './Banner.css';
-import logo from '../../data/metalogo.jpg';
+import logo from '../../data/images/metalogo.jpg';
 
 export default function Banner({ clickable }) {
   // **********************************************************************

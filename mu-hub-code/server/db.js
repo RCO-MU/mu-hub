@@ -15,7 +15,7 @@ class DB {
   // HELPER FUNCTIONS
   // **********************************************************************
 
-  // private helper method for getUserInfo, gets user Parse object
+  // private helper method, gets user Parse object
   static async #getUserObject(unixname) {
     // setup Parse query, search for matching unixname
     let user = new Parse.Object('HubUser');
@@ -31,7 +31,7 @@ class DB {
     }
   }
 
-  // private helper method for getUserInfo, gets intern Parse object
+  // private helper method, gets intern Parse object
   static async #getInternObject(unixname) {
     // setup Parse query, search for matching unixname
     let intern = new Parse.Object('Intern');
@@ -125,6 +125,25 @@ class DB {
       console.error(error);
     }
     return { user };
+  }
+
+  // creates a file entry
+  static async uploadFile(unixname, file) {
+    try {
+      // construct and save parse file object
+      const fileData = { base64: file.buffer.toString('base64') };
+      const parseFile = new Parse.File(file.originalname, fileData);
+      const responseFile = await parseFile.save();
+      // store file with owner in InternFile class
+      const internFile = new Parse.Object('InternFile');
+      internFile.set('owner', unixname);
+      internFile.set('file', responseFile);
+      await internFile.save();
+      return 201;
+    } catch (error) {
+      console.error(error);
+      return 500;
+    }
   }
 }
 
