@@ -1,6 +1,12 @@
 .not-found {
+    margin: 20px;
     text-align: center;
     padding: 110px;
+}
+
+.not-found.logged-in {
+    margin-left: calc(var(--sidebar-width) + 20px);
+    margin-top: calc(var(--navbar-height) + 20px);
 }
 
 .home-link {

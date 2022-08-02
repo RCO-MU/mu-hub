@@ -68,13 +68,14 @@ export default function AccountCreate({
   // PAGE RENDERING
   // **********************************************************************
 
+  // loading
   if (loading) {
     return <Loader />;
   }
   // else if not loading
   return (
     <div className="AccountCreate">
-      <h1>Create your account!</h1>
+      <h1>Account Info</h1>
       <h2>
         This is a temporary page.
         All of this information will eventually be retrieved via SSO integration.
@@ -117,7 +118,7 @@ export default function AccountCreate({
       <input
         className="action-button ac"
         type="submit"
-        value="Submit"
+        value="Continue"
         onClick={handleOnAccountSubmit}
       />
       <h3>{error}</h3>

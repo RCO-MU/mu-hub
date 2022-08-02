@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import Home from '../Home/Home';
 import Banner from '../Banner/Banner';
@@ -12,6 +12,7 @@ import Login from '../Login/Login';
 import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import AccountUpdate from '../AccountUpdate/AccountUpdate';
+import DocumentUpload from '../DocumentUpload/DocumentUpload';
 import './App.css';
 import Sidebar from '../Sidebar/Sidebar';
 
@@ -20,19 +21,18 @@ export default function App() {
   // CONSTANTS & VARIABLES
   // **********************************************************************
 
-  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['cookie-name']);
 
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [hasAccount, setHasAccount] = useState(false);
   const [isIntern, setIsIntern] = useState(false);
-  const [hasInternAccount, setHasInternAccount] = useState(false);
+  const [accountComplete, setAccountComplete] = useState(false);
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET)
@@ -50,6 +50,8 @@ export default function App() {
       const url = 'api/user'
       + `?unixname=${username}`;
       const { data } = await axios.get(url);
+      setUserInfo(data);
+      console.log(data);
       return data;
     } catch (err) {
       console.error(err);
@@ -82,16 +84,16 @@ export default function App() {
       // if current user is defined, fetch user info, set state vars accordingly
       if (user) {
         const data = await fetchUserInfo(user);
-        console.log(data);
-        setUserInfo(data);
         if (data.user) {
           setHasAccount(true);
           if (data.user.role === 'intern') {
             setIsIntern(true);
+          } else {
+            setAccountComplete(true);
           }
         }
         if (data.intern) {
-          setHasInternAccount(true);
+          setAccountComplete(true);
         }
       }
       setLoading(false);
@@ -104,8 +106,6 @@ export default function App() {
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: Build website skeleton with header and sidebar
-
   // loading
   if (loading) {
     return (
@@ -114,81 +114,109 @@ export default function App() {
       </div>
     );
   }
-  // if user has never logged in / has logged out
-  if (loggedIn === undefined || loggedIn === false) {
+
+  // figure out which element is rendered for "/" endpoint
+  const mainElement = () => {
+    // if user has never logged in, or has logged out
+    if (loggedIn === undefined || loggedIn === false) {
+      return (
+        <div className="App">
+          <Banner />
+          <Login
+            userInfo={userInfo}
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // if user has no account info
+    if (!hasAccount) {
+      return (
+        <div className="App">
+          <Banner />
+          <AccountCreate
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // if user is an intern with no intern info
+    if (isIntern && !accountComplete) {
+      return (
+        <div className="App">
+          <Banner />
+          <InternCreate
+            userInfo={userInfo}
+            loading={loading}
+            setLoading={setLoading}
+            setCookie={setCookie}
+          />
+        </div>
+      );
+    }
+    // else, logged in with all account info
     return (
-      <div className="App">
-        <Banner />
-        <Login
-          userInfo={userInfo}
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
+      <Home
+        userInfo={userInfo}
+        loading={loading}
+      />
     );
-  }
-  // if user has no account info
-  if (!hasAccount) {
-    return (
-      <div className="App">
-        <Banner />
-        <AccountCreate
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
-    );
-  }
-  // if user is an intern with no intern info
-  if (isIntern && !hasInternAccount) {
-    return (
-      <div className="App">
-        <Banner />
-        <InternCreate
-          userInfo={userInfo}
-          loading={loading}
-          setLoading={setLoading}
-          setCookie={setCookie}
-        />
-      </div>
-    );
-  }
-  // logged in with all account info
+  };
+
+  // display navbar and sidebar if user is logged in and account is complete.
   return (
     <div className="App">
       <main>
-        <Sidebar />
-        <Navbar />
+        {accountComplete && loggedIn ? (
+          <>
+            <Sidebar
+              userInfo={userInfo}
+              setLoading={setLoading}
+              setCookie={setCookie}
+            />
+            <Navbar />
+          </>
+        ) : null}
         <Routes>
           <Route
             path="/"
             element={(
-              <Home
-                userInfo={userInfo}
-                loading={loading}
-                setLoading={setLoading}
-                setCookie={setCookie}
-              />
+            mainElement()
 )}
           />
           <Route
             path="/account_update"
-            element={(
+            element={accountComplete && loggedIn ? (
               <AccountUpdate
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
                 setCookie={setCookie}
               />
-)}
+            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
           />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/document_upload"
+            element={accountComplete && loggedIn ? (
+              <DocumentUpload
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+              />
+            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
+          />
+          <Route
+            path="*"
+            element={<NotFound loggedIn={loggedIn && accountComplete} />}
+          />
         </Routes>
       </main>
     </div>
   );
 }
 
-// TODO: Create a footer
+// TODO: Create a footer (login only maybe?)

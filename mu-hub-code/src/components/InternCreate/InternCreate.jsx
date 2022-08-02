@@ -90,13 +90,11 @@ export default function InternCreate({
   // PAGE RENDERING
   // **********************************************************************
 
-  // TODO: make form more user-friendly (dropdowns, default values, placeholders, etc.)
-
   // loading
   if (loading) {
     return <Loader />;
   }
-  // else if not loading
+  // else if not loading, return intern account creation form
   return (
     <div className="InternCreate">
       <h1>Create your intern account!</h1>
@@ -154,7 +152,7 @@ export default function InternCreate({
         <textarea
           id="bio"
           className="input-field text ic"
-          placeholder="Enter a fun bio!"
+          placeholder="Tell us about yourself! (You may edit this later.)"
           name="bio"
           onChange={(e) => setBio(e.target.value)}
         />
