@@ -23,7 +23,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 
 // create proxy
-app.use(createProxyMiddleware('/api', { target: localhostURL, changeOrigin: true }));
+app.use('/api', createProxyMiddleware({ target: localhostURL, changeOrigin: true }));
 
 // initialize DB using constructor
 const db = new DB();
