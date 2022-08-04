@@ -7,7 +7,7 @@ const cors = require('cors');
 const multer = require('multer');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const DB = require('./db');
-const { PORT } = require('./config');
+const { PORT, localhostURL } = require('./config');
 
 // **********************************************************************
 // SERVER SETUP
@@ -21,7 +21,7 @@ const port = process.env.PORT || PORT;
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
-app.use(createProxyMiddleware('/api/**', { target: 'mu-hub.herokuapp.com' }));
+app.use(createProxyMiddleware('mu-hub.herokuapp.com/api/**', { target: localhostURL }));
 
 // initialize DB using constructor
 const db = new DB();
