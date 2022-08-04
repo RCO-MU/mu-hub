@@ -21,7 +21,9 @@ const port = process.env.PORT || PORT;
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
-app.use(createProxyMiddleware('mu-hub.herokuapp.com/api/**', { target: localhostURL }));
+
+// create proxy
+app.use(createProxyMiddleware('/api', { target: localhostURL, changeOrigin: true }));
 
 // initialize DB using constructor
 const db = new DB();
@@ -51,7 +53,19 @@ app.get('/api/user', async (req, res) => {
   try {
     // call DB method
     const info = await DB.getUserInfo(unixname);
-    res.status(200).send(info);
+    res.status(200).send('expected: ', info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get user information
+app.get('/user', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getUserInfo(unixname);
+    res.status(200).send('unexpected: ', info);
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
