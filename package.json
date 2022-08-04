@@ -2,7 +2,6 @@
   "name": "mu-hub",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:5001/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
@@ -15,6 +14,7 @@
     "express": "^4.18.1",
     "form-data": "^4.0.0",
     "heroku": "^7.62.0",
+    "http-proxy-middleware": "^2.0.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "parse": "^3.4.3",
