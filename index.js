@@ -137,8 +137,8 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// The "catchall" handler: for any request that isn't an api request, 
+// The "catchall" handler: for any request that isn't an api request,
 // send back React's index.html file to render the webpage.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 });
