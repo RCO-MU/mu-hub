@@ -1,11 +1,12 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
 
-const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const express = require('express');
+const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware/dist');
 const DB = require('./server/db');
 const { PORT, localhostURL } = require('./server/config');
 
@@ -136,4 +137,10 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
+});
+
+// The "catchall" handler: for any request that doesn't
+// match one above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 });
