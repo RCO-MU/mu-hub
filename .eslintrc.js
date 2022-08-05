@@ -17,7 +17,6 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: [
-    'react',
     '@typescript-eslint',
   ],
   rules: {
