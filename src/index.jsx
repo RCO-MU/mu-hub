@@ -6,7 +6,6 @@ import App from './components/App/App';
 import reportWebVitals from './utils/reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-// TODO LATER: REMOVE REACT STRICT MODE
 root.render(
   <Router>
     <App />

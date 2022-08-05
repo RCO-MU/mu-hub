@@ -6,8 +6,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
 const { createProxyMiddleware } = require('http-proxy-middleware');
-const DB = require('./db');
-const { PORT, localhostURL } = require('./config');
+const DB = require('./server/db');
+const { PORT, localhostURL } = require('./server/config');
 
 // **********************************************************************
 // SERVER SETUP
@@ -30,6 +30,15 @@ const db = new DB();
 
 // multer set up for file reading
 const upload = multer();
+
+// **********************************************************************
+// LISTENER
+// **********************************************************************
+
+// log port number and confirm server is launched
+app.listen(port, () => {
+  console.log(`🚀 Parse app listening on port ${port}`);
+});
 
 // **********************************************************************
 // ENDPOINTS
@@ -127,18 +136,4 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
-});
-
-// test
-/* app.get('/', async (req, res) => {
-  res.status(200).send('Hello World!');
-}); */
-
-// **********************************************************************
-// LISTENER
-// **********************************************************************
-
-// log port number and confirm server is launched
-app.listen(port, () => {
-  console.log(`🚀 Parse app listening on port ${port}`);
 });
