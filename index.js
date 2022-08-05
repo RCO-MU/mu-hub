@@ -1,12 +1,12 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
-
-const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
-const DB = require('./db');
-const { PORT } = require('../src/utils/constants');
+const express = require('express');
+const path = require('path');
+const DB = require('./client/server/db');
+const { PORT, localhostURL } = require('./client/server/config');
 
 // **********************************************************************
 // SERVER SETUP
@@ -27,8 +27,20 @@ const db = new DB();
 // multer set up for file reading
 const upload = multer();
 
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
 // **********************************************************************
-// ENDPOINTS
+// LISTENER
+// **********************************************************************
+
+// log port number and confirm server is launched
+app.listen(port, () => {
+  console.log(`🚀 Parse app listening on port ${port}`);
+});
+
+// **********************************************************************
+// ENDPOINTS - Put all API endpoints under '/api'
 // **********************************************************************
 
 // create user account
@@ -50,6 +62,18 @@ app.get('/api/user', async (req, res) => {
     // call DB method
     const info = await DB.getUserInfo(unixname);
     res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get user information
+app.get('/user', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getUserInfo(unixname);
+    res.status(200).send('unexpected: ', info);
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
@@ -113,11 +137,8 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
-// **********************************************************************
-// LISTENER
-// **********************************************************************
-
-// log port number and confirm server is launched
-app.listen(port, () => {
-  console.log(`🚀 Parse app listening on port ${port}`);
+// The "catchall" handler: for any request that isn't an api request,
+// send back React's index.html file to render the webpage.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(`${__dirname}/client/build/index.html`));
 });
