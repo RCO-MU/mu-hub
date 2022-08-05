@@ -6,7 +6,6 @@ const cors = require('cors');
 const multer = require('multer');
 const express = require('express');
 const path = require('path');
-const { createProxyMiddleware } = require('http-proxy-middleware/dist');
 const DB = require('./server/db');
 const { PORT, localhostURL } = require('./server/config');
 
@@ -22,9 +21,6 @@ const port = process.env.PORT || PORT;
 app.use(express.json());
 app.use(morgan('tiny'));
 app.use(cors());
-
-// create proxy
-app.use('/api', createProxyMiddleware({ target: localhostURL, changeOrigin: true }));
 
 // initialize DB using constructor
 const db = new DB();
