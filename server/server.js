@@ -53,7 +53,7 @@ app.get('/api/user', async (req, res) => {
   try {
     // call DB method
     const info = await DB.getUserInfo(unixname);
-    res.status(200).send('expected: ', info);
+    res.status(200).send(info);
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
@@ -128,6 +128,11 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     res.send({ errorMsg: error.message });
   }
 });
+
+// test
+/* app.get('/', async (req, res) => {
+  res.status(200).send('Hello World!');
+}); */
 
 // **********************************************************************
 // LISTENER
