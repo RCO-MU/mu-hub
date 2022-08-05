@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   env: {
     browser: true,
@@ -6,7 +7,6 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
   ],
   parser: '@typescript-eslint/parser',
@@ -18,7 +18,6 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint',
-    'react',
   ],
   rules: {
     'no-unused-vars': 'off',
