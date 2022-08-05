@@ -1,55 +1,25 @@
 {
   "name": "mu-hub",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "1.0.2": "^1.0.0",
-    "axios": "^0.27.2",
-    "axios-form-data": "^1.0.0",
-    "concurrently": "^7.2.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.1",
-    "form-data": "^4.0.0",
-    "heroku": "^7.62.0",
-    "http-proxy-middleware": "^2.0.6",
-    "morgan": "^1.10.0",
-    "multer": "^1.4.5-lts.1",
-    "parse": "^3.4.3",
-    "timers": "^0.1.1",
-    "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "server": "nodemon index.js",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/racollado/mu-hub.git"
   },
-  "devDependencies": {
-    "@types/parse": "^2.18.16",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.30.5",
-    "eslint": "^8.19.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jsx-a11y": "^6.6.0",
-    "eslint-plugin-react": "^7.30.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "nodemon": "^2.0.19"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/racollado/mu-hub/issues"
+  },
+  "homepage": "https://github.com/racollado/mu-hub#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "password-generator": "^2.3.2"
   }
 }
