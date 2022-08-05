@@ -1,0 +1,31 @@
+.Login {
+    margin: 40px;
+    text-align: center;
+}
+
+#login-msg {
+    font-size: 40px;
+}
+
+.login-button {
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 24px;
+    height: 50px;
+    max-width: 400px;
+    overflow: hidden;
+    padding: 0 12px;
+    transition: 0.2s;
+    width: 100%;
+}
+
+#sso {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    color: #fff;
+}
+
+#sso:hover {
+    background-color: #0b65db;
+    cursor: pointer;
+}

@@ -1,0 +1,46 @@
+.AccountCreate {
+    margin: 40px;
+    text-align: center;
+}
+
+.input-field {
+    padding: 10px;
+    font-size: larger;
+    margin: 15px;    
+}
+
+.input-field.ac {
+    height: 25px;
+}
+
+label {
+    font-size: larger;
+}
+
+#is-admin {
+    position: relative;
+    height: 20px;
+    margin-bottom: 35px;
+    width: 20px;
+    top: 3px;
+}
+
+.action-button {
+    background: #1479fb;
+    border: 1px solid #1479fb;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 24px;
+    height: 50px;
+    max-width: 200px;
+    overflow: hidden;
+    padding: 0 12px;
+    transition: 0.2s;
+    width: 100%;
+}
+
+.action-button:hover {
+    background-color: #0b65db;
+    cursor: pointer;
+}
