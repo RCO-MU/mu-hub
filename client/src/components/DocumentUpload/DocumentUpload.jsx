@@ -4,7 +4,7 @@ import axios from 'axios';
 import './DocumentUpload.css';
 import FormData from 'form-data';
 import { useState } from 'react';
-import ImageConfig from '../../utils/images';
+import ImageConfig from '../../utils/fileIcons';
 import uploadImg from '../../data/images/cloud-upload-regular-240.png';
 import Loader from '../Loader/Loader';
 
