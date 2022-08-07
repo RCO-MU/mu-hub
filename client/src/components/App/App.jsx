@@ -13,8 +13,9 @@ import AccountCreate from '../AccountCreate/AccountCreate';
 import InternCreate from '../InternCreate/InternCreate';
 import AccountUpdate from '../AccountUpdate/AccountUpdate';
 import DocumentUpload from '../DocumentUpload/DocumentUpload';
-import './App.css';
 import Sidebar from '../Sidebar/Sidebar';
+import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
+import './App.css';
 
 export default function App() {
   // **********************************************************************
@@ -47,9 +48,7 @@ export default function App() {
   async function fetchUserInfo(username) {
     setLoading(true);
     try {
-      const url = 'api/user'
-      + `?unixname=${username}`;
-      const { data } = await axios.get(url);
+      const { data } = await axios.get('api/user', { params: { unixname: username } });
       setUserInfo(data);
       console.log(data);
       return data;
@@ -207,6 +206,12 @@ export default function App() {
                 loading={loading}
                 setLoading={setLoading}
               />
+            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
+          />
+          <Route
+            path="/test"
+            element={accountComplete && loggedIn ? (
+              <ResidenceSearch />
             ) : <NotFound loggedIn={loggedIn && accountComplete} />}
           />
           <Route

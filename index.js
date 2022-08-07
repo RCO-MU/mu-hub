@@ -45,7 +45,7 @@ app.listen(port, () => {
 
 // create user account
 app.post('/api/user', async (req, res) => {
-  const { unixname, name, role } = req.query; // url params
+  const { unixname, name, role } = req.body; // url params
   try {
     // call DB method
     await DB.createUserAccount(unixname, name, role);
@@ -95,7 +95,7 @@ app.delete('/api/user', async (req, res) => {
 app.post('/api/intern', async (req, res) => {
   const {
     unixname, startDate, division, residence, college, bio,
-  } = req.query; // url params
+  } = req.body; // url params
   try {
     // call DB method
     await DB.createInternAccount(unixname, startDate, division, residence, college, bio);
@@ -111,7 +111,7 @@ app.post('/api/intern', async (req, res) => {
 
 // update intern information
 app.put('/api/intern', async (req, res) => {
-  const { unixname, bio } = req.query; // url params
+  const { unixname, bio } = req.body; // url params
   try {
     // call DB method
     const info = await DB.putInternInfo(unixname, bio);

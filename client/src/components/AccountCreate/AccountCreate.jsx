@@ -33,11 +33,12 @@ export default function AccountCreate({
   async function postNewAccount() {
     setLoading(true);
     try {
-      const url = 'api/user'
-      + `?unixname=${unixname}`
-      + `&name=${name}`
-      + `&role=${isAdmin ? 'admin' : 'intern'}`;
-      await axios.post(url);
+      const body = {
+        unixname,
+        name,
+        role: isAdmin ? 'admin' : 'intern',
+      };
+      await axios.post('api/user', body);
       setCookie('data', {
         loggedIn: true,
         user: unixname,
