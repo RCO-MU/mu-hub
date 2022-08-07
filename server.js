@@ -6,7 +6,7 @@ const cors = require('cors');
 const multer = require('multer');
 const express = require('express');
 const path = require('path');
-const DB = require('./client/server/db');
+const DB = require('./client/db');
 
 // **********************************************************************
 // SERVER SETUP
