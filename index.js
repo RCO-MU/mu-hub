@@ -1,12 +1,12 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
+require('dotenv').config();
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
 const express = require('express');
 const path = require('path');
 const DB = require('./client/server/db');
-const { PORT, localhostURL } = require('./client/server/config');
 
 // **********************************************************************
 // SERVER SETUP
@@ -14,7 +14,7 @@ const { PORT, localhostURL } = require('./client/server/config');
 
 // server setup
 const app = express();
-const port = process.env.PORT || PORT;
+const port = process.env.PORT;
 
 // use packages
 app.use(express.json());
