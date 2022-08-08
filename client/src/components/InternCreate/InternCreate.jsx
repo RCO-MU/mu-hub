@@ -9,6 +9,7 @@ import refreshPage from '../../utils/refreshPage';
 import colleges from '../../data/colleges.json';
 import startDates from '../../data/startDates.json';
 import divisions from '../../data/divisions.json';
+import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
 
 export default function InternCreate({
   userInfo, loading, setLoading,
@@ -54,14 +55,15 @@ export default function InternCreate({
   async function postNewIntern() {
     setLoading(true);
     try {
-      const url = 'api/intern'
-      + `?unixname=${userInfo.unixname}`
-      + `&startDate=${startDate}`
-      + `&division=${division}`
-      + `&residence=${residence}`
-      + `&college=${college}`
-      + `&bio=${bio}`;
-      await axios.post(url);
+      const body = {
+        unixname: userInfo.unixname,
+        startDate,
+        division,
+        residence,
+        college,
+        bio,
+      };
+      await axios.post('api/intern', body); // TODO fix post api/intern with req.body
     } catch (err) {
       console.error(err);
     }
@@ -103,7 +105,7 @@ export default function InternCreate({
         <br />
         <Select
           name="startDate"
-          className="input-field dropdown ic"
+          classNamePrefix="select"
           options={startDateOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setStartDate(e.value)}
@@ -115,7 +117,7 @@ export default function InternCreate({
         <br />
         <Select
           name="division"
-          className="input-field dropdown ic"
+          classNamePrefix="select"
           options={divisionOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setDivision(e.value)}
@@ -125,12 +127,9 @@ export default function InternCreate({
       <label htmlFor="residence">
         {'Residence: '}
         <br />
-        <input
-          type="text"
-          id="residence"
-          className="input-field text ic"
-          name="residence"
-          onChange={(e) => setResidence(e.target.value)}
+        <ResidenceSearch
+          residence={residence}
+          setResidence={setResidence}
         />
       </label>
       <br />
@@ -139,10 +138,11 @@ export default function InternCreate({
         <br />
         <Select
           name="colleges"
-          className="input-field dropdown ic"
+          classNamePrefix="select"
           options={collegeOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setCollege(e.value)}
+          placeholder="Search colleges..."
         />
       </label>
       <br />

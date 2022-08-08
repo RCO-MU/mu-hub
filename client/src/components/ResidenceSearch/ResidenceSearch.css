@@ -1,0 +1,35 @@
+.ResidenceSearch {
+    width: 400px;
+    margin: auto;
+}
+
+.location-search-input {
+    border: 1px solid rgb(208, 208, 208);
+    border-radius: 3px 3px;
+    color: rgb(130, 130, 130);
+    font-size: medium;
+    height: 15px;
+    margin-top: 15px;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    width: 375px;
+}
+
+.location-search-input:focus::-webkit-input-placeholder { 
+    color:transparent; 
+}
+
+.autocomplete-dropdown-container {
+    position: absolute;
+    z-index: 1;
+    max-width: 400px;
+}
+
+.suggestion-item {
+    padding: 10px;
+}
+
+.suggestion-item--active {
+    padding: 10px;
+}

@@ -1,12 +1,12 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
+require('dotenv').config();
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
 const express = require('express');
 const path = require('path');
-const DB = require('./client/server/db');
-const { PORT, localhostURL } = require('./client/server/config');
+const DB = require('./client/db');
 
 // **********************************************************************
 // SERVER SETUP
@@ -14,7 +14,7 @@ const { PORT, localhostURL } = require('./client/server/config');
 
 // server setup
 const app = express();
-const port = process.env.PORT || PORT;
+const port = process.env.PORT;
 
 // use packages
 app.use(express.json());
@@ -45,7 +45,7 @@ app.listen(port, () => {
 
 // create user account
 app.post('/api/user', async (req, res) => {
-  const { unixname, name, role } = req.query; // url params
+  const { unixname, name, role } = req.body; // url params
   try {
     // call DB method
     await DB.createUserAccount(unixname, name, role);
@@ -95,7 +95,7 @@ app.delete('/api/user', async (req, res) => {
 app.post('/api/intern', async (req, res) => {
   const {
     unixname, startDate, division, residence, college, bio,
-  } = req.query; // url params
+  } = req.body; // url params
   try {
     // call DB method
     await DB.createInternAccount(unixname, startDate, division, residence, college, bio);
@@ -111,7 +111,7 @@ app.post('/api/intern', async (req, res) => {
 
 // update intern information
 app.put('/api/intern', async (req, res) => {
-  const { unixname, bio } = req.query; // url params
+  const { unixname, bio } = req.body; // url params
   try {
     // call DB method
     const info = await DB.putInternInfo(unixname, bio);

@@ -12,10 +12,19 @@
     width: 260px;
 }
 
-.dropdown {
+.css-b62m3t-container {
+    width: 400px;
+    margin: auto;
+}
+
+.select__control {
     font-size: medium;
     margin: auto;
-    width: 300px;
+    margin-top: 15px;
+}
+
+.select__menu {
+    font-size: medium;
 }
 
 label {
@@ -31,3 +40,4 @@ label {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+

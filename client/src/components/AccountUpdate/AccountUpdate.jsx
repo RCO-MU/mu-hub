@@ -37,10 +37,11 @@ export default function AccountUpdate({
   async function putInternUpdate() {
     setLoading(true);
     try {
-      const url = 'api/intern'
-      + `?unixname=${userInfo.unixname}`
-      + `&bio=${bio}`;
-      await axios.put(url);
+      const body = {
+        unixname: userInfo.unixname,
+        bio,
+      };
+      await axios.put('api/intern', body);
     } catch (err) {
       console.error(err);
     }
@@ -56,9 +57,7 @@ export default function AccountUpdate({
   async function deleteAccount() {
     setLoading(true);
     try {
-      const url = 'api/user'
-        + `?unixname=${userInfo.unixname}`;
-      await axios.delete(url);
+      await axios.delete('api/user', { params: { unixname: userInfo.unixname } });
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +100,7 @@ export default function AccountUpdate({
         {userInfo.user.role === 'intern' ? (
           <>
             <p className="update-info"><i>{`• ${userInfo.intern.division} (${userInfo.intern.startDate} Start)`}</i></p>
-            <p className="update-info"><i>{`• Lives in ${userInfo.intern.residence}`}</i></p>
+            <p className="update-info"><i>{`• Lives in ${userInfo.intern.residence.name.split(',')[0]}`}</i></p>
             <p className="update-info"><i>{`• Goes to ${userInfo.intern.college}`}</i></p>
             <br />
             <p className="update-info"><b>Bio:</b></p>
