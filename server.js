@@ -57,7 +57,7 @@ app.post('/api/user', async (req, res) => {
       },
     });
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg: error.message, altMsg: 'here?' });
   }
 });
 
