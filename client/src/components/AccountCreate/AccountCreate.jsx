@@ -39,7 +39,6 @@ export default function AccountCreate({
         role: isIntern ? 'intern' : 'admin',
         ssoInfo,
       };
-      console.log('boutta send this post request: ', body);
       await axios.post('api/user', body);
       setCookie('data', {
         loggedIn: true,
@@ -63,7 +62,6 @@ export default function AccountCreate({
     } else {
       setError('');
       await postNewAccount();
-      await delay(3000); // artificial delay for occasional database latency
       refreshPage();
     }
   };

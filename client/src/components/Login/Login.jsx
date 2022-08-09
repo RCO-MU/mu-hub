@@ -35,7 +35,6 @@ function Login({
       try {
         setLoginPending(true);
         const result = await getRedirectResult(auth);
-        console.log('login result: ', result);
         if (result) {
           const ssoInfo = {
             name: result.user.displayName,

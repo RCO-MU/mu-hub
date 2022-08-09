@@ -83,7 +83,6 @@ export default function InternCreate({
     } else {
       setError('');
       await postNewIntern();
-      await delay(3000); // artificial delay for occasional database latency
       refreshPage();
     }
   };
