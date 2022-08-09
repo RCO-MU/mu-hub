@@ -2,19 +2,28 @@
 import * as React from 'react';
 import axios from 'axios';
 import './AccountUpdate.css';
+import { signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import refreshPage from '../../utils/refreshPage';
 
 export default function AccountUpdate({
-  userInfo, loading, setLoading, setCookie,
+  userInfo, loading, setLoading, setCookie, auth,
 }) {
   // **********************************************************************
   // CONSTANTS/VARIABLES
   // **********************************************************************
 
   const navigate = useNavigate();
+  let residenceLine = null;
+  if (userInfo.residence !== {}) {
+    residenceLine = (
+      <p className="update-info">
+        <i>{`• Lives in ${userInfo.intern.residence.name.split(',')[0]}`}</i>
+      </p>
+    );
+  }
 
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -74,6 +83,11 @@ export default function AccountUpdate({
 
   const handleDeleteAccount = async () => {
     await deleteAccount();
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error(error);
+    }
     setCookie('data', {
       loggedIn: false,
       user: undefined,
@@ -100,7 +114,7 @@ export default function AccountUpdate({
         {userInfo.user.role === 'intern' ? (
           <>
             <p className="update-info"><i>{`• ${userInfo.intern.division} (${userInfo.intern.startDate} Start)`}</i></p>
-            <p className="update-info"><i>{`• Lives in ${userInfo.intern.residence.name.split(',')[0]}`}</i></p>
+            {residenceLine}
             <p className="update-info"><i>{`• Goes to ${userInfo.intern.college}`}</i></p>
             <br />
             <p className="update-info"><b>Bio:</b></p>

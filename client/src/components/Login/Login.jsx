@@ -1,41 +1,70 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import Loader from '../Loader/Loader';
-import refreshPage from '../../utils/refreshPage';
-import delay from '../../utils/delay';
 import './Login.css';
+import refreshPage from '../../utils/refreshPage';
 
 function Login({
-  userInfo, setLoading, setCookie, loading,
+  userInfo, setUserInfo, setLoading, setCookie, loading, auth, provider,
 }) {
   // **********************************************************************
-  // CONSTANTS/VARIABLES
+  // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
-  const navigate = useNavigate();
+  const [loginPending, setLoginPending] = useState(false);
 
   // **********************************************************************
   // HANDLER FUNCTIONS
   // **********************************************************************
 
-  // IMPORTANT TODO: Use SSO to login user and obtain their information, remove fake delay
   const handleLogin = async () => {
-    setLoading(true);
-    setCookie('data', {
-      loggedIn: true,
-      user: userInfo.unixname,
-    });
-    await delay(3000);
-    refreshPage();
-    navigate('/');
+    try {
+      await signInWithRedirect(auth, provider);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // **********************************************************************
+  // USE EFFECT
+  // **********************************************************************
+
+  useEffect(() => {
+    async function effect() {
+      try {
+        setLoginPending(true);
+        const result = await getRedirectResult(auth);
+        console.log('login result: ', result);
+        if (result) {
+          const ssoInfo = {
+            name: result.user.displayName,
+            email: result.user.email,
+            phoneNumber: result.user.phoneNumber,
+            photoURL: result.user.photoURL,
+          };
+          setCookie('data', {
+            loggedIn: true,
+            user: userInfo.unixname,
+          });
+          setCookie('ssoInfo', ssoInfo);
+          refreshPage();
+        } else {
+          setLoginPending(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    effect();
+  }, []);
 
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
 
   // loading
-  if (loading) {
+  if (loading || loginPending) {
     return <Loader />;
   }
   // else if not loading
@@ -50,7 +79,7 @@ function Login({
       >
         Log in with SSO
       </button>
-      <p><i>(Currently not actually functional)</i></p>
+      <p><i>(Facebook SSO)</i></p>
     </div>
   );
 }

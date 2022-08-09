@@ -10,9 +10,6 @@ export default function ResidenceSearch({ residence, setResidence }) {
   const handleSelect = async (value) => {
     const geocode = await geocodeByAddress(value);
     const latLng = await getLatLng(geocode[0]);
-    console.log('value: ', value);
-    console.log('geocode: ', geocode);
-    console.log('latLng', latLng);
     setResidence({
       name: value,
       latitude: latLng.lat,

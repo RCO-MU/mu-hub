@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import refreshPage from '../../utils/refreshPage';
 import './Sidebar.css';
 
-export default function Sidebar({ userInfo, setLoading, setCookie }) {
+export default function Sidebar({
+  userInfo, setLoading, setCookie, auth,
+}) {
   // **********************************************************************
   // CONSTANTS & VARIABLES
   // **********************************************************************
@@ -32,12 +35,18 @@ export default function Sidebar({ userInfo, setLoading, setCookie }) {
 
   const handleLogout = async () => {
     setLoading(true);
-    setCookie('data', {
-      loggedIn: false,
-      user: userInfo.unixname,
-    });
-    navigate('/');
-    refreshPage();
+    try {
+      await signOut(auth);
+      setCookie('data', {
+        loggedIn: false,
+        user: userInfo.unixname,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      navigate('/');
+      refreshPage();
+    }
   };
 
   // **********************************************************************
@@ -47,6 +56,9 @@ export default function Sidebar({ userInfo, setLoading, setCookie }) {
   return (
     <section className="sidebar">
       <div id="user-info">
+        <a href="/account_update">
+          <img src={userInfo.user.ssoInfo.photoURL} alt="profile" className="profile" />
+        </a>
         <p id="name-sidebar"><b>{userInfo.user.name}</b></p>
         {userInfo.user.role === 'intern' ? (
           <p><i>{userInfo.intern.division}</i></p>

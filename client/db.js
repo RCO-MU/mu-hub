@@ -52,11 +52,12 @@ class DB {
   // **********************************************************************
 
   // creates a hub user account
-  static async createUserAccount(unixname, name, role) {
+  static async createUserAccount(unixname, name, role, ssoInfo) {
     const hubUser = new Parse.Object('HubUser');
     hubUser.set('unixname', unixname);
     hubUser.set('name', name);
     hubUser.set('role', role);
+    hubUser.set('ssoInfo', ssoInfo);
     try {
       await hubUser.save();
     } catch (error) {
