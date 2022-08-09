@@ -15,7 +15,7 @@ export default function AccountCreate({
 
   const [unixname, setUnixname] = useState('');
   const [name, setName] = useState(ssoInfo.name);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isIntern, setIsIntern] = useState(false);
   const [error, setError] = useState('');
 
   // **********************************************************************
@@ -36,7 +36,7 @@ export default function AccountCreate({
       const body = {
         unixname,
         name,
-        role: isAdmin ? 'admin' : 'intern',
+        role: isIntern ? 'intern' : 'admin',
         ssoInfo,
       };
       await axios.post('api/user', body);
@@ -44,7 +44,7 @@ export default function AccountCreate({
         loggedIn: true,
         user: unixname,
       });
-      removeCookie(ssoInfo);
+      removeCookie('ssoInfo');
     } catch (err) {
       console.error(err);
     }
@@ -109,13 +109,13 @@ export default function AccountCreate({
       </label>
       <br />
       <label htmlFor="is-admin">
-        {'Are you an admin? '}
+        {'Are you an intern? '}
         <input
           type="checkbox"
           id="is-admin"
           className="input-field checkbox ac"
           name="is-admin"
-          onChange={() => setIsAdmin(!isAdmin)}
+          onChange={() => setIsIntern(!isIntern)}
         />
       </label>
       <br />

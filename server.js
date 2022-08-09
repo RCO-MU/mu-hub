@@ -57,7 +57,7 @@ app.post('/api/user', async (req, res) => {
       },
     });
   } catch (error) {
-    res.send({ request: `POST /api/user/${unixname}/${name}/${role}/${JSON.stringify(ssoInfo)}`, errorMsg: error.message });
+    res.send({ errorMsg: error.message });
   }
 });
 
@@ -69,7 +69,7 @@ app.get('/api/user', async (req, res) => {
     const info = await DB.getUserInfo(unixname);
     res.status(200).send(info);
   } catch (error) {
-    res.send({ request: `GET /api/user/${unixname}`, errorMsg: error.message });
+    res.send({ errorMsg: error.message });
   }
 });
 
