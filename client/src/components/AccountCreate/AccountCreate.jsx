@@ -39,6 +39,7 @@ export default function AccountCreate({
         role: isIntern ? 'intern' : 'admin',
         ssoInfo,
       };
+      console.log('boutta send this post request: ', body);
       await axios.post('api/user', body);
       setCookie('data', {
         loggedIn: true,
