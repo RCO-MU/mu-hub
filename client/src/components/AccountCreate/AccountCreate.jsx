@@ -7,14 +7,14 @@ import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 
 export default function AccountCreate({
-  loading, setLoading, setCookie,
+  loading, setLoading, setCookie, removeCookie, ssoInfo,
 }) {
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
   // **********************************************************************
 
   const [unixname, setUnixname] = useState('');
-  const [name, setName] = useState('');
+  const [name, setName] = useState(ssoInfo.name);
   const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState('');
 
@@ -37,12 +37,14 @@ export default function AccountCreate({
         unixname,
         name,
         role: isAdmin ? 'admin' : 'intern',
+        ssoInfo,
       };
       await axios.post('api/user', body);
       setCookie('data', {
         loggedIn: true,
         user: unixname,
       });
+      removeCookie(ssoInfo);
     } catch (err) {
       console.error(err);
     }
@@ -60,7 +62,7 @@ export default function AccountCreate({
     } else {
       setError('');
       await postNewAccount();
-      await delay(3000); // artificial delay for occasional database latency
+      await delay(1000); // artificial delay for occasional database latency
       refreshPage();
     }
   };
@@ -79,7 +81,7 @@ export default function AccountCreate({
       <h1>Account Info</h1>
       <h2>
         This is a temporary page.
-        All of this information will eventually be retrieved via SSO integration.
+        All of this information will eventually be retrieved via Internal SSO integration.
       </h2>
       <label htmlFor="unixname">
         {'Unixname: '}
@@ -101,6 +103,7 @@ export default function AccountCreate({
           id="name"
           className="input-field text ac"
           name="name"
+          defaultValue={name}
           onChange={(e) => setName(e.target.value)}
         />
       </label>

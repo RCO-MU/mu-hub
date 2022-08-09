@@ -45,11 +45,17 @@ app.listen(port, () => {
 
 // create user account
 app.post('/api/user', async (req, res) => {
-  const { unixname, name, role } = req.body; // url params
+  const {
+    unixname, name, role, ssoInfo,
+  } = req.body;
   try {
     // call DB method
-    await DB.createUserAccount(unixname, name, role);
-    res.status(201).send({ account: { unixname, name, role } });
+    await DB.createUserAccount(unixname, name, role, ssoInfo);
+    res.status(201).send({
+      account: {
+        unixname, name, role, ssoInfo,
+      },
+    });
   } catch (error) {
     res.send({ errorMsg: error.message });
   }

@@ -3,6 +3,10 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth, FacebookAuthProvider, signInWithRedirect, getRedirectResult,
+} from 'firebase/auth';
 import Home from '../Home/Home';
 import Banner from '../Banner/Banner';
 import Navbar from '../Navbar/Navbar';
@@ -22,7 +26,20 @@ export default function App() {
   // CONSTANTS & VARIABLES
   // **********************************************************************
 
-  const [cookies, setCookie] = useCookies(['cookie-name']);
+  const [cookies, setCookie, removeCookie] = useCookies(['cookie-name']);
+
+  // Initialize Firebase for Facebook SDK Login
+  const firebaseApp = initializeApp({
+    apiKey: 'AIzaSyCniwbenknrUkxP9agmSDRdlhRmrYPTHOs',
+    authDomain: 'famous-sunbeam-292718.firebaseapp.com',
+    projectId: 'famous-sunbeam-292718',
+    storageBucket: 'famous-sunbeam-292718.appspot.com',
+    messagingSenderId: '634039612718',
+    appId: '1:634039612718:web:89cc402dc8979a1aeb76bf',
+    measurementId: 'G-FT77JZ4EDZ',
+  });
+  const provider = new FacebookAuthProvider();
+  const auth = getAuth();
 
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -30,6 +47,7 @@ export default function App() {
 
   const [loading, setLoading] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [ssoInfo, setSsoInfo] = useState({});
   const [userInfo, setUserInfo] = useState({});
   const [hasAccount, setHasAccount] = useState(false);
   const [isIntern, setIsIntern] = useState(false);
@@ -79,6 +97,7 @@ export default function App() {
       if (cookies.data !== undefined) {
         setLoggedIn(cookies.data.loggedIn);
         user = cookies.data.user;
+        setSsoInfo(cookies.ssoInfo);
       }
       // if current user is defined, fetch user info, set state vars accordingly
       if (user) {
@@ -114,109 +133,103 @@ export default function App() {
     );
   }
 
-  // figure out which element is rendered for "/" endpoint
-  const mainElement = () => {
-    // if user has never logged in, or has logged out
-    if (loggedIn === undefined || loggedIn === false) {
-      return (
-        <div className="App">
-          <Banner />
-          <Login
-            userInfo={userInfo}
-            loading={loading}
-            setLoading={setLoading}
-            setCookie={setCookie}
-          />
-        </div>
-      );
-    }
-    // if user has no account info
-    if (!hasAccount) {
-      return (
-        <div className="App">
-          <Banner />
-          <AccountCreate
-            loading={loading}
-            setLoading={setLoading}
-            setCookie={setCookie}
-          />
-        </div>
-      );
-    }
-    // if user is an intern with no intern info
-    if (isIntern && !accountComplete) {
-      return (
-        <div className="App">
-          <Banner />
-          <InternCreate
-            userInfo={userInfo}
-            loading={loading}
-            setLoading={setLoading}
-            setCookie={setCookie}
-          />
-        </div>
-      );
-    }
-    // else, logged in with all account info
+  // if user is not logged in
+  if (!loggedIn) {
     return (
-      <Home
-        userInfo={userInfo}
-        loading={loading}
-      />
+      <div className="App">
+        <Banner />
+        <Login
+          userInfo={userInfo}
+          setUserInfo={setUserInfo}
+          loading={loading}
+          setLoading={setLoading}
+          setCookie={setCookie}
+          auth={auth}
+          provider={provider}
+        />
+      </div>
     );
-  };
+  }
 
-  // display navbar and sidebar if user is logged in and account is complete.
+  // if user does not have account
+  if (!hasAccount) {
+    return (
+      <div className="App">
+        <Banner />
+        <AccountCreate
+          loading={loading}
+          setLoading={setLoading}
+          setCookie={setCookie}
+          removeCookie={removeCookie}
+          ssoInfo={ssoInfo}
+        />
+      </div>
+    );
+  }
+
+  // if user is an intern with no intern info
+  if (isIntern && !accountComplete) {
+    return (
+      <div className="App">
+        <Banner />
+        <InternCreate
+          userInfo={userInfo}
+          loading={loading}
+          setLoading={setLoading}
+          setCookie={setCookie}
+        />
+      </div>
+    );
+  }
+
+  // user is logged in and account is complete.
+  // display navbar and sidebar and have routes accessible
   return (
     <div className="App">
       <main>
-        {accountComplete && loggedIn ? (
-          <>
-            <Sidebar
-              userInfo={userInfo}
-              setLoading={setLoading}
-              setCookie={setCookie}
-            />
-            <Navbar />
-          </>
-        ) : null}
+        <Sidebar
+          userInfo={userInfo}
+          setLoading={setLoading}
+          setCookie={setCookie}
+          auth={auth}
+        />
+        <Navbar />
         <Routes>
           <Route
             path="/"
             element={(
-            mainElement()
-)}
+              <Home userInfo={userInfo} loading={loading} />
+            )}
           />
           <Route
             path="/account_update"
-            element={accountComplete && loggedIn ? (
+            element={(
               <AccountUpdate
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
                 setCookie={setCookie}
+                auth={auth}
               />
-            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
+            )}
           />
           <Route
             path="/document_upload"
-            element={accountComplete && loggedIn ? (
+            element={(
               <DocumentUpload
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
               />
-            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
-          />
-          <Route
-            path="/test"
-            element={accountComplete && loggedIn ? (
-              <ResidenceSearch />
-            ) : <NotFound loggedIn={loggedIn && accountComplete} />}
+            )}
           />
           <Route
             path="*"
-            element={<NotFound loggedIn={loggedIn && accountComplete} />}
+            element={(
+              <NotFound
+                loggedIn={loggedIn && accountComplete}
+              />
+            )}
           />
         </Routes>
       </main>
