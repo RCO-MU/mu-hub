@@ -33,11 +33,8 @@ function Login({
   useEffect(() => {
     async function effect() {
       try {
-        console.log('here1');
         setLoginPending(true);
-        console.log('here2');
         const result = await getRedirectResult(auth);
-        console.log('here3');
         console.log('login result: ', result);
         if (result) {
           const ssoInfo = {
@@ -56,7 +53,6 @@ function Login({
           setLoginPending(false);
         }
       } catch (error) {
-        console.log('here4');
         console.error(error);
       }
     }
