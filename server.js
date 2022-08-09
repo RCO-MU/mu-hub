@@ -73,18 +73,6 @@ app.get('/api/user', async (req, res) => {
   }
 });
 
-// get user information
-app.get('/user', async (req, res) => {
-  const { unixname } = req.query; // url params
-  try {
-    // call DB method
-    const info = await DB.getUserInfo(unixname);
-    res.status(200).send('unexpected: ', info);
-  } catch (error) {
-    res.send({ errorMsg: error.message });
-  }
-});
-
 // delete user
 app.delete('/api/user', async (req, res) => {
   const { unixname } = req.query; // url params

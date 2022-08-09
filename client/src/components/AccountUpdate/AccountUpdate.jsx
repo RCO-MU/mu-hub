@@ -16,8 +16,9 @@ export default function AccountUpdate({
   // **********************************************************************
 
   const navigate = useNavigate();
+
   let residenceLine = null;
-  if (userInfo.residence !== {}) {
+  if (userInfo.intern.residence.name) {
     residenceLine = (
       <p className="update-info">
         <i>{`• Lives in ${userInfo.intern.residence.name.split(',')[0]}`}</i>

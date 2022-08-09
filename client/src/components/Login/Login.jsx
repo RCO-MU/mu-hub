@@ -6,7 +6,7 @@ import './Login.css';
 import refreshPage from '../../utils/refreshPage';
 
 function Login({
-  userInfo, setUserInfo, setLoading, setCookie, loading, auth, provider,
+  userInfo, setCookie, loading, auth, provider,
 }) {
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -35,7 +35,6 @@ function Login({
       try {
         setLoginPending(true);
         const result = await getRedirectResult(auth);
-        console.log('login result: ', result);
         if (result) {
           const ssoInfo = {
             name: result.user.displayName,

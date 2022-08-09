@@ -45,16 +45,11 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
       const form = new FormData();
       form.append('file', file);
       form.append('unixname', userInfo.unixname);
-
       // call axios with specifications for file upload
       const url = 'api/upload/';
       const { data } = await axios.post(url, form, {
         headers: form.getHeaders ? form.getHeaders() : { 'Content-Type': 'multipart/form-data' },
       });
-
-      // print server resposnse
-      console.log('response from server: ', data);
-
       fileRemove(file);
       return data;
     } catch (err) {

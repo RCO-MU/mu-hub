@@ -68,7 +68,6 @@ export default function App() {
     try {
       const { data } = await axios.get('api/user', { params: { unixname: username } });
       setUserInfo(data);
-      console.log(data);
       return data;
     } catch (err) {
       console.error(err);
