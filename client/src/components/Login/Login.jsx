@@ -6,7 +6,7 @@ import './Login.css';
 import refreshPage from '../../utils/refreshPage';
 
 function Login({
-  userInfo, setUserInfo, setLoading, setCookie, loading, auth, provider,
+  userInfo, setCookie, loading, auth, provider,
 }) {
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -33,8 +33,11 @@ function Login({
   useEffect(() => {
     async function effect() {
       try {
+        console.log('here1');
         setLoginPending(true);
+        console.log('here2');
         const result = await getRedirectResult(auth);
+        console.log('here3');
         console.log('login result: ', result);
         if (result) {
           const ssoInfo = {
@@ -53,6 +56,7 @@ function Login({
           setLoginPending(false);
         }
       } catch (error) {
+        console.log('here4');
         console.error(error);
       }
     }
