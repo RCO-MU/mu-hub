@@ -57,7 +57,7 @@ app.post('/api/user', async (req, res) => {
       },
     });
   } catch (error) {
-    res.send({ errorMsg: error.message, altMsg: 'here?' });
+    res.send({ errorMsg1: error.message });
   }
 });
 
@@ -69,7 +69,7 @@ app.get('/api/user', async (req, res) => {
     const info = await DB.getUserInfo(unixname);
     res.status(200).send(info);
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg2: error.message });
   }
 });
 
@@ -81,7 +81,7 @@ app.get('/user', async (req, res) => {
     const info = await DB.getUserInfo(unixname);
     res.status(200).send('unexpected: ', info);
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg3: error.message });
   }
 });
 
@@ -93,7 +93,7 @@ app.delete('/api/user', async (req, res) => {
     const info = await DB.deleteUser(unixname);
     res.status(200).send(info);
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg4: error.message });
   }
 });
 
@@ -111,7 +111,7 @@ app.post('/api/intern', async (req, res) => {
       },
     });
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg5: error.message });
   }
 });
 
@@ -123,7 +123,7 @@ app.put('/api/intern', async (req, res) => {
     const info = await DB.putInternInfo(unixname, bio);
     res.status(200).send({ update: { unixname, bio } });
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg6: error.message });
   }
 });
 
@@ -139,7 +139,7 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
       res.status(500).send({ response: `${file.originalname} could not be uploaded` });
     }
   } catch (error) {
-    res.send({ errorMsg: error.message });
+    res.send({ errorMsg7: error.message });
   }
 });
 
