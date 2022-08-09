@@ -62,7 +62,7 @@ export default function AccountCreate({
     } else {
       setError('');
       await postNewAccount();
-      await delay(1000); // artificial delay for occasional database latency
+      await delay(3000); // artificial delay for occasional database latency
       refreshPage();
     }
   };
