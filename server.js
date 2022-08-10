@@ -1,8 +1,8 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
 require('dotenv').config();
-const https = require('https');
-const fs = require('fs');
+// const https = require('https');
+// const fs = require('fs');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
