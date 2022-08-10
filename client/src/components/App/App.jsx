@@ -20,6 +20,7 @@ import DocumentUpload from '../DocumentUpload/DocumentUpload';
 import Sidebar from '../Sidebar/Sidebar';
 import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
 import './App.css';
+import InternDiscover from '../InternDiscover/InternDiscover';
 
 export default function App() {
   // **********************************************************************
@@ -219,6 +220,17 @@ export default function App() {
                 userInfo={userInfo}
                 loading={loading}
                 setLoading={setLoading}
+              />
+            )}
+          />
+          <Route
+            path="/intern_discover"
+            element={(
+              <InternDiscover
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+                setCookie={setCookie}
               />
             )}
           />

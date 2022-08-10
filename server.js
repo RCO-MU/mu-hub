@@ -1,6 +1,8 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
 require('dotenv').config();
+const https = require('https');
+const fs = require('fs');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
@@ -34,10 +36,25 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // LISTENER
 // **********************************************************************
 
-// log port number and confirm server is launched
-app.listen(port, () => {
+// FOR LOCALHOST HTTPS TESTING
+const httpsOptions = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+  requestCert: false,
+  rejectUnauthorized: false,
+};
+const server = https.createServer(httpsOptions, app)
+  .listen(port, () => {
+    console.log(`🚀 Parse app listening on port ${port}`);
+  });
+
+// FOR PROD
+/*
+  // log port number and confirm server is launched
+  app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
-});
+  });
+*/
 
 // **********************************************************************
 // ENDPOINTS - Put all API endpoints under '/api'
