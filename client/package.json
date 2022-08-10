@@ -30,7 +30,9 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "react-scripts build",
+    "server": "nodemon server/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run start\""
   },
   "browserslist": {
     "production": [
