@@ -47,6 +47,39 @@ class DB {
     }
   }
 
+  // private helper method, gets all interns besides specified user
+  static async #getAllInterns(unixname) {
+    // setup Parse query, search for all but matching unixname
+    const intern = new Parse.Object('Intern');
+    const query = new Parse.Query(intern);
+    query.notEqualTo('unixname', unixname);
+    try {
+      // perform query
+      const interns = await query.findAll();
+      return interns.map((obj) => obj.toJSON());
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  // private helper method, computes a similarity index of two interns
+  static #computeSimilarity(i1, i2) {
+    let score = 0.0;
+    if (i1.startDate === i2.startDate) {
+      score += 0.1;
+    }
+    if (i1.division === i2.division) {
+      score += 0.2;
+    }
+    if (i1.college === i2.college) {
+      score += 0.5;
+    }
+    // latitude and longitude distance calculation
+    // bio string similarity
+    return score + Math.random();
+  }
+
   // **********************************************************************
   // MAIN METHODS
   // **********************************************************************
@@ -145,6 +178,16 @@ class DB {
       console.error(error);
       return 500;
     }
+  }
+
+  // retrieves all hub user info
+  static async getRankedInterns(unixname) {
+    let user1 = await this.#getInternObject(unixname);
+    user1 = user1.toJSON();
+    const interns = await this.#getAllInterns(unixname);
+    interns.forEach((user2) => { user2.score = this.#computeSimilarity(user1, user2); });
+    interns.sort((a, b) => ((a.score > b.score) ? -1 : 1));
+    return interns;
   }
 }
 

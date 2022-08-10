@@ -1,8 +1,8 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
 require('dotenv').config();
-// const https = require('https');
-// const fs = require('fs');
+const https = require('https');
+const fs = require('fs');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // **********************************************************************
 
 // FOR LOCALHOST HTTPS TESTING
-/*
 const httpsOptions = {
   key: fs.readFileSync('./key.pem'),
   cert: fs.readFileSync('./cert.pem'),
@@ -48,13 +47,14 @@ const server = https.createServer(httpsOptions, app)
   .listen(port, () => {
     console.log(`🚀 Parse app listening on port ${port}`);
   });
-*/
 
+/*
 // FOR PROD
 // log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
 });
+*/
 
 // **********************************************************************
 // ENDPOINTS - Put all API endpoints under '/api'
@@ -143,6 +143,18 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
     } else {
       res.status(500).send({ response: `${file.originalname} could not be uploaded` });
     }
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get ranked interns
+app.get('/api/interns', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getRankedInterns(unixname);
+    res.status(200).send(info);
   } catch (error) {
     res.send({ errorMsg: error.message });
   }
