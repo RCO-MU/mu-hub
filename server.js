@@ -154,6 +154,7 @@ app.get('/api/interns', async (req, res) => {
   try {
     // call DB method
     const info = await DB.getRankedInterns(unixname);
+    console.log('interns:', info);
     res.status(200).send(info);
   } catch (error) {
     res.send({ errorMsg: error.message });

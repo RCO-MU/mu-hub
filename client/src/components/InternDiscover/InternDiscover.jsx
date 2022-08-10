@@ -12,12 +12,14 @@ export default function InternDiscover({
   // **********************************************************************
 
   const [interns, setInterns] = useState([]);
+  const [pending, setPending] = useState(false);
 
   // **********************************************************************
   // AXIOS FUNCTIONS (GET)
   // **********************************************************************
 
   async function fetchRankedInterns(username) {
+    setPending(true);
     try {
       const { data } = await axios.get('api/interns', { params: { unixname: username } });
       return data;
@@ -35,7 +37,7 @@ export default function InternDiscover({
     async function effect() {
       const data = await fetchRankedInterns(userInfo.unixname);
       setInterns(data);
-      setLoading(false);
+      setPending(false);
     }
     // call defined function
     effect();
@@ -46,8 +48,8 @@ export default function InternDiscover({
   // **********************************************************************
 
   // loading
-  if (loading) {
-    return <Loader />;
+  if (loading || pending) {
+    return <Loader loggedIn />;
   }
   // else if not loading, return intern list
   return (

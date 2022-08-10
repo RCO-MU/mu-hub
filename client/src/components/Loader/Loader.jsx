@@ -1,9 +1,9 @@
 import * as React from 'react';
 import './Loader.css';
 
-function Loader() {
+function Loader({ loggedIn }) {
   return (
-    <div id="preloader">
+    <div id="preloader" className={loggedIn ? 'logged-in' : ''}>
       <div id="loader" />
     </div>
   );

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Parse = require('parse/node');
+const stringSimilarity = require('string-similarity');
 
 class DB {
   // **********************************************************************
@@ -16,7 +17,7 @@ class DB {
   // **********************************************************************
 
   // private helper method, gets user Parse object
-  static async #getUserObject(unixname) {
+  static async #getUserObject(unixname, toJSON) {
     // setup Parse query, search for matching unixname
     let user = new Parse.Object('HubUser');
     const query = new Parse.Query(user);
@@ -24,7 +25,7 @@ class DB {
     try {
       // perform query
       [user] = await query.find();
-      return user;
+      return toJSON ? user.toJSON() : user;
     } catch (error) {
       console.error(error);
       return null;
@@ -32,7 +33,7 @@ class DB {
   }
 
   // private helper method, gets intern Parse object
-  static async #getInternObject(unixname) {
+  static async #getInternObject(unixname, toJSON) {
     // setup Parse query, search for matching unixname
     let intern = new Parse.Object('Intern');
     const query = new Parse.Query(intern);
@@ -40,7 +41,7 @@ class DB {
     try {
       // perform query
       [intern] = await query.find();
-      return intern;
+      return toJSON ? intern.toJSON() : intern;
     } catch (error) {
       console.error(error);
       return null;
@@ -63,21 +64,48 @@ class DB {
     }
   }
 
+  // distance between two pairs of latitude and longitude
+  static #distance(lat1, lat2, lon1, lon2) {
+    lon1 *= (Math.PI / 180);
+    lon2 *= (Math.PI / 180);
+    lat1 *= (Math.PI / 180);
+    lat2 *= (Math.PI / 180);
+    // Haversine formula
+    const dlon = lon2 - lon1;
+    const dlat = lat2 - lat1;
+    const a = Math.sin(dlat / 2) ** 2
+    + Math.cos(lat1) * Math.cos(lat2)
+    * Math.sin(dlon / 2) ** 2;
+    const c = 2 * Math.asin(Math.sqrt(a));
+    const r = 3956; // radius of earth in miles
+    return (c * r);
+  }
+
   // private helper method, computes a similarity index of two interns
   static #computeSimilarity(i1, i2) {
     let score = 0.0;
+    // start date
     if (i1.startDate === i2.startDate) {
-      score += 0.1;
-    }
-    if (i1.division === i2.division) {
       score += 0.2;
     }
+    // division
+    if (i1.division === i2.division) {
+      score += 0.3;
+    }
+    // college
     if (i1.college === i2.college) {
       score += 0.5;
     }
-    // latitude and longitude distance calculation
-    // bio string similarity
-    return score + Math.random();
+    // residence proximity (added to score if within 2 miles)
+    const res1 = i1.residence;
+    const res2 = i2.residence;
+    const distance = this.#distance(res1.latitude, res2.latitude, res1.longitude, res2.longitude);
+    score += Math.max(0.0, (1.0 - distance / 2.0));
+    // bio similarity (scored 0 - 1) as long as neither bio is blank
+    if (i1.bio !== '' && i2.bio !== '') {
+      score += stringSimilarity.compareTwoStrings(i1.bio, i2.bio);
+    }
+    return score;
   }
 
   // **********************************************************************
@@ -116,17 +144,13 @@ class DB {
 
   // retrieves all hub user info
   static async getUserInfo(unixname) {
-    let user = await this.#getUserObject(unixname);
+    const user = await this.#getUserObject(unixname, true);
     let intern = null;
     // also retrieve intern info if needed
-    if (user.get('role') === 'intern') {
-      intern = await this.#getInternObject(unixname);
-      if (intern) {
-        intern = intern.toJSON();
-        delete intern.unixname; // remove redundant field
-      }
+    if (user.role === 'intern') {
+      intern = await this.#getInternObject(unixname, true);
+      delete intern.unixname; // remove redundant field
     }
-    user = user.toJSON();
     delete user.unixname; // remove redundant field
     return {
       unixname,
@@ -137,7 +161,7 @@ class DB {
 
   // updates intern bio
   static async putInternInfo(unixname, bio) {
-    const intern = await this.#getInternObject(unixname);
+    const intern = await this.#getInternObject(unixname, false);
     intern.set('bio', bio);
     try {
       await intern.save();
@@ -148,11 +172,12 @@ class DB {
 
   // deletes user from database
   static async deleteUser(unixname) {
-    const user = await this.#getUserObject(unixname);
+    const user = await this.#getUserObject(unixname, false);
     try {
       await user.destroy();
+      // also delete intern information
       if (user.get('role') === 'intern') {
-        const intern = await this.#getInternObject(unixname);
+        const intern = await this.#getInternObject(unixname, false);
         await intern.destroy();
       }
     } catch (error) {
@@ -182,10 +207,15 @@ class DB {
 
   // retrieves all hub user info
   static async getRankedInterns(unixname) {
-    let user1 = await this.#getInternObject(unixname);
-    user1 = user1.toJSON();
+    const user1 = await this.#getInternObject(unixname, true);
     const interns = await this.#getAllInterns(unixname);
-    interns.forEach((user2) => { user2.score = this.#computeSimilarity(user1, user2); });
+    // add similarity score and name to each intern
+    await Promise.all(interns.map(async (user2) => {
+      user2.score = this.#computeSimilarity(user1, user2);
+      const obj = await this.#getUserObject(user2.unixname, true);
+      user2.name = obj.name;
+    }));
+    // sort the list by similarity score
     interns.sort((a, b) => ((a.score > b.score) ? -1 : 1));
     return interns;
   }
