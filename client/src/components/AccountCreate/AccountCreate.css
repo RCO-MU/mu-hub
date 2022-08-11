@@ -1,6 +1,5 @@
 .AccountCreate {
-    margin: var(--home-margin);
-    margin-top: calc(var(--navbar-height) + var(--home-margin));
+    margin: 40px;
     text-align: center;
 }
 
