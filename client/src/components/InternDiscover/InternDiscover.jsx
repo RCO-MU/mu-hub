@@ -61,7 +61,7 @@ export default function InternDiscover({ userInfo, loading }) {
   // admins can not access this page
   if (userInfo.user.role === 'admin') {
     return (
-      <div className="InternDiscover">
+      <div className="InternDiscover blocked">
         <h1>No admin access.</h1>
         <h2 className="home-link">
           <Link to="/">

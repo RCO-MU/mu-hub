@@ -1,5 +1,6 @@
 /* ADAPTED FROM https://github.com/trananhtuat/react-drop-file-input */
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './DocumentUpload.css';
 import FormData from 'form-data';
@@ -75,6 +76,20 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
   // loading
   if (loading) {
     return <Loader />;
+  }
+
+  // admins can not access this page
+  if (userInfo.user.role === 'admin') {
+    return (
+      <div className="DocumentUpload blocked">
+        <h1>No admin access.</h1>
+        <h2 className="home-link">
+          <Link to="/">
+            Return home?
+          </Link>
+        </h2>
+      </div>
+    );
   }
 
   // ADAPTED FROM https://github.com/trananhtuat/react-drop-file-input

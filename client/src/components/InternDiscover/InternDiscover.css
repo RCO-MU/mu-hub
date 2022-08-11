@@ -5,7 +5,9 @@
     text-align: center;
 }
 
-/* TODO: Change media query widths */
+.blocked {
+    padding: 110px;
+}
 
 .intern-grid {
     margin: 0 auto;
