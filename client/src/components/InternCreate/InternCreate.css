@@ -1,4 +1,6 @@
 .InternCreate {
+    margin: var(--home-margin);
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
 }
 
