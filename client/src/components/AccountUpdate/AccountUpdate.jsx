@@ -18,7 +18,6 @@ export default function AccountUpdate({
   const navigate = useNavigate();
 
   let residenceLine = null;
-  console.log(userInfo);
   if (userInfo.user.role === 'intern' && userInfo.intern.residence.name) {
     residenceLine = (
       <p className="update-info">
@@ -127,7 +126,8 @@ export default function AccountUpdate({
             <textarea
               id="bio"
               className="input-field update text"
-              placeholder="Tell us about yourself!"
+              placeholder="Tell us about yourself! This can be your hometown,
+              interests, etc. The more, the better!"
               name="bio"
               defaultValue={userInfo.intern.bio}
               onChange={handleBioChange}

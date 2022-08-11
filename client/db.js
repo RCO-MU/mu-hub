@@ -216,6 +216,7 @@ class DB {
       user2.score = this.#computeSimilarity(user1, user2);
       const obj = await this.#getUserObject(user2.unixname, true);
       user2.name = obj.name;
+      user2.ssoInfo = obj.ssoInfo;
     }));
     // sort the list by similarity score
     interns.sort((a, b) => ((a.score > b.score) ? -1 : 1));

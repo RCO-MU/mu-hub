@@ -181,7 +181,8 @@ export default function InternCreate({
         <textarea
           id="bio"
           className="input-field text ic"
-          placeholder="Tell us about yourself! (You may edit this later.)"
+          placeholder="Tell us about yourself! This can be your hometown, interests, etc.
+          The more, the better! (You may edit this later.)"
           name="bio"
           onChange={(e) => setBio(e.target.value)}
         />

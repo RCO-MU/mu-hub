@@ -1,0 +1,30 @@
+.InternCard {
+  background-color: #9cc3f5;
+  border: 1px solid black;
+  border-radius: 20px 20px;
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  font-weight: bolder;
+  font-size: large;
+  height: 100%;
+  margin: auto;
+  padding: 10px;
+  width: 315px;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.profile.card {
+  float: left;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.intern-info {
+  font-size: medium;
+}
+
+.intern-bio {
+  padding: 5px;
+  color: rgb(48, 48, 48);
+  margin: 0;
+}

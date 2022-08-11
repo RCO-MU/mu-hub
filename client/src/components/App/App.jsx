@@ -198,7 +198,13 @@ export default function App() {
           <Route
             path="/"
             element={(
-              <Home userInfo={userInfo} loading={loading} />
+              <Home
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+                setCookie={setCookie}
+                auth={auth}
+              />
             )}
           />
           <Route

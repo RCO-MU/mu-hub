@@ -76,6 +76,8 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
   if (loading) {
     return <Loader />;
   }
+
+  // ADAPTED FROM https://github.com/trananhtuat/react-drop-file-input
   return (
     <div className="DocumentUpload">
       <h2 className="header">
@@ -123,7 +125,7 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
               onClick={handleFileUpload}
             />
           </div>
-        ) : <h4>Todo: Display previously uploaded files or file upload error.</h4>
+        ) : null
       }
     </div>
   );
