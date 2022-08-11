@@ -69,16 +69,15 @@ function Login({
   // else if not loading
   return (
     <div className="Login">
-      <h1 id="login-msg">MetaU Hub Login</h1>
+      <h1 id="login-msg"><b>MetaU Hub Login</b></h1>
       <button
         className="login-button"
         id="sso"
         type="button"
         onClick={handleLogin}
       >
-        Log in with SSO
+        Log in with Facebook SSO
       </button>
-      <p><i>(Facebook SSO)</i></p>
     </div>
   );
 }

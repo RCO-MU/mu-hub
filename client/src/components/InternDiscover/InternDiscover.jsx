@@ -37,6 +37,7 @@ export default function InternDiscover({
     async function effect() {
       const data = await fetchRankedInterns(userInfo.unixname);
       setInterns(data);
+      console.log(data);
       setPending(false);
     }
     // call defined function

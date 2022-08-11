@@ -98,6 +98,12 @@ export default function AccountUpdate({
     refreshPage();
   };
 
+  const handleBioChange = (e) => {
+    const newBio = e.target.value;
+    setBio(newBio);
+    setIsChanged(userInfo.intern.bio !== newBio);
+  };
+
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
@@ -118,15 +124,13 @@ export default function AccountUpdate({
             <p className="update-info"><i>{`• ${userInfo.intern.division} (${userInfo.intern.startDate} Start)`}</i></p>
             {residenceLine}
             <p className="update-info"><i>{`• Goes to ${userInfo.intern.college}`}</i></p>
-            <br />
-            <p className="update-info"><b>Bio:</b></p>
             <textarea
               id="bio"
               className="input-field update text"
               placeholder="Tell us about yourself!"
               name="bio"
               defaultValue={userInfo.intern.bio}
-              onChange={(e) => { setBio(e.target.value); setIsChanged(true); }}
+              onChange={handleBioChange}
             />
             <br />
             {isChanged ? (

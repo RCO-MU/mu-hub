@@ -41,7 +41,7 @@ class DB {
     try {
       // perform query
       [intern] = await query.find();
-      return toJSON ? intern.toJSON() : intern;
+      return intern ? (toJSON ? intern.toJSON() : intern) : null;
     } catch (error) {
       console.error(error);
       return null;
@@ -96,11 +96,11 @@ class DB {
     if (i1.college === i2.college) {
       score += 0.5;
     }
-    // residence proximity (added to score if within 2 miles)
+    // residence proximity (added to score if within 5 miles)
     const res1 = i1.residence;
     const res2 = i2.residence;
     const distance = this.#distance(res1.latitude, res2.latitude, res1.longitude, res2.longitude);
-    score += Math.max(0.0, (1.0 - distance / 2.0));
+    score += Math.max(0.0, (1.0 - distance / 5.0));
     // bio similarity (scored 0 - 1) as long as neither bio is blank
     if (i1.bio !== '' && i2.bio !== '') {
       score += stringSimilarity.compareTwoStrings(i1.bio, i2.bio);
@@ -149,7 +149,9 @@ class DB {
     // also retrieve intern info if needed
     if (user.role === 'intern') {
       intern = await this.#getInternObject(unixname, true);
-      delete intern.unixname; // remove redundant field
+      if (intern) {
+        delete intern.unixname;
+      } // remove redundant field
     }
     delete user.unixname; // remove redundant field
     return {

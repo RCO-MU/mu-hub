@@ -1,7 +1,7 @@
 .AccountUpdate {
-    margin: 20px;
-    margin-left: calc(var(--sidebar-width) + 20px);
-    margin-top: calc(var(--navbar-height) + 20px);
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
     justify-content: center;
 }
@@ -27,6 +27,8 @@
 }
 
 .update.text {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px 10px;
     padding: 10px;
     font-size: large;
     margin: 10px;
@@ -34,10 +36,6 @@
     max-width: 85%;
     height: auto;
     min-height: 25px;
-}
-
-label {
-    font-size: larger;
 }
 
 .delete {

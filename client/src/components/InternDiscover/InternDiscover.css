@@ -1,7 +1,8 @@
 .InternDiscover {
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
-    margin-left: calc(var(--sidebar-width) + 20px);
-    margin-top: calc(var(--navbar-height) + 20px);
 }
 
 .text {

@@ -86,7 +86,7 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
       >
         <div className="drop-file-input-label">
           <img src={uploadImg} alt="" />
-          <p>Click OR Drag and Drop</p>
+          <p>Click / Drag & Drop</p>
         </div>
         <input type="file" name="file" value="" onChange={onFileDrop} encType="multipart/form-data" />
       </div>
@@ -123,7 +123,7 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
               onClick={handleFileUpload}
             />
           </div>
-        ) : <h2>Todo: Display previously uploaded files or file upload error.</h2>
+        ) : <h4>Todo: Display previously uploaded files or file upload error.</h4>
       }
     </div>
   );

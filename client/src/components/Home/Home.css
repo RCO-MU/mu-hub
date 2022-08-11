@@ -1,7 +1,7 @@
 .Home {
-    margin: 20px;
-    margin-left: calc(var(--sidebar-width) + 20px);
-    margin-top: calc(var(--navbar-height) + 20px);
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
     border: 1px solid black;
     background-color: white;

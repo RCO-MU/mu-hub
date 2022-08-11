@@ -1,15 +1,14 @@
 import * as React from 'react';
 import axios from 'axios';
-import './InternCreate.css';
 import { useState } from 'react';
 import Select, { createFilter } from 'react-select';
 import Loader from '../Loader/Loader';
-import delay from '../../utils/delay';
 import refreshPage from '../../utils/refreshPage';
 import colleges from '../../data/colleges.json';
 import startDates from '../../data/startDates.json';
 import divisions from '../../data/divisions.json';
 import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
+import './InternCreate.css';
 
 export default function InternCreate({
   userInfo, loading, setLoading,
@@ -29,6 +28,38 @@ export default function InternCreate({
   const divisionOptions = divisions.map((division) => ({
     value: division, label: division,
   }));
+
+  // react-select styling, adapted from:
+  // https://stackoverflow.com/questions/54218351/changing-height-of-react-select-component/60912805#60912805
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      background: 'rgb(252,252,252)',
+      borderColor: '#bbbbbb',
+      minHeight: '48px',
+      height: '48px',
+      boxShadow: state.isFocused ? null : null,
+    }),
+
+    valueContainer: (provided) => ({
+      ...provided,
+      height: '48px',
+      padding: '0 6px',
+    }),
+
+    input: (provided) => ({
+      ...provided,
+      margin: '0px',
+      textAlign: 'center',
+    }),
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    indicatorsContainer: (provided) => ({
+      ...provided,
+      height: '48px',
+    }),
+  };
 
   // **********************************************************************
   // STATE VARIABLES AND FUNCTIONS
@@ -98,34 +129,33 @@ export default function InternCreate({
   // else if not loading, return intern account creation form
   return (
     <div className="InternCreate">
-      <h1>Create your intern account!</h1>
+      <h3>Create your intern account!</h3>
       <label htmlFor="startDate">
         {'Start Date: '}
-        <br />
         <Select
           name="startDate"
           classNamePrefix="select"
           options={startDateOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setStartDate(e.value)}
+          styles={customStyles}
         />
       </label>
       <br />
       <label htmlFor="division">
         {'Division: '}
-        <br />
         <Select
           name="division"
           classNamePrefix="select"
           options={divisionOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setDivision(e.value)}
+          styles={customStyles}
         />
       </label>
       <br />
       <label htmlFor="residence">
         {'Residence: '}
-        <br />
         <ResidenceSearch
           residence={residence}
           setResidence={setResidence}
@@ -134,7 +164,6 @@ export default function InternCreate({
       <br />
       <label htmlFor="college">
         {'College: '}
-        <br />
         <Select
           name="colleges"
           classNamePrefix="select"
@@ -142,6 +171,7 @@ export default function InternCreate({
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setCollege(e.value)}
           placeholder="Search colleges..."
+          styles={customStyles}
         />
       </label>
       <br />

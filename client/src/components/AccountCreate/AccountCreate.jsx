@@ -77,14 +77,10 @@ export default function AccountCreate({
   // else if not loading
   return (
     <div className="AccountCreate">
-      <h1>Account Info</h1>
-      <h2>
-        This is a temporary page.
-        All of this information will eventually be retrieved via Internal SSO integration.
-      </h2>
+      <h3>Account Info</h3>
+      <br />
       <label htmlFor="unixname">
         {'Unixname: '}
-        <br />
         <input
           type="text"
           id="unixname"
@@ -94,9 +90,10 @@ export default function AccountCreate({
         />
       </label>
       <br />
+      <br />
+      <br />
       <label htmlFor="Name">
         {'Name: '}
-        <br />
         <input
           type="text"
           id="name"
@@ -107,8 +104,9 @@ export default function AccountCreate({
         />
       </label>
       <br />
+      <br />
+      <br />
       <label htmlFor="is-admin">
-        {'Are you an intern? '}
         <input
           type="checkbox"
           id="is-admin"
@@ -116,6 +114,7 @@ export default function AccountCreate({
           name="is-admin"
           onChange={() => setIsIntern(!isIntern)}
         />
+        <span id="admin-span">Are you an intern?</span>
       </label>
       <br />
       <input
