@@ -6,10 +6,22 @@
     padding-left: 12px !important;
 }
 
+.css-b62m3t-container {
+    width: 400px;
+    margin: auto;
+}
+
 #bio {
     background-color: rgb(252,252,252);
     border-color: #bbbbbb;
+    height: 150px;
+    min-height: 120px;
+    width: 500px;
     min-width: 250px;
-    max-width: 1000px;
+    max-width: min(750px, 90%);
+}
+
+label {
+    font-size: larger;
 }
 

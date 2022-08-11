@@ -38,6 +38,8 @@ export default function InternCreate({
       borderColor: '#bbbbbb',
       minHeight: '48px',
       height: '48px',
+      width: '400px',
+      fontSize: 'large',
       boxShadow: state.isFocused ? null : null,
     }),
 
@@ -45,16 +47,27 @@ export default function InternCreate({
       ...provided,
       height: '48px',
       padding: '0 6px',
+      width: '400px',
+      fontSize: 'large',
+    }),
+
+    menu: (provided) => ({
+      ...provided,
+      width: '400px',
+      fontSize: 'large',
     }),
 
     input: (provided) => ({
       ...provided,
       margin: '0px',
       textAlign: 'center',
+      fontSize: 'large',
     }),
+
     indicatorSeparator: () => ({
       display: 'none',
     }),
+
     indicatorsContainer: (provided) => ({
       ...provided,
       height: '48px',
