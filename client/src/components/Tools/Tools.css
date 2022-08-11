@@ -7,9 +7,10 @@
     background-color: #e3e3e3;
     border: 1px solid rgb(183, 183, 183);
     color: black;
-    font-size: large;
-    height: 80px;
-    width: 100%;
+    font-size: x-large;
+    height: 100px;
+    width: 350px;
+    max-width: 100%;
 }
 
 .action-button.tool:hover {
