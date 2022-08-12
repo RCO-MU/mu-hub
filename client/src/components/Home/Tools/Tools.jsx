@@ -36,6 +36,13 @@ export default function Tools() {
       <button
         className="action-button tool"
         type="button"
+        onClick={() => navigate('/blog')}
+      >
+        Blog Posts
+      </button>
+      <button
+        className="action-button tool"
+        type="button"
         onClick={() => {}}
       >
         More coming soon...

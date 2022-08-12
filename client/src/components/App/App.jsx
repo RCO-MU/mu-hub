@@ -16,6 +16,7 @@ import InternCreate from '../Account/InternCreate/InternCreate';
 import AccountUpdate from '../Account/AccountUpdate/AccountUpdate';
 import DocumentUpload from '../Home/Tools/DocumentUpload/DocumentUpload';
 import InternDiscover from '../Home/Tools/InternDiscover/InternDiscover';
+import Blog from '../Home/Tools/Blog/Blog';
 import NotFound from '../NotFound/NotFound';
 import './App.css';
 import AnnouncementCreate from '../Home/Announcements/AnnouncementCreate/AnnouncementCreate';
@@ -246,6 +247,12 @@ export default function App() {
                 loading={loading}
                 setLoading={setLoading}
               />
+            )}
+          />
+          <Route
+            path="/blog"
+            element={(
+              <Blog />
             )}
           />
           <Route
