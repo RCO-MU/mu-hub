@@ -119,13 +119,27 @@ class DB {
     if (a.division && a.division !== userInfo.intern.division) {
       return false;
     }
-    if (a.residence && a.residence !== userInfo.intern.residence) {
+    if (a.residence && a.residence.name !== userInfo.intern.residence.name) {
       return false;
     }
     if (a.college && a.college !== userInfo.intern.college) {
       return false;
     }
     return true;
+  }
+
+  static async #getUsersAnnouncements(unixname) {
+    const announcement = new Parse.Object('Announcements');
+    const query = new Parse.Query(announcement);
+    query.equalTo('posterInfo.unixname', unixname);
+    try {
+      // perform query
+      const announcements = await query.find();
+      return announcements;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
   }
 
   // **********************************************************************
@@ -192,7 +206,7 @@ class DB {
     }
   }
 
-  // deletes user from database
+  // deletes user and all associated data from database
   static async deleteUser(unixname) {
     const user = await this.#getUserObject(unixname, false);
     try {
@@ -201,7 +215,11 @@ class DB {
       if (user.get('role') === 'intern') {
         const intern = await this.#getInternObject(unixname, false);
         await intern.destroy();
+        const files = await this.getFiles(unixname, false);
+        await files.forEach((file) => file.destroy());
       }
+      const announcements = await this.#getUsersAnnouncements(unixname);
+      await announcements.forEach((a) => a.destroy());
     } catch (error) {
       console.error(error);
     }
@@ -228,14 +246,14 @@ class DB {
   }
 
   // creates a file entry
-  static async getFiles(unixname) {
+  static async getFiles(unixname, toJSON) {
     const internFile = new Parse.Object('InternFile');
     const query = new Parse.Query(internFile);
     query.equalTo('owner', unixname);
     try {
       // perform query
       const files = await query.findAll();
-      return files.map((obj) => obj.toJSON());
+      return toJSON ? files.map((obj) => obj.toJSON()) : files;
     } catch (error) {
       console.error(error);
       return null;

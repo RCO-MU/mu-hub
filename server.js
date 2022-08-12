@@ -36,6 +36,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // LISTENER
 // **********************************************************************
 
+/*
 // FOR LOCALHOST HTTPS TESTING
 const httpsOptions = {
   key: fs.readFileSync('./key.pem'),
@@ -47,14 +48,13 @@ const server = https.createServer(httpsOptions, app)
   .listen(port, () => {
     console.log(`🚀 Parse app listening on port ${port}`);
   });
+*/
 
-/*
 // FOR PROD
 // log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
 });
-*/
 
 // **********************************************************************
 // ENDPOINTS - Put all API endpoints under '/api'
@@ -153,7 +153,7 @@ app.get('/api/file', async (req, res) => {
   const { unixname } = req.query; // url params
   try {
     // call DB method
-    const info = await DB.getFiles(unixname);
+    const info = await DB.getFiles(unixname, true);
     res.status(200).send(info);
   } catch (error) {
     res.send({ errorMsg: error.message });
@@ -186,7 +186,7 @@ app.get('/api/announcements', async (req, res) => {
 
 // post announcement
 app.post('/api/announcements', async (req, res) => {
-  const announcement = req.body; // url params
+  const announcement = req.body;
   try {
     // call DB method
     const info = await DB.postAnnouncement(announcement);

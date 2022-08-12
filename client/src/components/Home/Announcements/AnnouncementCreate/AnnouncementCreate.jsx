@@ -94,7 +94,6 @@ export default function AnnouncementCreate({ userInfo, loading, setLoading }) {
         college: college ? college.value : undefined,
         role: role ? 'admin' : undefined,
       };
-      // console.log(body);
     }
     try {
       await axios.post('api/announcements', body);

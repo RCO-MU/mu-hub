@@ -136,9 +136,7 @@ export default function DocumentUpload({ userInfo, loading, setLoading }) {
       <h2 className="header">
         Upload your documents here:
       </h2>
-      <div
-        className="drop-file-input"
-      >
+      <div className="drop-file-input">
         <div className="drop-file-input-label">
           <img src={uploadImg} alt="" />
           <p>Click / Drag & Drop</p>
