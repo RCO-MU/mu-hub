@@ -51,3 +51,36 @@
 .action-button {
     margin: 10px;
 }
+
+.tooltip.delete {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+    
+.tooltip.delete .tooltiptext.delete {
+    visibility: hidden;
+    width: 0px;
+    max-height: 110px;
+    height:auto;
+    top: calc(100% + 40px);
+    left: -110px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.action-button.delete:hover + .tooltip.delete > .tooltiptext.delete {
+    width: 320px;
+    visibility: visible;
+    margin-left: -160px;
+}
+

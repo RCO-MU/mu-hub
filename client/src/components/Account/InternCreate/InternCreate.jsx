@@ -129,6 +129,13 @@ export default function InternCreate({
       <br />
       <label htmlFor="residence">
         {'Residence: '}
+        <div className="tooltip res">
+          ?
+          <span className="tooltiptext res">
+            Residence information is optional and is only
+            used to match interns based on shared residence.
+          </span>
+        </div>
         <ResidenceSearch
           residence={residence}
           setResidence={setResidence}

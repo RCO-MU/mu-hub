@@ -19,3 +19,20 @@
     width: 30%; 
     padding: 5px;
 }
+
+@media (max-width: 1060px) {
+    .left-container {
+        float: none;
+        margin: auto;
+        width: 100%;
+    }
+    .right-container {
+        float: none;
+        margin: auto;
+        width: 100%;
+    }
+    .action-button.tool {
+        height: 50px;
+        width: 100px;
+    }
+}

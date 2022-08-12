@@ -162,6 +162,12 @@ export default function AccountUpdate({
       >
         Delete Account
       </button>
+      <div className="tooltip delete">
+        <span className="tooltiptext delete">
+          This action is final and cannot be undone.
+          All profile information, including uploaded files and posts, will be permanently removed.
+        </span>
+      </div>
     </div>
   );
 }

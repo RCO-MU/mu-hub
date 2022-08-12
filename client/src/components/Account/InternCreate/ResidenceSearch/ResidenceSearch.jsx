@@ -33,7 +33,7 @@ export default function ResidenceSearch({ residence, setResidence }) {
         }) => (
           <div>
             <input
-              className="input-field"
+              className="input-field res"
               {...getInputProps({
                 placeholder: 'Search Places...',
                 className: 'location-search-input',

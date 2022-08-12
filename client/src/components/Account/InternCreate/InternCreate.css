@@ -25,3 +25,40 @@ label {
     font-size: larger;
 }
 
+.tooltip.res {
+    position: relative;
+    display: inline-block;
+    border: 1px solid rgb(167, 167, 167);
+    border-radius: 50%;
+    padding: 5px;
+}
+    
+.tooltip.res .tooltiptext.res {
+    visibility: hidden;
+    width: 0px;
+    max-height: 100px;
+    height:auto;
+    top: 0px;
+    left: 50px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.tooltip.res:hover > .tooltiptext.res {
+    width: 320px;
+    visibility: visible;
+}
+
+.tooltip.res:hover {
+    cursor: pointer;
+}
+

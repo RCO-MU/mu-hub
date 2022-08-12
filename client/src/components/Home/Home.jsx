@@ -21,11 +21,11 @@ export default function Home({ userInfo }) {
   // intern view
   return (
     <div className="Home">
-      <div className="left-container">
-        <Announcements userInfo={userInfo} />
-      </div>
       <div className="right-container">
         <Tools />
+      </div>
+      <div className="left-container">
+        <Announcements userInfo={userInfo} />
       </div>
     </div>
   );

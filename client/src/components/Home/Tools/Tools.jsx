@@ -26,7 +26,6 @@ export default function Tools() {
       >
         Discover Interns
       </button>
-      <br />
       <button
         className="action-button tool"
         type="button"
@@ -34,7 +33,6 @@ export default function Tools() {
       >
         Upload Documents
       </button>
-      <br />
       <button
         className="action-button tool"
         type="button"

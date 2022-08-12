@@ -36,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // LISTENER
 // **********************************************************************
 
-/*
 // FOR LOCALHOST HTTPS TESTING
 const httpsOptions = {
   key: fs.readFileSync('./key.pem'),
@@ -48,13 +47,14 @@ const server = https.createServer(httpsOptions, app)
   .listen(port, () => {
     console.log(`🚀 Parse app listening on port ${port}`);
   });
-*/
 
+/*
 // FOR PROD
 // log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
 });
+*/
 
 // **********************************************************************
 // ENDPOINTS - Put all API endpoints under '/api'
