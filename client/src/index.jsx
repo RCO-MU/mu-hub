@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import M from 'materialize-css';
 import App from './components/App/App';
 import reportWebVitals from './utils/reportWebVitals';
 

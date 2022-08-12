@@ -1,0 +1,19 @@
+.Tools h2 {
+    font-size: 60px;
+    margin: 20px;
+}
+
+.action-button.tool {
+    background-color: #e3e3e3;
+    border: 1px solid rgb(183, 183, 183);
+    color: black;
+    font-size: x-large;
+    height: 100px;
+    width: 350px;
+    max-width: min(300px, 100%);
+    min-width: 240px;
+}
+
+.action-button.tool:hover {
+    background-color: #a5a5a5;
+}

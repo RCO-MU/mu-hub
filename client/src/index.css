@@ -21,5 +21,6 @@ code {
 
 :root {
   --navbar-height: 150px;
-  --sidebar-width: 205px;
+  --sidebar-width: 230px;
+  --home-margin: 30px;
 }

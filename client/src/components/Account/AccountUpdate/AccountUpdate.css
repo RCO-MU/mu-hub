@@ -1,0 +1,86 @@
+.AccountUpdate {
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
+    text-align: center;
+    justify-content: center;
+}
+
+.user-card {
+    background-color: #9cc3f5;
+    border-radius: 20px 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid black;
+    max-width: 820px;
+    overflow: hidden;
+    font-size: large;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.update-info {
+    margin: 10px;
+}
+
+#name-update {
+    font-size: xx-large;
+}
+
+#bio.update {
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px 10px;
+    padding: 10px;
+    font-size: large;
+    margin: 10px;
+    min-width: min(85%, 200px);
+    max-width: 85%;
+    height: 100px;
+    min-height: 50px;
+}
+
+.delete {
+    background-color: red;
+    border: 0px;
+}
+
+.delete:hover {
+    background-color: rgb(200, 0, 0);
+}
+
+.action-button {
+    margin: 10px;
+}
+
+.tooltip.delete {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+    
+.tooltip.delete .tooltiptext.delete {
+    visibility: hidden;
+    width: 0px;
+    max-height: 110px;
+    height:auto;
+    top: calc(100% + 40px);
+    left: -110px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.action-button.delete:hover + .tooltip.delete > .tooltiptext.delete {
+    width: 320px;
+    visibility: visible;
+    margin-left: -160px;
+}
+

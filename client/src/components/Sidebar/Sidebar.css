@@ -5,11 +5,17 @@
     background: #e0e0e0;
     position: fixed;
     height: 100%;
-    box-shadow: rgba(0, 0, 0, 0.25) 1.5px 1.5px 2px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 
 .profile {
     margin-top: 10px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.profile:hover {
+    cursor: pointer;
 }
 
 #user-info {
@@ -20,6 +26,11 @@
 
 #name-sidebar {
     font-size: 20px;
+    margin: 5px;
+}
+
+#division-sidebar {
+    margin: 5px;
 }
 
 hr {
@@ -38,7 +49,6 @@ hr {
     width: 160px;
 }
 
-
 .action-button.side:hover {
     background-color: #a5a5a5;
 }
@@ -49,7 +59,7 @@ hr {
     padding: 10px;
 }
 
-#links h2 {
+#links h4 {
     margin: 0;
 }
 

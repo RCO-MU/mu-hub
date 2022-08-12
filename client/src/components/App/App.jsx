@@ -4,22 +4,22 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth, FacebookAuthProvider, signInWithRedirect, getRedirectResult,
-} from 'firebase/auth';
-import Home from '../Home/Home';
-import Banner from '../Banner/Banner';
-import Navbar from '../Navbar/Navbar';
+import { getAuth, FacebookAuthProvider } from 'firebase/auth';
 import Loader from '../Loader/Loader';
-import NotFound from '../NotFound/NotFound';
-import Login from '../Login/Login';
-import AccountCreate from '../AccountCreate/AccountCreate';
-import InternCreate from '../InternCreate/InternCreate';
-import AccountUpdate from '../AccountUpdate/AccountUpdate';
-import DocumentUpload from '../DocumentUpload/DocumentUpload';
+import Banner from '../Navbar/Banner/Banner';
+import Navbar from '../Navbar/Navbar';
 import Sidebar from '../Sidebar/Sidebar';
-import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
+import Home from '../Home/Home';
+import Login from '../Account/Login/Login';
+import AccountCreate from '../Account/AccountCreate/AccountCreate';
+import InternCreate from '../Account/InternCreate/InternCreate';
+import AccountUpdate from '../Account/AccountUpdate/AccountUpdate';
+import DocumentUpload from '../Home/Tools/DocumentUpload/DocumentUpload';
+import InternDiscover from '../Home/Tools/InternDiscover/InternDiscover';
+import Blog from '../Home/Tools/Blog/Blog';
+import NotFound from '../NotFound/NotFound';
 import './App.css';
+import AnnouncementCreate from '../Home/Announcements/AnnouncementCreate/AnnouncementCreate';
 
 export default function App() {
   // **********************************************************************
@@ -197,7 +197,13 @@ export default function App() {
           <Route
             path="/"
             element={(
-              <Home userInfo={userInfo} loading={loading} />
+              <Home
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+                setCookie={setCookie}
+                auth={auth}
+              />
             )}
           />
           <Route
@@ -220,6 +226,33 @@ export default function App() {
                 loading={loading}
                 setLoading={setLoading}
               />
+            )}
+          />
+          <Route
+            path="/intern_discover"
+            element={(
+              <InternDiscover
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+                setCookie={setCookie}
+              />
+            )}
+          />
+          <Route
+            path="/create_announcement"
+            element={(
+              <AnnouncementCreate
+                userInfo={userInfo}
+                loading={loading}
+                setLoading={setLoading}
+              />
+            )}
+          />
+          <Route
+            path="/blog"
+            element={(
+              <Blog />
             )}
           />
           <Route

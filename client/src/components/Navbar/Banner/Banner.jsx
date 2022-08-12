@@ -1,23 +1,26 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import logo from '../../../data/images/metalogo.jpg';
 import './Banner.css';
-import logo from '../../data/images/metalogo.jpg';
 
 export default function Banner({ clickable }) {
   // **********************************************************************
   // CONSTANTS & VARIABLES
   // **********************************************************************
 
+  const navigate = useNavigate();
+
   // renders logo based on if it can be clicked on
   const makeLogo = () => {
     if (clickable) {
       return (
-        <a href="/">
-          <img
-            src={logo}
-            alt="logo"
-            className="logo"
-          />
-        </a>
+        <img
+          src={logo}
+          alt="logo"
+          className="logo"
+          onClick={() => navigate('/')}
+          onKeyDown={() => {}}
+        />
       );
     }
     // not clickable

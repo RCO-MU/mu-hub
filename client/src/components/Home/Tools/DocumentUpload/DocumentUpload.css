@@ -1,7 +1,7 @@
 .DocumentUpload {
-    margin: 20px;
-    margin-left: calc(var(--sidebar-width) + 20px);
-    margin-top: calc(var(--navbar-height) + 20px);
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
     justify-content: center;
 }
@@ -9,7 +9,7 @@
 .drop-file-input {
     position: relative;
     width: 500px;
-    height: 200px;
+    height: 220px;
     border: 2px dashed black;
     border-radius: 20px;
     margin: auto;
@@ -35,6 +35,10 @@
     color: var(--txt-second-color);
     font-weight: 600;
     padding: 10px;
+}
+
+.drop-file-input-label p {
+    margin: 5px;
 }
 
 .drop-file-input-label img {
@@ -95,4 +99,8 @@
 
 .drop-file-preview-item:hover .drop-file-preview-item-del {
     opacity: 1;
+}
+
+.previous-files a {
+    font-size: 20px;
 }

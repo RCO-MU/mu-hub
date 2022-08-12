@@ -1,0 +1,64 @@
+.InternCreate {
+    text-align: center;
+}
+
+.select__value-container {
+    padding-left: 12px !important;
+}
+
+.css-b62m3t-container {
+    width: 400px;
+    margin: auto;
+}
+
+#bio {
+    background-color: rgb(252,252,252);
+    border-color: #bbbbbb;
+    height: 150px;
+    min-height: 120px;
+    width: 500px;
+    min-width: 250px;
+    max-width: min(750px, 90%);
+}
+
+label {
+    font-size: larger;
+}
+
+.tooltip.res {
+    position: relative;
+    display: inline-block;
+    border: 1px solid rgb(167, 167, 167);
+    border-radius: 50%;
+    padding: 5px;
+}
+    
+.tooltip.res .tooltiptext.res {
+    visibility: hidden;
+    width: 0px;
+    max-height: 100px;
+    height:auto;
+    top: 0px;
+    left: 50px;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.tooltip.res:hover > .tooltiptext.res {
+    width: 320px;
+    visibility: visible;
+}
+
+.tooltip.res:hover {
+    cursor: pointer;
+}
+

@@ -15,7 +15,7 @@ export default function Sidebar({
     <div className="link">
       <p>
         <a
-          style={{ color: '#1974f3' }}
+          style={{ color: '#1974f3', borderBottom: '1.5px solid #1974f3' }}
           href={link}
           target="_blank"
           rel="noopener noreferrer"
@@ -56,12 +56,16 @@ export default function Sidebar({
   return (
     <section className="sidebar">
       <div id="user-info">
-        <a href="/account_update">
-          <img src={userInfo.user.ssoInfo.photoURL} alt="profile" className="profile" />
-        </a>
+        <img
+          src={userInfo.user.ssoInfo.photoURL}
+          alt="profile"
+          className="profile"
+          onClick={() => navigate('/account_update')}
+          onKeyDown={() => {}}
+        />
         <p id="name-sidebar"><b>{userInfo.user.name}</b></p>
         {userInfo.user.role === 'intern' ? (
-          <p><i>{userInfo.intern.division}</i></p>
+          <p id="division-sidebar"><i>{userInfo.intern.division}</i></p>
         ) : null}
         <button
           className="action-button side"
@@ -81,7 +85,7 @@ export default function Sidebar({
         <hr />
       </div>
       <div id="links">
-        <h2>Useful Links</h2>
+        <h4>Useful Links</h4>
         {linkElement('https://sites.google.com/fb.com/internexperiencehub/home', 'Intern Experience')}
         {linkElement('https://www.internalfb.com/onboarding/n00b/plan?comm_entry_point=IO_EMAIL_SPLIT', 'Onboarding Portal')}
         {linkElement('https://www.internalfb.com/profile/view', 'Internal Profile')}

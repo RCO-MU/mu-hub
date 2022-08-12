@@ -1,15 +1,16 @@
 import * as React from 'react';
 import axios from 'axios';
-import './InternCreate.css';
 import { useState } from 'react';
 import Select, { createFilter } from 'react-select';
-import Loader from '../Loader/Loader';
-import delay from '../../utils/delay';
-import refreshPage from '../../utils/refreshPage';
-import colleges from '../../data/colleges.json';
-import startDates from '../../data/startDates.json';
-import divisions from '../../data/divisions.json';
-import ResidenceSearch from '../ResidenceSearch/ResidenceSearch';
+import Loader from '../../Loader/Loader';
+import refreshPage from '../../../utils/refreshPage';
+import colleges from '../../../data/colleges.json';
+import startDates from '../../../data/startDates.json';
+import divisions from '../../../data/divisions.json';
+import ResidenceSearch from './ResidenceSearch/ResidenceSearch';
+import customStyles from '../../../data/reactSelectStyles';
+import scrollToBottom from '../../../utils/scrollToBottom';
+import './InternCreate.css';
 
 export default function InternCreate({
   userInfo, loading, setLoading,
@@ -63,7 +64,7 @@ export default function InternCreate({
         college,
         bio,
       };
-      await axios.post('api/intern', body); // TODO fix post api/intern with req.body
+      await axios.post('api/intern', body);
     } catch (err) {
       console.error(err);
     }
@@ -76,10 +77,13 @@ export default function InternCreate({
   const handleOnInternInfoSubmit = async () => {
     if (startDate === '') {
       setError('Please enter your start date.');
+      scrollToBottom();
     } else if (division === '') {
       setError('Please select your MetaU division.');
+      scrollToBottom();
     } else if (college === '') {
       setError('Please select your college.');
+      scrollToBottom();
     } else {
       setError('');
       await postNewIntern();
@@ -98,34 +102,40 @@ export default function InternCreate({
   // else if not loading, return intern account creation form
   return (
     <div className="InternCreate">
-      <h1>Create your intern account!</h1>
+      <h3>Create your intern account!</h3>
       <label htmlFor="startDate">
         {'Start Date: '}
-        <br />
         <Select
           name="startDate"
           classNamePrefix="select"
           options={startDateOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setStartDate(e.value)}
+          styles={customStyles}
         />
       </label>
       <br />
       <label htmlFor="division">
         {'Division: '}
-        <br />
         <Select
           name="division"
           classNamePrefix="select"
           options={divisionOptions}
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setDivision(e.value)}
+          styles={customStyles}
         />
       </label>
       <br />
       <label htmlFor="residence">
         {'Residence: '}
-        <br />
+        <div className="tooltip res">
+          ?
+          <span className="tooltiptext res">
+            Residence information is optional and is only
+            used to match interns based on shared residence.
+          </span>
+        </div>
         <ResidenceSearch
           residence={residence}
           setResidence={setResidence}
@@ -134,7 +144,6 @@ export default function InternCreate({
       <br />
       <label htmlFor="college">
         {'College: '}
-        <br />
         <Select
           name="colleges"
           classNamePrefix="select"
@@ -142,6 +151,7 @@ export default function InternCreate({
           filterOption={createFilter({ ignoreAccents: false })}
           onChange={(e) => setCollege(e.value)}
           placeholder="Search colleges..."
+          styles={customStyles}
         />
       </label>
       <br />
@@ -151,7 +161,8 @@ export default function InternCreate({
         <textarea
           id="bio"
           className="input-field text ic"
-          placeholder="Tell us about yourself! (You may edit this later.)"
+          placeholder="Tell us about yourself! This can be your hometown, interests, etc.
+          The more, the better! (You may edit this later.)"
           name="bio"
           onChange={(e) => setBio(e.target.value)}
         />

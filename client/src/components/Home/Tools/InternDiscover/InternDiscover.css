@@ -1,0 +1,37 @@
+.InternDiscover {
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
+    text-align: center;
+}
+
+.blocked {
+    padding: 110px;
+}
+
+.intern-grid {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    grid-auto-rows: min-content;
+    row-gap: 20px;
+    z-index: 0;
+}
+  
+@media (min-width: 1000px) {
+.intern-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (min-width: 1300px) {
+.intern-grid { 
+    grid-template-columns: repeat(3, 1fr);
+}
+}
+
+@media (min-width: 1600px) {
+.intern-grid { 
+    grid-template-columns: repeat(4, 1fr);
+}
+}

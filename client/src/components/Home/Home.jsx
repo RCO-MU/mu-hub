@@ -1,23 +1,32 @@
 /* eslint-disable no-promise-executor-return */
 import * as React from 'react';
 import Loader from '../Loader/Loader';
+import Announcements from './Announcements/Announcements';
+import Tools from './Tools/Tools';
 import './Home.css';
 
-export default function Home({
-  loading,
-}) {
+export default function Home({ userInfo }) {
   // **********************************************************************
   // PAGE RENDERING
   // **********************************************************************
 
-  // loading
-  if (loading) {
-    return <Loader />;
+  // admin view
+  if (userInfo.user.role === 'admin') {
+    return (
+      <div className="Home">
+        <Announcements userInfo={userInfo} />
+      </div>
+    );
   }
-  // else if not loading
+  // intern view
   return (
     <div className="Home">
-      <p>Announcements and Tools coming soon!</p>
+      <div className="right-container">
+        <Tools />
+      </div>
+      <div className="left-container">
+        <Announcements userInfo={userInfo} />
+      </div>
     </div>
   );
 }

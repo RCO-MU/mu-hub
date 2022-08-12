@@ -3,26 +3,34 @@
     text-align: center;
 }
 
+#temp-page-warn {
+    font-size: 20px;
+}
+
 .input-field {
     padding: 10px;
-    font-size: larger;
-    margin: 15px;    
 }
 
 .input-field.ac {
     height: 25px;
+    max-width: 300px;
 }
 
-label {
-    font-size: larger;
+#unixname {
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#is-admin {
-    position: relative;
-    height: 20px;
+#name {
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#admin-span {
+    font-size: large;
     margin-bottom: 35px;
-    width: 20px;
-    top: 3px;
 }
 
 .action-button {

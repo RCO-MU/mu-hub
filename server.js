@@ -1,6 +1,8 @@
 // TODO: Refactor code like in student_store_v2, with
 // routes separate from error handling and listener.
 require('dotenv').config();
+const https = require('https');
+const fs = require('fs');
 const morgan = require('morgan');
 const cors = require('cors');
 const multer = require('multer');
@@ -34,6 +36,21 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // LISTENER
 // **********************************************************************
 
+/*
+// FOR LOCALHOST HTTPS TESTING
+const httpsOptions = {
+  key: fs.readFileSync('./key.pem'),
+  cert: fs.readFileSync('./cert.pem'),
+  requestCert: false,
+  rejectUnauthorized: false,
+};
+const server = https.createServer(httpsOptions, app)
+  .listen(port, () => {
+    console.log(`🚀 Parse app listening on port ${port}`);
+  });
+*/
+
+// FOR PROD
 // log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
@@ -116,7 +133,7 @@ app.put('/api/intern', async (req, res) => {
 });
 
 // upload file
-app.post('/api/upload', upload.single('file'), async (req, res) => {
+app.post('/api/file', upload.single('file'), async (req, res) => {
   const { file } = req;
   const { unixname } = req.body;
   try {
@@ -125,6 +142,58 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
       res.status(201).send({ response: `${file.originalname} uploaded successfully by ${unixname}` });
     } else {
       res.status(500).send({ response: `${file.originalname} could not be uploaded` });
+    }
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get files
+app.get('/api/file', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getFiles(unixname, true);
+    res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get ranked interns
+app.get('/api/interns', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getRankedInterns(unixname);
+    res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get announcements
+app.get('/api/announcements', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getAnnouncements(unixname);
+    res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// post announcement
+app.post('/api/announcements', async (req, res) => {
+  const announcement = req.body;
+  try {
+    // call DB method
+    const info = await DB.postAnnouncement(announcement);
+    if (info === 201) {
+      res.status(201).send({ response: `${announcement.title} uploaded successfully` });
+    } else {
+      res.status(500).send({ response: `${announcement.title} could not be uploaded` });
     }
   } catch (error) {
     res.send({ errorMsg: error.message });

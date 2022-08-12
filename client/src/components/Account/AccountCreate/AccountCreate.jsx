@@ -2,9 +2,9 @@ import * as React from 'react';
 import axios from 'axios';
 import './AccountCreate.css';
 import { useState } from 'react';
-import Loader from '../Loader/Loader';
-import delay from '../../utils/delay';
-import refreshPage from '../../utils/refreshPage';
+import Loader from '../../Loader/Loader';
+import refreshPage from '../../../utils/refreshPage';
+import scrollToBottom from '../../../utils/scrollToBottom';
 
 export default function AccountCreate({
   loading, setLoading, setCookie, removeCookie, ssoInfo,
@@ -57,8 +57,10 @@ export default function AccountCreate({
   const handleOnAccountSubmit = async () => {
     if (unixname === '') {
       setError('Please enter your unixname.');
+      scrollToBottom();
     } else if (name === '') {
       setError('Please enter your name.');
+      scrollToBottom();
     } else {
       setError('');
       await postNewAccount();
@@ -77,14 +79,10 @@ export default function AccountCreate({
   // else if not loading
   return (
     <div className="AccountCreate">
-      <h1>Account Info</h1>
-      <h2>
-        This is a temporary page.
-        All of this information will eventually be retrieved via Internal SSO integration.
-      </h2>
+      <h3>Account Info</h3>
+      <br />
       <label htmlFor="unixname">
         {'Unixname: '}
-        <br />
         <input
           type="text"
           id="unixname"
@@ -94,9 +92,10 @@ export default function AccountCreate({
         />
       </label>
       <br />
+      <br />
+      <br />
       <label htmlFor="Name">
         {'Name: '}
-        <br />
         <input
           type="text"
           id="name"
@@ -107,8 +106,9 @@ export default function AccountCreate({
         />
       </label>
       <br />
+      <br />
+      <br />
       <label htmlFor="is-admin">
-        {'Are you an intern? '}
         <input
           type="checkbox"
           id="is-admin"
@@ -116,6 +116,7 @@ export default function AccountCreate({
           name="is-admin"
           onChange={() => setIsIntern(!isIntern)}
         />
+        <span id="admin-span">Are you an intern?</span>
       </label>
       <br />
       <input

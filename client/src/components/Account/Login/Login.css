@@ -1,5 +1,5 @@
 .Login {
-    margin: 40px;
+    margin: var(--home-margin);
     text-align: center;
 }
 
