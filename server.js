@@ -36,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 // LISTENER
 // **********************************************************************
 
-/*
 // FOR LOCALHOST HTTPS TESTING
 const httpsOptions = {
   key: fs.readFileSync('./key.pem'),
@@ -48,13 +47,14 @@ const server = https.createServer(httpsOptions, app)
   .listen(port, () => {
     console.log(`🚀 Parse app listening on port ${port}`);
   });
-*/
 
+/*
 // FOR PROD
 // log port number and confirm server is launched
 app.listen(port, () => {
   console.log(`🚀 Parse app listening on port ${port}`);
 });
+*/
 
 // **********************************************************************
 // ENDPOINTS - Put all API endpoints under '/api'
@@ -133,7 +133,7 @@ app.put('/api/intern', async (req, res) => {
 });
 
 // upload file
-app.post('/api/upload', upload.single('file'), async (req, res) => {
+app.post('/api/file', upload.single('file'), async (req, res) => {
   const { file } = req;
   const { unixname } = req.body;
   try {
@@ -148,6 +148,18 @@ app.post('/api/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+// get files
+app.get('/api/file', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getFiles(unixname);
+    res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
 // get ranked interns
 app.get('/api/interns', async (req, res) => {
   const { unixname } = req.query; // url params
@@ -155,6 +167,34 @@ app.get('/api/interns', async (req, res) => {
     // call DB method
     const info = await DB.getRankedInterns(unixname);
     res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// get announcements
+app.get('/api/announcements', async (req, res) => {
+  const { unixname } = req.query; // url params
+  try {
+    // call DB method
+    const info = await DB.getAnnouncements(unixname);
+    res.status(200).send(info);
+  } catch (error) {
+    res.send({ errorMsg: error.message });
+  }
+});
+
+// post announcement
+app.post('/api/announcements', async (req, res) => {
+  const announcement = req.body; // url params
+  try {
+    // call DB method
+    const info = await DB.postAnnouncement(announcement);
+    if (info === 201) {
+      res.status(201).send({ response: `${announcement.title} uploaded successfully` });
+    } else {
+      res.status(500).send({ response: `${announcement.title} could not be uploaded` });
+    }
   } catch (error) {
     res.send({ errorMsg: error.message });
   }

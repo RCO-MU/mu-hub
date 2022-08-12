@@ -1,12 +1,7 @@
 /* eslint-disable no-console */
 import * as React from 'react';
-import axios from 'axios';
-import './Tools.css';
-import { signOut } from 'firebase/auth';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Loader from '../Loader/Loader';
-import refreshPage from '../../utils/refreshPage';
+import './Tools.css';
 
 export default function Tools() {
   // **********************************************************************

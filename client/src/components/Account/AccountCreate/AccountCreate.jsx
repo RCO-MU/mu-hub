@@ -2,9 +2,9 @@ import * as React from 'react';
 import axios from 'axios';
 import './AccountCreate.css';
 import { useState } from 'react';
-import Loader from '../Loader/Loader';
-import delay from '../../utils/delay';
-import refreshPage from '../../utils/refreshPage';
+import Loader from '../../Loader/Loader';
+import refreshPage from '../../../utils/refreshPage';
+import scrollToBottom from '../../../utils/scrollToBottom';
 
 export default function AccountCreate({
   loading, setLoading, setCookie, removeCookie, ssoInfo,
@@ -57,8 +57,10 @@ export default function AccountCreate({
   const handleOnAccountSubmit = async () => {
     if (unixname === '') {
       setError('Please enter your unixname.');
+      scrollToBottom();
     } else if (name === '') {
       setError('Please enter your name.');
+      scrollToBottom();
     } else {
       setError('');
       await postNewAccount();

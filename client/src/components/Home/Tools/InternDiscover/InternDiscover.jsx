@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import Loader from '../Loader/Loader';
+import Loader from '../../../Loader/Loader';
 import './InternDiscover.css';
-import InternCard from '../InternCard/InternCard';
+import InternCard from './InternCard/InternCard';
 
 export default function InternDiscover({ userInfo, loading }) {
   // **********************************************************************
@@ -39,7 +39,6 @@ export default function InternDiscover({ userInfo, loading }) {
         try {
           const data = await fetchRankedInterns(userInfo.unixname);
           setInterns(data);
-          console.log(data);
           setPending(false);
         } catch (err) {
           console.error(err);

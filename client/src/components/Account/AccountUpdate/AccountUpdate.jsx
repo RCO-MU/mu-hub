@@ -5,8 +5,8 @@ import './AccountUpdate.css';
 import { signOut } from 'firebase/auth';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Loader from '../Loader/Loader';
-import refreshPage from '../../utils/refreshPage';
+import Loader from '../../Loader/Loader';
+import refreshPage from '../../../utils/refreshPage';
 
 export default function AccountUpdate({
   userInfo, loading, setLoading, setCookie, auth,

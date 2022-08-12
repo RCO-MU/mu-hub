@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { signInWithRedirect, getRedirectResult } from 'firebase/auth';
-import Loader from '../Loader/Loader';
+import Loader from '../../Loader/Loader';
 import './Login.css';
-import refreshPage from '../../utils/refreshPage';
+import refreshPage from '../../../utils/refreshPage';
 
 function Login({
   userInfo, setCookie, loading, auth, provider,

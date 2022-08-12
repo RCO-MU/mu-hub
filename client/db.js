@@ -108,6 +108,26 @@ class DB {
     return score;
   }
 
+  static #announcementVisible(a, userInfo) {
+    a = a.toJSON();
+    if (a.role && a.role !== userInfo.user.role) {
+      return false;
+    }
+    if (a.startDate && a.startDate !== userInfo.intern.startDate) {
+      return false;
+    }
+    if (a.division && a.division !== userInfo.intern.division) {
+      return false;
+    }
+    if (a.residence && a.residence !== userInfo.intern.residence) {
+      return false;
+    }
+    if (a.college && a.college !== userInfo.intern.college) {
+      return false;
+    }
+    return true;
+  }
+
   // **********************************************************************
   // MAIN METHODS
   // **********************************************************************
@@ -207,6 +227,21 @@ class DB {
     }
   }
 
+  // creates a file entry
+  static async getFiles(unixname) {
+    const internFile = new Parse.Object('InternFile');
+    const query = new Parse.Query(internFile);
+    query.equalTo('owner', unixname);
+    try {
+      // perform query
+      const files = await query.findAll();
+      return files.map((obj) => obj.toJSON());
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
   // retrieves all hub user info
   static async getRankedInterns(unixname) {
     const user1 = await this.#getInternObject(unixname, true);
@@ -221,6 +256,47 @@ class DB {
     // sort the list by similarity score
     interns.sort((a, b) => ((a.score > b.score) ? -1 : 1));
     return interns;
+  }
+
+  // gets announcements related to user
+  static async getAnnouncements(unixname) {
+    const announcement = new Parse.Object('Announcements');
+    const query = new Parse.Query(announcement);
+    query.addDescending('updatedAt');
+    try {
+      // perform query
+      let announcements = await query.find();
+      const userInfo = await this.getUserInfo(unixname);
+      // filter if intern
+      if (userInfo.user.role === 'intern') {
+        announcements = announcements.filter((a) => this.#announcementVisible(a, userInfo));
+      }
+      return announcements.map((obj) => obj.toJSON());
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  // gets announcements related to user
+  static async postAnnouncement(announcement) {
+    const aObj = new Parse.Object('Announcements');
+    aObj.set('posterInfo', announcement.posterInfo);
+    aObj.set('title', announcement.title);
+    aObj.set('content', announcement.content);
+    aObj.set('attachment', announcement.attachment);
+    aObj.set('startDate', announcement.startDate);
+    aObj.set('division', announcement.division);
+    aObj.set('residence', announcement.residence);
+    aObj.set('college', announcement.college);
+    aObj.set('role', announcement.role);
+    try {
+      await aObj.save();
+      return 201;
+    } catch (error) {
+      console.error(error);
+      return 500;
+    }
   }
 }
 

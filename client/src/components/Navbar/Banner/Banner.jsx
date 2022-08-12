@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../../data/images/metalogo.jpg';
+import logo from '../../../data/images/metalogo.jpg';
 import './Banner.css';
 
 export default function Banner({ clickable }) {

@@ -1,16 +1,21 @@
 .Home {
-    margin: var(--home-margin);
+    margin: 25px;
     margin-left: calc(var(--sidebar-width) + var(--home-margin));
     margin-top: calc(var(--navbar-height) + var(--home-margin));
     text-align: center;
+    height: 100%;
 }
 
 .left-container {
     float: left;
-    width: 70%; 
+    width: 70%;
+    padding: 20px;
+    padding-top: 5px;
 }
 
 .right-container {
     float: right;
+    height: 100%;
     width: 30%; 
+    padding: 5px;
 }

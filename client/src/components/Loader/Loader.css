@@ -10,8 +10,9 @@
 }
 
 #preloader.logged-in {
-  left: calc(var(--sidebar-width)/2);
-  top: calc(var(--navbar-height)/2);
+  position: relative;
+  top: 400px;
+  left: 50px;
 }
 
 #loader {

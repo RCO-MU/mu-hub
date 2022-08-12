@@ -1,0 +1,41 @@
+.AnnouncementCreate {
+    margin: var(--home-margin);
+    margin-left: calc(var(--sidebar-width) + var(--home-margin));
+    margin-top: calc(var(--navbar-height) + var(--home-margin));
+    text-align: center;
+    justify-content: center;
+}
+
+.AnnouncementCreate h3 {
+    margin: 0;
+}
+
+#title {
+    margin: 10px;
+}
+
+#content {
+    background-color: rgb(252,252,252);
+    border-color: #bbbbbb;
+    height: 150px;
+    min-height: 200px;
+    width: 600px;
+    min-width: 350px;
+    max-width: min(750px, 90%);
+}
+
+#filters {
+    width: 600px;
+    margin: auto;
+    min-height: 300px;
+}
+
+.filter {
+    float: left;
+    margin: 5px;
+    text-align:left;
+}
+
+.AnnouncementCreate .action-button {
+    float: none;
+}
