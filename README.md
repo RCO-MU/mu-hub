@@ -13,10 +13,9 @@ MetaU Hub is a centralized web hub/tool for MetaU interns and those involved beh
 
 ### Description
 
+The MetaU Hub is a centralized web hub/tool intended for MetaU interns and those involved behind the scenes of the program. The project has two main goals in mind: 1) provide easy access to various pieces of important information, such as MetaU-related information, documents, and announcements, and 2) facilitate connection between different people involved with the program such as MetaU interns, CodePath instructors, MetaU program managers, etc.
+
 In the spirit of long-term impact, I want to create something that could benefit the experience of fellow MetaU interns and full-time employees involved with MetaU long into the future. It is the program’s 10th year anniversary, but it is only the first year that web development is offered as a track, so with this in mind, I want to take advantage of the newly available development platform in a meaningful way in order to give back to the MetaU program.
-
-My plan is to create a MetaU Hub, a centralized web hub/tool intended for MetaU interns and those involved behind the scenes of the program. This project has two main goals in mind: 1) provide easy access various pieces of important information like MetaU-related documents and announcements and 2) facilitate connection between different people involved with the program such as MetaU interns, CodePath instructors, MetaU program managers, etc.
-
 
 ### App Evaluation
 **TBA**
