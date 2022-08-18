@@ -21,7 +21,7 @@ In the spirit of long-term impact, I want to create something that could benefit
 https://www.youtube.com/watch?v=Gsa_ymRUSkE
 
 ### Timeline
-https://docs.google.com/document/d/1LEndSmMHgrxabNb-HG5G64Zwi7PrFSU8b8BCrriioQ8/edit?usp=sharing
+https://docs.google.com/document/d/1LEndSmMHgrxabNb-HG5G64Zwi7PrFSU8b8BCrriioQ8/edit?usp=sharing (only accessible by Meta-affiliated workers)
 
 ## Product Spec
 ### 1. User Stories
