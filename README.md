@@ -20,6 +20,9 @@ In the spirit of long-term impact, I want to create something that could benefit
 ### Demo
 https://www.youtube.com/watch?v=Gsa_ymRUSkE
 
+### Timeline
+https://docs.google.com/document/d/1LEndSmMHgrxabNb-HG5G64Zwi7PrFSU8b8BCrriioQ8/edit?usp=sharing
+
 ## Product Spec
 ### 1. User Stories
 
@@ -65,25 +68,32 @@ Once the user is logged in, the "/" endpoint leads to many others:
 - "/intern_discover"
 - "document_upload"
 - "/blog"
+
 All of these endpoints lead back to the "/" endpoint via the interactive icon in the top navbar.
 There are also several links in the sidebar that redirect to external websites via a new tab.
 
-## Wireframes
-
-### Digital Wireframes & Mockups
+## Wireframe / Mockup
 https://www.figma.com/file/BAGCoZNmJsYFgIOoEHr6Re/MetaU-Hub?node-id=0%3A1 (only accessible by Meta-affiliated workers)
 
 Screenshot of homepage mockup:
+
 <img width="1101" alt="Screen Shot 2022-08-18 at 3 02 52 PM" src="https://user-images.githubusercontent.com/73001297/185503075-7ff39f61-a5e9-4a41-b477-1015101bf8a0.png">
 
 ## Schema 
 ### Models
-#### Post
-**TBA**
+https://docs.google.com/document/d/1QUS4lxpS3XeEsrxDcK5iAa260tMpQZf7rf0NNoMrSdk/edit?usp=sharing (only accessible by Meta-affiliated workers)
+
 
 ### Networking
-#### List of network requests by screen
-**TBA**
+#### API Endpoints
+https://docs.google.com/document/d/1uVdazqsPYhYmoJWNb3fGxCY-JsIVDMsL_5m-WkKuV18/edit?usp=sharing (only accessible by Meta-affiliated workers)
 
-#### [OPTIONAL:] Existing API Endpoints
-**TBA**
+
+#### List of network requests by screen
+
+- "/": POST /user (create account), GET /user, POST /intern (create intern account), GET /announcements (home)
+- "/account_update": PUT /intern, DELETE /user
+- "create_announcement": POST /announcements
+- "/intern_discover": GET /interns
+- "document_upload": POST /file, GET /file
+- "/blog": N/A (blog posts retrieved from blogs.JSON file in src)
