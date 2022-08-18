@@ -19,10 +19,7 @@ export default function BlogPost({ title, content }) {
     return (
       <>
         {cont.map((line) => (
-          <>
-            <p>{line}</p>
-            <br />
-          </>
+          <p>{line}</p>
         ))}
         {/* no break after last line */}
         <p>{lastLine}</p>
