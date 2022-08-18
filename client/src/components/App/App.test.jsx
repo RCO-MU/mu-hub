@@ -4,7 +4,7 @@ import {
 } from '@testing-library/react';
 import App from './App';
 
-// TODO: WRITE CORRECT TESTS
+// TODO: Write tests
 test('renders learn react link', () => {
   render(<App />);
   const linkElement = screen.getByText(/learn react/i);
