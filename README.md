@@ -17,8 +17,8 @@ The MetaU Hub is a centralized web hub/tool intended for MetaU interns and those
 
 In the spirit of long-term impact, I want to create something that could benefit the experience of fellow MetaU interns and full-time employees involved with MetaU long into the future. It is the program’s 10th year anniversary, but it is only the first year that web development is offered as a track, so with this in mind, I want to take advantage of the newly available development platform in a meaningful way in order to give back to the MetaU program.
 
-### App Evaluation
-**TBA**
+### Demo
+https://www.youtube.com/watch?v=Gsa_ymRUSkE
 
 ## Product Spec
 ### 1. User Stories
@@ -56,24 +56,25 @@ On the MetaU Hub, as a program manager, Chris is allowed to post announcements t
 updates and events via the MetaU Hub, and can also select what types/groups of interns can see relevant announcements such as iOS/Android/Web interns or 
 interns who have a specific start date.
 
-### 2. Screen Archetypes
-**TBA**
-
-### 3. Navigation
-
-**Tab Navigation** (Tab to Screen)
-**TBA**
-
-**Flow Navigation** (Screen to Screen)
-**TBA**
+### 2. Navigation
+The "/" endpoint renders many different screens depending on user account status (whether they have logged in, have an account, etc.)
+Access to any other URL extenders is blocked unless a user has completed the registration and login process.
+Once the user is logged in, the "/" endpoint leads to many others:
+- "/account_update"
+- "create_announcement"
+- "/intern_discover"
+- "document_upload"
+- "/blog"
+All of these endpoints lead back to the "/" endpoint via the interactive icon in the top navbar.
+There are also several links in the sidebar that redirect to external websites via a new tab.
 
 ## Wireframes
 
 ### Digital Wireframes & Mockups
-**TBA**
+https://www.figma.com/file/BAGCoZNmJsYFgIOoEHr6Re/MetaU-Hub?node-id=0%3A1 (only accessible by Meta-affiliated workers)
 
-### Interactive Prototype
-**TBA**
+Screenshot of homepage mockup:
+<img width="1101" alt="Screen Shot 2022-08-18 at 3 02 52 PM" src="https://user-images.githubusercontent.com/73001297/185503075-7ff39f61-a5e9-4a41-b477-1015101bf8a0.png">
 
 ## Schema 
 ### Models
