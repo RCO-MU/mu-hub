@@ -88,6 +88,7 @@ export default function Sidebar({
         <h4>Useful Links</h4>
         {linkElement('https://sites.google.com/fb.com/internexperiencehub/home', 'Intern Experience')}
         {linkElement('https://www.internalfb.com/onboarding/n00b/plan?comm_entry_point=IO_EMAIL_SPLIT', 'Onboarding Portal')}
+        {linkElement('https://courses.codepath.com/sessions', 'CodePath')}
         {linkElement('https://www.internalfb.com/profile/view', 'Internal Profile')}
         {linkElement('https://www.internalfb.com/intern/help/portal/', 'Help Portal')}
         {linkElement('https://www.internalfb.com/officeguide', 'Office Guide')}

@@ -13,6 +13,16 @@ export default function BlogPost({ title, content }) {
   // PAGE RENDERING
   // **********************************************************************
 
+  // blog posts content format (formatting array)
+  function contentFormat(cont) {
+    return (
+      <>
+        {cont.map((line) => <p>{line}</p>)}
+        <br />
+      </>
+    );
+  }
+
   return (
     <div className="BlogPost">
       <button
@@ -24,7 +34,7 @@ export default function BlogPost({ title, content }) {
       </button>
       <div className={isOpen ? 'content open' : 'content'}>
         <p>
-          {content}
+          {contentFormat(content)}
         </p>
       </div>
     </div>
