@@ -15,16 +15,7 @@ export default function BlogPost({ title, content }) {
 
   // blog posts content format (formatting array)
   function contentFormat(cont) {
-    const lastLine = cont.pop();
-    return (
-      <>
-        {cont.map((line) => (
-          <p>{line}</p>
-        ))}
-        {/* no break after last line */}
-        <p>{lastLine}</p>
-      </>
-    );
+    return cont.map((line) => (<p>{line}</p>));
   }
 
   return (
