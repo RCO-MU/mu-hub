@@ -72,6 +72,19 @@ Once the user is logged in, the "/" endpoint leads to many others:
 All of these endpoints lead back to the "/" endpoint via the interactive icon in the top navbar.
 There are also several links in the sidebar that redirect to external websites via a new tab.
 
+### 3. Future Goals
+While development on the project is done for the time being, there are many more milestones that I would have wanted to complete given more time.
+- Replace Facebook SSO w/ Internal SSO
+-- Internal SSO was originally an MVP feature for the project, but too many roadblocks (permission requests, vague wikis) made it too complex to implement in the timeframe. If there were more time, this would be the first change I would make. It would allow for more information to be auto-populated and increase security so that only Meta employees can make MetaU Hub accounts. It would also allow for interactions with more internal tools, such as links to chat with other users on Workplace.
+- Make Announcements more robust
+-- I want the announcement feed to be more interactive and dynamic with functionalities such as post editing/deleting, file attachments with previews, and a comment and like system.
+- Fix Document Upload
+-- The document upload tool is unfortunately inconsistent due to the Parse database being used in the backend; it doesn't accept certain types of encoding and certain file names. If this database could be replaced with a more reliable solution such as S3, the file upload system would have far fewer issues.
+- More Tools
+-- There are so many more tools that could be implemented for interns: maybe a tool for creating weekly progress updates, or a project timeline planner, or a Q&A tool for interns to anonymously send questions to MetaU staff. There are so many possibilities to provide more useful tools to MetaU interns.
+- More Admin Functionality
+-- Admins don't have access to tools or profile editing, so their MetaU Hub experience is quite underdeveloped. I would hope to increase their privileges and create tools designed for them - like a tool where they can answer anonymous questions from MetaU interns (throwback!)
+
 ## Wireframe / Mockup
 https://www.figma.com/file/BAGCoZNmJsYFgIOoEHr6Re/MetaU-Hub?node-id=0%3A1 (only accessible by Meta-affiliated workers)
 
