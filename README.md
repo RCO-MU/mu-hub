@@ -85,6 +85,8 @@ While development on the project is done for the time being, there are many more
 - **More Admin Functionality**
 -- Admins don't have access to tools or profile editing, so their MetaU Hub experience is quite underdeveloped. I would hope to increase their privileges and create tools designed for them - like a tool where they can answer anonymous questions from MetaU interns (throwback!)
 
+Most importantly, I hope that some version of this project concept could actually be used in the future with MetaU interns to give them a sense of support and community!
+
 ## Wireframe / Mockup
 https://www.figma.com/file/BAGCoZNmJsYFgIOoEHr6Re/MetaU-Hub?node-id=0%3A1 (only accessible by Meta-affiliated workers)
 
